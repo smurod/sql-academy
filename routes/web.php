@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('public.home');
 });
 
 Route::get('/dashboard', function () {
@@ -16,5 +17,19 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/app', function () {
+    return view('public.layouts.app');
+});
+
+Route::get('/admin', function () {
+    return view('admin.layouts.app');
+});
+
+
+Route::get('auth/{provider}', [SocialController::class, 'redirectToProvider']);
+Route::get('auth/{provider}/callback', [SocialController::class, 'handleProviderCallback']);
+
+
 
 require __DIR__.'/auth.php';
