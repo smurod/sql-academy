@@ -1,4 +1,6 @@
 @include('admin.layouts.header')
+@include('admin.layouts.sidebar')
+
     <!--begin::App Main-->
     <main class="app-main">
         <!--begin::App Content Header-->
@@ -25,6 +27,7 @@
             <!--begin::Container-->
             <div class="container-fluid">
                 @yield('content')
+
             </div>
             <!--end::Container-->
         </div>

@@ -35,6 +35,7 @@
 ></script>
 <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
 <script src="{{asset('assets/admin/dist/js/adminlte.js')}}"></script>
+<script src="{{asset('assets/admin/dist/js/tinymce/tinymce.min.js')}}"></script>
 <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
 <script>
     const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
