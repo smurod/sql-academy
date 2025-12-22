@@ -3,7 +3,13 @@
 use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LessonController;
+use App\Http\Controllers\LessonProgressController;
 
+
+Route::resource('lesson-progress', LessonProgressController::class);
+Route::resource('lesson-progress', LessonProgressController::class);
+Route::resource('lessons', LessonController::class);
 Route::get('/', function () {
     return view('public.home');
 });

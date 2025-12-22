@@ -22,7 +22,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->boolean('completed')->default(false);
-            $table->unique(['user_id', 'lesson_id']);
+            $table->timestamps();
         });
 
     }
