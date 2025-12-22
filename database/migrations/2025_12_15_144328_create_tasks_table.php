@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('task_text');
             $table->string('difficulty')->nullable(); // easy, medium, hard
+            $table->timestamps();
+
         });
 
     }
