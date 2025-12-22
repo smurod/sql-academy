@@ -18,6 +18,8 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->longText('correct_sql');
+            $table->timestamps();
+
         });
 
     }

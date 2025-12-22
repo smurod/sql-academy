@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->longText('theory_text');
             $table->integer('lesson_order');
+            $table->timestamps();
         });
 
     }
