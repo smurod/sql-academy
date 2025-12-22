@@ -10,7 +10,6 @@ use App\Http\Controllers\LessonProgressController;
 
 
 Route::resource('lesson-progress', LessonProgressController::class);
-Route::resource('lesson-progress', LessonProgressController::class);
 Route::resource('lessons', LessonController::class);
 Route::get('/', function () {
     return view('public.home');
