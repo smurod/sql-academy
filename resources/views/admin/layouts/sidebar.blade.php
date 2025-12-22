@@ -39,7 +39,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('courses.index')}}" class="nav-link active">
+                            <a href="{{route('courses.index')}}" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Список курсов</p>
                             </a>
@@ -52,7 +52,30 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-header">DOCUMENTATION</li>
+                <li class="nav-header">Задачи по урокам</li>
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon bi bi-speedometer"></i>
+                        <p>
+                            Задания
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('tasks.index')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Список задач</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('tasks.create')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Добавить задание</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
             </ul>
             <!--end::Sidebar Menu-->

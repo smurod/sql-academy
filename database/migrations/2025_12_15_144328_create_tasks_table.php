@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('lesson_id')
                 ->constrained()
                 ->cascadeOnDelete();
-
             $table->string('title');
             $table->text('task_text');
             $table->string('difficulty')->nullable(); // easy, medium, hard
+            $table->timestamps();
         });
 
     }
