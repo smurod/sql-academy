@@ -15,14 +15,14 @@
                         <label for="validationCustom04" class="form-label">Урок</label>
                         <select class="form-select" name="lesson_id" required>
                             <option selected disabled value="">Выберите урок</option>
-                            @foreach($tasks as $task)
-                            <option value="{{$task->lesson_id}}">{{$task->lesson->title}}</option>
+                            @foreach($lessons as $lesson)
+                            <option value="{{$lesson->id}}">{{$lesson->title}}</option>
                             @endforeach
                         </select><br>
                         <div class="invalid-feedback">Please select a valid state.</div>
                     </div>
                     <div class="mb-12">
-                        <label class="form-label">Название курса</label>
+                        <label class="form-label">Название задание</label>
                         <input
                             name="title"
                             type="text"

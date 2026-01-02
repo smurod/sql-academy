@@ -2,6 +2,10 @@
 <html lang="en">
 <!--begin::Head-->
 <head>
+    <link rel="stylesheet" href="{{asset('assets/admin/dist/jquery.cleditor.css')}}"/>
+    <script src="{{asset('assets/admin/dist/jquery-3.7.1.min.js')}}"></script>
+    <script src="{{asset('assets/admin/dist/jquery.cleditor.min.js')}}"></script>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>AdminLTE v4 | Dashboard</title>
     <!--begin::Primary Meta Tags-->

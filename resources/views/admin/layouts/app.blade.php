@@ -34,4 +34,6 @@
         <!--end::App Content-->
     </main>
     <!--end::App Main-->
+@yield('scripts')
+
 @include('admin.layouts.footer')
