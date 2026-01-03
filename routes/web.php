@@ -39,6 +39,5 @@ Route::get('auth/{provider}', [SocialController::class, 'redirectToProvider']);
 Route::get('auth/{provider}/callback', [SocialController::class, 'handleProviderCallback']);
 Route::resource('courses', CourseController::class);
 Route::resource('/tasks', TaskController::class);
-Route::resource('/lessons', LessonController::class);
 
 require __DIR__.'/auth.php';

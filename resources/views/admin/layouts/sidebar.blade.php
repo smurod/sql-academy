@@ -51,31 +51,6 @@
                         </li>
                     </ul>
                 </li>
-
-                <li class="nav-header">Уроки по курсам</li>
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
-                        <i class="nav-icon bi bi-speedometer"></i>
-                        <p>
-                            Уроки
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('lessons.index')}}" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Список уроков</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('lessons.create')}}" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Добавить урок</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
                 <li class="nav-header">Задачи по урокам</li>
                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link active">
