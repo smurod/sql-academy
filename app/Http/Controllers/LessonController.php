@@ -1,70 +1,100 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Course;
 
 use App\Models\Lesson;
-use App\Models\Course;
+use App\Models\TaskAttempt;
 use Illuminate\Http\Request;
 
 class LessonController extends Controller
 {
+
     public function index()
     {
-        return Lesson::with('course')
-            ->orderBy('lesson_order')
-            ->get();
+        $lessons = Lesson::all();
+        return view('admin.lessons.index', compact('lessons'));
     }
+
 
     public function create()
     {
-        return Course::all();
+        $courses = Course::all();
+
+        return view('admin.lessons.create', compact('courses'));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'course_id'    => 'required|exists:courses,id',
-            'title'        => 'required|string|max:255',
-            'theory_text'  => 'required|string',
-            'lesson_order' => 'required|integer|min:1',
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'level' => 'nullable|string',
         ]);
 
-        return Lesson::create($validated);
+        Lesson::create($request->all());
+
+        return redirect()->route('lessons.index')
+            ->with('success', 'Урок успешно добавлен');
     }
+
 
     public function show(Lesson $lesson)
     {
-        return $lesson->load('course');
+        $lesson->load('tasks');
+
+        $userId = auth()->id();
+
+        // 1. Всего задач в уроке
+        $totalTasks = $lesson->tasks->count();
+
+        // 2. Решённые задачи (хотя бы одна правильная попытка)
+        $completedTasks = TaskAttempt::where('user_id', $userId)
+            ->where('is_correct', true)
+            ->whereIn('task_id', $lesson->tasks->pluck('id'))
+            ->distinct('task_id')
+            ->count();
+
+        // 3. Процент выполнения
+        $progressPercent = $totalTasks > 0
+            ? round(($completedTasks / $totalTasks) * 100)
+            : 0;
+
+        return view('public.lessons.show', compact(
+            'lesson',
+            'totalTasks',
+            'completedTasks',
+            'progressPercent'
+        ));
     }
+
 
     public function edit(Lesson $lesson)
     {
-        return [
-            'lesson'  => $lesson,
-            'courses' => Course::all(),
-        ];
+        return view('admin.lessons.edit', compact('lesson'));
     }
+
 
     public function update(Request $request, Lesson $lesson)
     {
-        $validated = $request->validate([
-            'course_id'    => 'required|exists:courses,id',
-            'title'        => 'required|string|max:255',
-            'theory_text'  => 'required|string',
-            'lesson_order' => 'required|integer|min:1',
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'level' => 'nullable|string',
         ]);
 
-        $lesson->update($validated);
+        $lesson->update($request->all());
 
-        return $lesson;
+        return redirect()->route('lessons.index')
+            ->with('success', 'Урок обновлён');
     }
+
 
     public function destroy(Lesson $lesson)
     {
         $lesson->delete();
 
-        return response()->json([
-            'message' => 'Lesson deleted successfully'
-        ]);
+        return redirect()->route('lessons.index')
+            ->with('success', 'Урок удалён');
     }
 }
