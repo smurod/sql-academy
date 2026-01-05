@@ -51,5 +51,4 @@ Route::get('auth/{provider}/callback', [SocialController::class, 'handleProvider
 Route::resource('courses', CourseController::class);
 Route::resource('/tasks', TaskController::class);
 
-
 require __DIR__.'/auth.php';

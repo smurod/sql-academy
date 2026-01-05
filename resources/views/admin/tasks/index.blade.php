@@ -8,7 +8,7 @@
                     <thead>
                     <tr>
                         <th style="width: 10px">ID</th>
-                        <th>ID-урока</th>
+                        <th>ID/Название урока</th>
                         <th>Название</th>
                         <th style="width: 40px">Текст задания</th>
                         <th>Сложность</th>

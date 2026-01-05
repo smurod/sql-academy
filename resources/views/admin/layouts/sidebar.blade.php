@@ -23,11 +23,11 @@
                 role="menu"
                 data-accordion="false"
             >
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon bi bi-speedometer"></i>
 
-                <!-- ================= КУРСЫ ================= -->
-                <li class="nav-item {{ request()->routeIs('courses.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->routeIs('courses.*') ? 'active' : '' }}">
-                        <i class="nav-icon bi bi-collection"></i>
+              
                         <p>
                             Курсы
                             <i class="nav-arrow bi bi-chevron-right"></i>
