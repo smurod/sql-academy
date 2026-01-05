@@ -39,33 +39,8 @@ class LessonController extends Controller
     }
 
 
-    public function show(Lesson $lesson)
-    {
-        $lesson->load('tasks');
-
-        $userId = auth()->id();
-
-        // 1. Всего задач в уроке
-        $totalTasks = $lesson->tasks->count();
-
-        // 2. Решённые задачи (хотя бы одна правильная попытка)
-        $completedTasks = TaskAttempt::where('user_id', $userId)
-            ->where('is_correct', true)
-            ->whereIn('task_id', $lesson->tasks->pluck('id'))
-            ->distinct('task_id')
-            ->count();
-
-        // 3. Процент выполнения
-        $progressPercent = $totalTasks > 0
-            ? round(($completedTasks / $totalTasks) * 100)
-            : 0;
-
-        return view('public.lessons.show', compact(
-            'lesson',
-            'totalTasks',
-            'completedTasks',
-            'progressPercent'
-        ));
+    public function show(Course $course){
+        return view('admin.lessons.show', compact('lesson'));
     }
 
 
