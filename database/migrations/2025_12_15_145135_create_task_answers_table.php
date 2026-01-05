@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->longText('correct_sql');
             $table->timestamps();
+            $table->unique('task_id');
 
         });
 

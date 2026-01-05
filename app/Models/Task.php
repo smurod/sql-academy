@@ -15,10 +15,18 @@ class Task extends Model
         'task_text',
         'difficulty',
     ];
- 
+    public function answer()
+    {
+        return $this->hasOne(TaskAnswer::class);
+    }
+
+    public function attempts()
+    {
+        return $this->hasMany(TaskAttempt::class);
+    }
+
    public function lesson(){
         return $this->belongsTo(Lesson::class);
     }
-
 
    }
