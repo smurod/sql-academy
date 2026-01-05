@@ -29,7 +29,6 @@ class CourseController extends Controller
         return view('admin.courses.show', compact('course'));
     }
     public function edit(Course $course){
-        $course = Course::all();
         return view('admin.courses.edit', compact('course'));
     }
     public function update(Request $request, Course $course){
