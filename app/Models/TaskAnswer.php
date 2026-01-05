@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class TaskAnswer extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'task_id',
         'correct_sql',
+        'explanation',
     ];
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
 }

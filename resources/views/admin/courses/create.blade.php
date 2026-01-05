@@ -22,7 +22,7 @@
                 <div class="mb-12">
                     <label class="form-label">Описание курса</label>
                     <script src="{{asset('assets/admin/dist/js/tinymce/tinymce.min.js')}}"></script>
-                    <textarea name="description" class="form-control"></textarea>
+                    <textarea name="description" class="form-control" rows="4"></textarea>
                     <script type="text/javascript">
                         tinymce.init({
                             selector: 'textarea',  // change this value according to your HTML

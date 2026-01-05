@@ -3,14 +3,16 @@
 use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskAnswerController;
+use App\Http\Controllers\TaskAttemptController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LessonProgressController;
 
 
-Route::resource('lesson-progress', LessonProgressController::class);
-Route::resource('lesson-progress', LessonProgressController::class);
+
+Route::resource('lessons-progress', LessonProgressController::class);
 Route::resource('lessons', LessonController::class);
 Route::get('/', function () {
     return view('public.home');
@@ -34,6 +36,15 @@ Route::get('/admin', function () {
     return view('admin.layouts.app');
 });
 
+// попытки
+Route::post('/tasks/{task}/attempt',
+    [TaskAttemptController::class, 'store']
+)->middleware('auth')->name('tasks.attempt');
+
+// админ ответы
+Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
+    Route::resource('task-answers', TaskAnswerController::class);
+});
 
 Route::get('auth/{provider}', [SocialController::class, 'redirectToProvider']);
 Route::get('auth/{provider}/callback', [SocialController::class, 'handleProviderCallback']);

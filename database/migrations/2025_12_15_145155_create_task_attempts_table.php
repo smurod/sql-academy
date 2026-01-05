@@ -24,7 +24,6 @@ return new class extends Migration
             $table->longText('user_sql');
             $table->boolean('is_correct')->default(false);
             $table->timestamps();
-
         });
 
     }

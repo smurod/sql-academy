@@ -7,12 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class TaskAttempt extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'user_id',
         'task_id',
+        'user_id',
         'user_sql',
         'is_correct',
     ];
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
+
