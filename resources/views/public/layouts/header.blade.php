@@ -48,10 +48,10 @@
 
                     <ul class="nav-menu flex-align ">
                         <li class="nav-menu__item">
-                            <a href="contact.html" class="nav-menu__link"> Курс</a>
+                            <a href="courses.index" class="nav-menu__link"> Курс</a>
                         </li>
                         <li class="nav-menu__item">
-                            <a href="contact.html" class="nav-menu__link"> Тренажёр</a>
+                            <a href="courses.index" class="nav-menu__link"> Тренажёр</a>
                         </li>
                         <li class="nav-menu__item has-submenu activePage">
                             <a href="javascript:void(0)" class="nav-menu__link"> Ещё</a>

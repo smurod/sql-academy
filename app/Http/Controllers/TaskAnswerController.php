@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TaskAnswer;
 use Illuminate\Http\Request;
 
 class TaskAnswerController extends Controller
