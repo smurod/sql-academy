@@ -12,15 +12,10 @@ use App\Http\Controllers\LessonProgressController;
 
 
 
-Route::resource('lessons-progress', LessonProgressController::class);
-Route::resource('lessons', LessonController::class);
 Route::get('/', function () {
     return view('public.home');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.home');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -48,7 +43,15 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
 
 Route::get('auth/{provider}', [SocialController::class, 'redirectToProvider']);
 Route::get('auth/{provider}/callback', [SocialController::class, 'handleProviderCallback']);
-Route::resource('courses', CourseController::class);
-Route::resource('/tasks', TaskController::class);
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::resource('courses', CourseController::class);
+    Route::resource('/tasks', TaskController::class);
+    Route::resource('lessons-progress', LessonProgressController::class);
+    Route::resource('lessons', LessonController::class);
+    Route::get('/dashboard', function () {
+        return view('admin.home');
+    })->middleware(['auth', 'verified'])->name('dashboard');
+
+});
 
 require __DIR__.'/auth.php';

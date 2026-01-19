@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('level')->nullable(); // beginner, middle, advanced
+            $table->date('start_date')->nullable();
+            $table->integer('duration')->nullable();
+            $table->string('image')->nullable();
+            $table->text('extra_info')->nullable();
             $table->timestamps();
         });
 

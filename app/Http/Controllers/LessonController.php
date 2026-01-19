@@ -20,8 +20,8 @@ class LessonController extends Controller
     public function create()
     {
         $courses = Course::all();
-
-        return view('admin.lessons.create', compact('courses'));
+        $lessons = Lesson::all();
+        return view('admin.lessons.create', compact('lessons', 'courses'));
     }
 
     public function store(Request $request)
@@ -39,7 +39,7 @@ class LessonController extends Controller
     }
 
 
-    public function show(Course $course){
+    public function show(Lesson $lesson){
         return view('admin.lessons.show', compact('lesson'));
     }
 

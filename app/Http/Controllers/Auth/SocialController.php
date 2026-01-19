@@ -49,6 +49,6 @@ class SocialController extends Controller
             }
         }
         Auth::login($user, true); // логин пользователя
-        return redirect()->intended('/dashboard');
+        return redirect()->intended('/admin/dashboard');
     }
 }

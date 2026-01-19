@@ -37,17 +37,11 @@
 
                     <div class="mb-12">
                         <label class="form-label">Теория урока</label>
-                        <script src="{{ asset('assets/admin/dist/js/tinymce/tinymce.min.js') }}"></script>
-                        <textarea name="description" class="form-control" rows="4"></textarea>
-                        <script type="text/javascript">
-                            tinymce.init({
-                                selector: 'textarea',
-                                license_key: 'gpl',
-                                plugins: 'a_tinymce_plugin',
-                                a_plugin_option: true,
-                                a_configuration_option: 400
-                            });
+                        <script>
+                            $(document).ready(function () { $("#input").cleditor(); });
                         </script>
+
+                        <textarea id="input" name="theory_text"></textarea>
                     </div>
 
                     <div class="col-md-12">
