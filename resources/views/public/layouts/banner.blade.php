@@ -21,12 +21,12 @@
                     </h1>
                     <p class="text-neutral-500 text-line-2 wow bounceInUp">Освойте SQL, обучаясь на упражнениях, приближенных к реальным профессиональным задачам</p>
                     <div class="buttons-wrapper flex-align flex-wrap gap-24 mt-40">
-                        <a href="course.html" class="btn btn-main rounded-pill flex-align gap-8" data-aos="fade-right">
-                            Browse Courses
+                        <a href="{{route('public.courses.index')}}" class="btn btn-main rounded-pill flex-align gap-8" data-aos="fade-right">
+                            Смотреть проекты
                             <i class="ph-bold ph-arrow-up-right d-flex text-lg"></i>
                         </a>
                         <a href="about.html" class="btn btn-outline-main rounded-pill flex-align gap-8" data-aos="fade-left">
-                            About Us
+                            О нас
                             <i class="ph-bold ph-arrow-up-right d-flex text-lg"></i>
                         </a>
                     </div>
@@ -34,7 +34,7 @@
             </div>
             <div class="col-xl-6">
                 <div class="banner-thumb position-relative">
-                    <img src="assets/public/images/thumbs/banner-img.png" alt="" class="banner-thumb__img rounded-12 wow bounceIn" data-wow-duration="3s" data-wow-delay=".5s" data-tilt data-tilt-max="12" data-tilt-speed="500" data-tilt-perspective="5000" data-tilt-full-page-listening data-tilt-scale="1.02">
+                    <img src="{{ Storage::url('banner.png') }}" alt="" class="banner-thumb__img rounded-12 wow bounceIn" data-wow-duration="3s" data-wow-delay=".5s" data-tilt data-tilt-max="12" data-tilt-speed="500" data-tilt-perspective="5000" data-tilt-full-page-listening data-tilt-scale="1.02">
 
                     <img src="assets/public/images/shapes/curve-arrow.png" alt="" class="curve-arrow position-absolute">
 
