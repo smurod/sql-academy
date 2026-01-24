@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Lesson;
 use App\Models\Task;
@@ -32,7 +32,8 @@ class TaskController extends Controller
         return view('admin.tasks.show', compact('task'));
     }
     public function edit(Task $task){
-        return view('admin.tasks.edit', compact('task'));
+        $lessons = Lesson::all();
+        return view('admin.tasks.edit', compact('task', 'lessons'));
     }
     public function update(Request $request, Task $task){
         $data = $request->validate([

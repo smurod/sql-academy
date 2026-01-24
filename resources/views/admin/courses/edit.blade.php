@@ -34,19 +34,17 @@
                     <div class="col-md-12">
                         <label class="form-label">Уровень</label>
                         <select class="form-select" name="level" required>
-                            <option disabled value="" {{ old('level', $course->level) == '' ? 'selected' : '' }}>
-                                Выберите уровень...
-                            </option>
+                            <option disabled value="">Выберите уровень...</option>
 
-                            <option value="beginner" @selected(old('level', $course->level) == 'beginner')>
+                            <option value="beginner" {{ (old('level', $course->level) == 'beginner') ? 'selected' : '' }}>
                                 Beginner
                             </option>
 
-                            <option value="middle" @selected(old('level', $course->level) == 'middle')>
+                            <option value="middle" {{ (old('level', $course->level) == 'middle') ? 'selected' : '' }}>
                                 Middle
                             </option>
 
-                            <option value="advanced" @selected(old('level', $course->level) == 'advanced')>
+                            <option value="advanced" {{ (old('level', $course->level) == 'advanced') ? 'selected' : '' }}>
                                 Advanced
                             </option>
                         </select>
@@ -57,7 +55,8 @@
                 <!--end::Body-->
                 <!--begin::Footer-->
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <a class="btn btn-outline-warning" href="{{route('courses.index')}}">Отмена</a>
+                    <button type="submit" class="btn btn-success">Сохранить</button>
                 </div>
                 <!--end::Footer-->
             </form>

@@ -1,52 +1,37 @@
 @extends('admin.layouts.app')
 @section('content')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-12">
+                <div class="card-header"><h3 class="card-title">Список уроков</h3></div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="width: 10px">ID</th>
+                            <th>Название курса/ID</th>
+                            <th>Название урока</th>
+                            <th>Теория урока</th>
+                            <th>Позиция урока</th>
+                            <th>Назад</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="align-middle">
+                                <td>{{$lesson->id}}</td>
+                                <td>{{$lesson->course_id}}</td>
+                                <td>{{$lesson->title}}</td>
+                                <td>{{$lesson->theory_text}}</td>
+                                <td>{{$lesson->lesson_order}}</td>
+                                <td><a class="btn btn-outline-primary" href="{{route('lessons.index')}}">Назад</a></td>
+                            </tr>
+                        </tbody>
 
-    <div class="col-md-12">
-        <div class="card mb-3">
-            <div class="card-header">
-                <h3>{{ $lesson->title }}</h3>
-            </div>
+                    </table>
 
-            <div class="card-body">
-
-                @if($lesson->lecture())
-                    <h5>Лекция</h5>
-                    <p>{{ $lesson->lecture() }}</p>
-                    <hr>
-                @endif
-
-                @if($lesson->hasCode())
-                    <h5>Код</h5>
-                    <pre><code>{{ $lesson->code() }}</code></pre>
-                    <hr>
-                @endif
-
-                @if($lesson->hasPresentation())
-                    <h5>Презентация</h5>
-                    <a href="{{ asset('storage/'.$lesson->presentation()) }}"
-                       class="btn btn-outline-secondary"
-                       target="_blank">
-                        Скачать презентацию
-                    </a>
-                    <hr>
-                @endif
-
-                @if($lesson->hasVideo())
-                    <h5>Видео</h5>
-                    <video width="600" controls>
-                        <source src="{{ asset('storage/'.$lesson->video()) }}">
-                        Ваш браузер не поддерживает видео
-                    </video>
-                    <hr>
-                @endif
-
-                <a href="{{ route('courses.show', $lesson->course_id) }}"
-                   class="btn btn-outline-primary">
-                    ← Назад к курсу
-                </a>
+                </div>
 
             </div>
         </div>
-    </div>
-
 @endsection

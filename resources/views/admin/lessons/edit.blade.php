@@ -29,17 +29,11 @@
 
                     <div class="mb-12">
                         <label class="form-label">Теория урока</label>
-                        <script src="{{ asset('assets/admin/dist/js/tinymce/tinymce.min.js') }}"></script>
-                        <textarea name="theory_text" class="form-control">{{ $lesson->theory_text }}</textarea>
-                        <script type="text/javascript">
-                            tinymce.init({
-                                selector: 'textarea',
-                                license_key: 'gpl',
-                                plugins: 'a_tinymce_plugin',
-                                a_plugin_option: true,
-                                a_configuration_option: 400
-                            });
+                        <script>
+                            $(document).ready(function () { $("#input").cleditor(); });
                         </script>
+
+                        <textarea id="input" name="theory_text">{{ $lesson->theory_text }}</textarea>
                     </div>
 
                     <div class="col-md-12">
@@ -57,7 +51,8 @@
 
                 <!--begin::Footer-->
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">
+                    <a class="btn btn-outline-warning" href="{{route('lessons.index')}}">Отмена</a>
+                    <button type="submit" class="btn btn-success">
                         Сохранить
                     </button>
                 </div>

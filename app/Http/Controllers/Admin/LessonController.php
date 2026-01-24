@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
 
-use App\Models\Lesson;
+namespace App\Http\Controllers\Admin;
 use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,7 +18,8 @@ class LessonController extends Controller
     public function create()
     {
         $courses = Course::all();
-        return view('admin.lessons.create', compact('courses'));
+        $lessons = Lesson::all();
+        return view('admin.lessons.create', compact('lessons', 'courses'));
     }
 
     public function store(Request $request)

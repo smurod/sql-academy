@@ -19,9 +19,8 @@ class Course extends Model
         'image',
         'extra_info',
     ];
-
     public function lessons()
     {
-        return $this->hasMany(Lesson::class)->orderBy('lesson_order');
+        return $this->hasMany(Lesson::class);
     }
 }
