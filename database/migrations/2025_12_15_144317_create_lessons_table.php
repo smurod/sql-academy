@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained()->cascadeOnDelete();
             $table->string('title');
-            $table->longText('theory_text');
+            $table->text('theory_text');
             $table->integer('lesson_order');
             $table->timestamps();
         });
+
 
     }
 

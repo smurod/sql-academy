@@ -24,7 +24,7 @@
                                 <td>{{$lesson->title}}</td>
                                 <td>{{$lesson->theory_text}}</td>
                                 <td>{{$lesson->lesson_order}}</td>
-                                <td><a class="btn btn-outline-primary" href="{{route('lessons.index')}}"><Назад</a></td>
+                                <td><a class="btn btn-outline-primary" href="{{route('lessons.index')}}">Назад</a></td>
                             </tr>
                         </tbody>
 

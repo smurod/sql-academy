@@ -10,6 +10,10 @@
                         <th style="width: 10px">ID</th>
                         <th>Название</th>
                         <th>Описание</th>
+                        <th>Начало</th>
+                        <th>Продолжтельность</th>
+                         <th>Фото</th>
+                        <th>Доп. Инфо</th>
                         <th style="width: 40px">Уровень</th>
                         <th>Вернутся назад</th>
                     </tr>
@@ -18,7 +22,12 @@
                         <tr class="align-middle">
                             <td>{{$course->id}}</td>
                             <td>{{$course->title}}</td>
-                            <td>{{$course->description}}</td>
+                            <td>{{$course->theory_text}}</td>
+                            <td>{{$course->start_date}}</td>
+                            <td>{{$course->duration}}</td>
+                            <td><img src="{{ asset('storage/'.$course->image) }}" width="100px" alt=""></td>
+                            <td>{{$course->extra_info}}</td>
+
                             <td>
                                 @if(!empty($course->level))
                                     <span>{{$course->level}}</span>
