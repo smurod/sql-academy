@@ -1,33 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title -->
     <title> EdullAll - LMS, Tutors, Education & Online Course Html Template</title>
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/public/images/logo/favicon.png">
+    <link rel="shortcut icon" href="{{ asset('assets/public/images/logo/favicon.png') }}">
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="assets/public/css/bootstrap.min.css">
-    <!-- select2 -->
-    <link rel="stylesheet" href="assets/public/css/select2.min.css">
-    <!-- Slick -->
-    <link rel="stylesheet" href="assets/public/css/slick.css">
-    <!-- Slick -->
-    <link rel="stylesheet" href="assets/public/css/magnific-popup.css">
-    <!-- jquery-ui -->
-    <link rel="stylesheet" href="assets/public/css/jquery-ui.css">
-    <!-- plyr Css -->
-    <link rel="stylesheet" href="assets/public/css/plyr.css">
-    <!-- animate -->
-    <link rel="stylesheet" href="assets/public/css/animate.css">
-
-    <link rel="stylesheet" href="assets/public/css/aos.css">
-    <!-- Main css -->
-    <link rel="stylesheet" href="assets/public/css/main.css">
-</head>
+    <link rel="stylesheet" href="{{ asset('assets/public/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/public/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/public/css/slick.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/public/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/public/css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/public/css/plyr.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/public/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/public/css/aos.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/public/css/main.css') }}"></head>
 <body>
 <!-- ==================== Header Start Here ==================== -->
 <header class="header">
@@ -38,7 +28,7 @@
                 <!-- Logo Start -->
                 <div class="logo">
                     <a href="index.html" class="link">
-                        <img src="{{asset('storage/app/public/logo.png')}}" alt="Logo">
+                        <img src="{{ Storage::url('sqlmastery.png') }}" alt="Logo">
                     </a>
                 </div>
                 <!-- Logo End  -->
@@ -48,7 +38,7 @@
 
                     <ul class="nav-menu flex-align ">
                         <li class="nav-menu__item">
-                            <a href="courses.index" class="nav-menu__link"> Курс</a>
+                            <a href="{{route('public.courses.index')}}" class="nav-menu__link"> Курсы</a>
                         </li>
                         <li class="nav-menu__item">
                             <a href="courses.index" class="nav-menu__link"> Тренажёр</a>

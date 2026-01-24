@@ -21,7 +21,7 @@ class CourseFactory extends Factory
             'description' => $this->faker->paragraph(),
             'level' => $this->faker->randomElement(['beginner', 'middle', 'advanced']),
             'start_date' => $this->faker->date(),
-            'duration' => $this->faker->randomElement(['3 months', '6 months', '12 months']),
+            'duration' => $this->faker->randomElement(['3', '6', '12']),
             'image' => $this->faker->imageUrl(),
             'extra_info' => $this->faker->paragraph(),
         ];

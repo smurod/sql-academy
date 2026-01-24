@@ -10,9 +10,9 @@
                 <div class="col" data-aos="fade-up" data-aos-duration="300" >
                     <div class="footer-item">
                         <div class="footer-item__logo">
-                            <a href="index.html"> <img src="assets/public/images/logo/logo.png" alt=""></a>
+                            <a href="index.html"> <img src="{{ Storage::url('sqlmastery.png') }}    " alt=""></a>
                         </div>
-                        <p class="my-32">EduAll exceeded all my expectations! The instructors were not only experts</p>
+                        <p class="my-32">SQLMastery превзошел все ожидания! Наши курсы открывают двери в мир профессиональной аналитики данных.</p>
                         <ul class="social-list flex-align gap-24">
                             <li class="social-list__item">
                                 <a href="https://www.facebook.com" class="text-main-600 text-2xl hover-text-main-two-600"><i class="ph-bold ph-facebook-logo"></i></a>
@@ -31,51 +31,51 @@
                 </div>
                 <div class="col" data-aos="fade-up" data-aos-duration="400" >
                     <div class="footer-item">
-                        <h4 class="footer-item__title mb-32">Navigation</h4>
+                        <h4 class="footer-item__title mb-32">Навигация</h4>
                         <ul class="footer-menu">
                             <li class="mb-16">
-                                <a href="about.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">About us</a>
+                                <a href="about.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">О проекте</a>
                             </li>
                             <li class="mb-16">
-                                <a href="courses.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Courses</a>
+                                <a href="{{route('public.courses.index')}}" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Все курсы</a>
                             </li>
                             <li class="mb-16">
-                                <a href="instructor.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Instructor</a>
+                                <a href="instructor.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Тренажер</a>
                             </li>
                             <li class="mb-16">
-                                <a href="faq.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">FAQs</a>
+                                <a href="faq.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Помощь</a>
                             </li>
                             <li class="mb-0">
-                                <a href="blog.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Blogs</a>
+                                <a href="blog.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Статьи</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col" data-aos="fade-up" data-aos-duration="600" >
                     <div class="footer-item">
-                        <h4 class="footer-item__title mb-32">Category</h4>
+                        <h4 class="footer-item__title mb-32">Категории</h4>
                         <ul class="footer-menu">
                             <li class="mb-16">
-                                <a href="courses.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">UI/UX Design</a>
+                                <a href="courses.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Основы SQL</a>
                             </li>
                             <li class="mb-16">
-                                <a href="courses.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Web Development</a>
+                                <a href="courses.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">PostgreSQL</a>
                             </li>
                             <li class="mb-16">
-                                <a href="courses.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Python Development</a>
+                                <a href="courses.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Оптимизация</a>
                             </li>
                             <li class="mb-16">
-                                <a href="courses.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Digital Marketing</a>
+                                <a href="courses.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Базы данных</a>
                             </li>
                             <li class="mb-16">
-                                <a href="courses.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Graphic Design</a>
+                                <a href="courses.html" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Анализ данных</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col" data-aos="fade-up" data-aos-duration="800" >
                     <div class="footer-item">
-                        <h4 class="footer-item__title mb-32">Contact Us</h4>
+                        <h4 class="footer-item__title mb-32">Контакты</h4>
                         <div class="flex-align gap-20 mb-24">
                             <span class="icon d-flex text-32 text-main-600"><i class="ph ph-phone"></i></span>
                             <div class="">
@@ -101,8 +101,8 @@
                 </div>
                 <div class="col" data-aos="fade-up" data-aos-duration="1000" >
                     <div class="footer-item">
-                        <h4 class="footer-item__title mb-32">Subscribe Here</h4>
-                        <p class="text-neutral-500">Enter your email address to register to our newsletter subscription</p>
+                        <h4 class="footer-item__title mb-32">Подписка</h4>
+                        <p class="text-neutral-500">Введите ваш почтовый адрес для получения обновлений о новых задачах</p>
                         <form action="#" class="mt-24 position-relative">
                             <input type="email" class="form-control bg-white shadow-none border border-neutral-30 rounded-pill h-52 ps-24 pe-40 focus-border-main-600" placeholder="Email...">
                             <button type="submit" class="w-36 h-36 flex-center rounded-circle bg-main-600 text-white hover-bg-main-800 position-absolute top-50 translate-middle-y inset-inline-end-0 me-8">
@@ -119,10 +119,10 @@
         <div class="bottom-footer bg-main-25 border-top border-dashed border-main-100 border-0 py-32">
             <div class="container container-two">
                 <div class="bottom-footer__inner flex-between gap-3 flex-wrap">
-                    <p class="bottom-footer__text" data-aos="fade-right" data-aos-duration="1000" > Copyright &copy; 2024 <span class="fw-semibold">EduAll</span> All Rights Reserved.</p>
+                    <p class="bottom-footer__text" data-aos="fade-right" data-aos-duration="1000" > Copyright &copy; 2026 <span class="fw-semibold">SQLMastery</span> Все права защищены.</p>
                     <div class="footer-links" data-aos="fade-left" data-aos-duration="1000" >
-                        <a href="#" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Privacy Policy</a>
-                        <a href="#" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Terms & Conditions</a>
+                        <a href="#" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Политика конфиденциальности</a>
+                        <a href="#" class="text-neutral-500 hover-text-main-600 hover-text-decoration-underline">Условия и соглашения</a>
                     </div>
                 </div>
             </div>
@@ -130,36 +130,46 @@
     </div>
 </footer>
 <!-- ==================== Footer End Here ==================== -->
+<!-- Scroll to Top Button - ДОБАВЬТЕ ЭТО -->
+<div class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+    </svg>
+</div>
+
+<script src="{{ asset('assets/public/js/jquery-3.7.1.min.js') }}"></script>
 
 
-<!-- Jquery js -->
-<script src="assets/public/js/jquery-3.7.1.min.js"></script>
-<!-- Bootstrap Bundle Js -->
-<script src="assets/public/js/boostrap.bundle.min.js"></script>
-<!-- select2 Js -->
-<script src="assets/public/js/select2.min.js"></script>
-<!-- Phosphor Icon Js -->
-<script src="assets/public/js/phosphor-icon.js"></script>
-<!-- Slick js -->
-<script src="assets/public/js/slick.min.js"></script>
-<!-- Slick js -->
-<script src="assets/public/js/counter.min.js"></script>
-<!-- magnific popup -->
-<script src="assets/public/js/magnific-popup.min.js"></script>
-<!-- Jquery Ui js -->
-<script src="assets/public/js/jquery-ui.js"></script>
-<!-- plyr Js -->
-<script src="assets/public/js/plyr.js"></script>
-<!-- vanilla Tilt -->
-<script src="assets/public/js/vanilla-tilt.min.js"></script>
-<!-- wow -->
-<script src="assets/public/js/wow.min.js"></script>
+<script src="{{ asset('assets/public/js/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ asset('assets/public/js/boostrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/public/js/select2.min.js') }}"></script>
+<script src="{{ asset('assets/public/js/phosphor-icon.js') }}"></script>
+<script src="{{ asset('assets/public/js/slick.min.js') }}"></script>
+<script src="{{ asset('assets/public/js/counter.min.js') }}"></script>
+<script src="{{ asset('assets/public/js/magnific-popup.min.js') }}"></script>
+<script src="{{ asset('assets/public/js/jquery-ui.js') }}"></script>
+<script src="{{ asset('assets/public/js/plyr.js') }}"></script>
+<script src="{{ asset('assets/public/js/vanilla-tilt.min.js') }}"></script>
+<script src="{{ asset('assets/public/js/wow.min.js') }}"></script>
+<script src="{{ asset('assets/public/js/aos.js') }}"></script>
 
-<script src="assets/public/js/aos.js"></script>
+<script>
+    // Инициализация до загрузки main.js
+    $(document).ready(function() {
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 1000,
+                once: true,
+                offset: 50
+            });
+            AOS.refresh();
+        }
+        if (typeof WOW !== 'undefined') {
+            new WOW().init();
+        }
+    });
+</script>
 
-<!-- main js -->
-<script src="assets/public/js/main.js"></script>
-
-
+<script src="{{ asset('assets/public/js/main.js') }}" defer></script>
 </body>
 </html>

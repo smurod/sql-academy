@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 use App\Models\Course;
-
 use App\Models\Lesson;
-use App\Models\TaskAttempt;
 use Illuminate\Http\Request;
 
 class LessonController extends Controller
