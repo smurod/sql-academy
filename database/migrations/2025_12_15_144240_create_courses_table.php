@@ -14,8 +14,12 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description')->nullable();
-            $table->string('level')->nullable(); // beginner, middle, advanced
+            $table->text('theory_text')->nullable();
+            $table->string('level')->nullable();
+            $table->date('start_date')->nullable();
+            $table->integer('duration')->nullable();
+            $table->string('image')->nullable();
+            $table->text('extra_info')->nullable();
             $table->timestamps();
         });
 

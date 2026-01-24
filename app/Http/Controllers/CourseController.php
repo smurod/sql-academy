@@ -16,15 +16,28 @@ class CourseController extends Controller
         return view('admin.courses.create', compact('course'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
+
         $data = $request->validate([
-            'title' => 'required',
+            'title' => 'required|string|max:255|min:3',
             'description' => 'required',
-            'level' => 'required',
+            'start_date' => 'nullable|date',
+            'duration' => 'nullable|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'extra_info' => 'nullable|string',
+            'level' => 'required|string|min:3|max:255',
         ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('courses', 'public');
+        }
+
         Course::create($data);
-        return redirect()->route('courses.index')->with('success', 'Курс успешно добавлен');
+
+        return redirect()->route('courses.index')->with('success', 'Курс добавлен');
     }
+
     public function show(Course $course){
         return view('admin.courses.show', compact('course'));
     }

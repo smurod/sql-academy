@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
             CourseSeeder::class,
             LessonSeeder::class,
             TaskSeeder::class,
-            TaskAnswerSeeder::class,
             TaskAttemptSeeder::class,
             LessonProgressSeeder::class,
 
