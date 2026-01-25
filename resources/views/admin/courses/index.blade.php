@@ -1,4 +1,13 @@
 @extends('admin.layouts.app')
+@section('page-header')
+    <x-breadcrumb
+    title="Список курсов"
+    :items="[
+    ['label' => 'Home', 'url'=> route('dashboard')],
+    ['label' => 'Курсы', 'url'=> route('courses.index')],
+]"
+    ></x-breadcrumb>
+@endsection
 @section('content')
     <div class="col-md-12">
         <div class="card mb-12">
@@ -9,9 +18,9 @@
                     <tr>
                         <th style="width: 10px">ID</th>
                         <th>Название</th>
-                        <th>Описание</th>
+                        <th>Описание(кратко)</th>
                         <th style="width: 40px">Уровень</th>
-                        <th>Смотреть</th>
+                        <th>Список уроков</th>
                         <th>Изменить</th>
                         <th>Удалить</th>
 
@@ -22,7 +31,7 @@
                     <tr class="align-middle">
                         <td>{{$course->id}}</td>
                         <td>{{$course->title}}</td>
-                        <td>{{$course->description}}</td>
+                        <td>{{ Str::limit($course->description, 80) }}</td>
                         <td>
                             @if(!empty($course->level))
                                 <span>{{$course->level}}</span>
@@ -30,7 +39,7 @@
                                 Не указано
                             @endif
                         </td>
-                        <td><a href="{{route('courses.show', $course)}}" class="btn btn-outline-primary">Смотреть</a></td>
+                        <td><a href="{{route('courses.show', $course)}}" class="btn btn-outline-primary">Список уроков</a></td>
                         <td><a href="{{route('courses.edit', $course)}}" class="btn btn-outline-info">Изменить</a></td>
                         <td>
                             <form action="{{route('courses.destroy', $course)}}" method="post">

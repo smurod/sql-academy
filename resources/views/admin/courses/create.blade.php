@@ -1,6 +1,15 @@
 @extends('admin.layouts.app')
+@section('page-header')
+    <x-breadcrumb
+        title="Добавление курса"
+        :items="[
+    ['label' => 'Home', 'url'=> route('dashboard')],
+    ['label' => 'Курсы', 'url'=> route('courses.index')],
+    ['label' => 'Добавление курса', 'url'=> route('courses.create')],
+]"
+    ></x-breadcrumb>
+@endsection
 @section('content')
-
     <div class="col-md-12">
     <!--begin::Quick Example-->
     <div class="card card-primary card-outline mb-12">

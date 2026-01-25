@@ -1,16 +1,24 @@
 @extends('admin.layouts.app')
+@section('page-header')
+    <x-breadcrumb
+        title="Список уроков"
+        :items="[
+    ['label' => 'Home', 'url'=> route('dashboard')],
+    ['label' => 'Курсы', 'url'=> route('courses.index')],
+    ['label' => 'Список уроков', 'url'=> route('courses.lessons.index', $course)],
+]"
+    ></x-breadcrumb>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-12">
-                <div class="card-header"><h3 class="card-title">Список уроков</h3></div>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th style="width: 10px">ID</th>
-                            <th>Название курса/ID</th>
+                            <th style="width: 10px">ID-урока</th>
                             <th>Название урока</th>
                             <th>Теория урока</th>
                             <th>Позиция урока</th>
@@ -20,12 +28,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($lessons as $lesson)
+                        @foreach($course->lessons as $lesson)
                         <tr class="align-middle">
                             <td>{{$lesson->id}}</td>
-                            <td>{{$lesson->course_id}}</td>
                             <td>{{$lesson->title}}</td>
-                            <td>{{$lesson->theory_text}}</td>
+                            <td>{{ Str::limit($lesson->theory_text, 70) }}</td>
                             <td>{{$lesson->lesson_order}}</td>
                             <td><a class="btn btn-outline-info" href="{{route('lessons.show', $lesson)}}">Смотреть</a></td>
                             <td><a class="btn btn-outline-primary" href="{{route('lessons.edit', $lesson)}}">Изменить</a></td>
@@ -39,11 +46,15 @@
                         </tr>
                         @endforeach
                         </tbody>
-
                     </table>
-
-            </div>
-
+                    <br>
+                </div>
         </div>
-    </div>
+            <br><div class="col-md-12">
+                <a href="{{ route('courses.lessons.create', $course->id) }}"
+                   class="btn btn-outline-success">
+                    ➕ Добавить урок
+                </a>
+            </div>
+        </div>
 @endsection

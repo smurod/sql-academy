@@ -53,36 +53,7 @@
                     </ul>
                 </li>
 
-                <!-- ================= УРОКИ ================= -->
-                <li class="nav-item {{ request()->routeIs('lessons.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->routeIs('lessons.*') ? 'active' : '' }}">
-                        <i class="nav-icon bi bi-journal-text"></i>
-                        <p>
-                            Уроки
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
-                    </a>
-
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('lessons.index') }}"
-                               class="nav-link {{ request()->routeIs('lessons.index') ? 'active' : '' }}">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Список уроков</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('lessons.create') }}"
-                               class="nav-link {{ request()->routeIs('lessons.create') ? 'active' : '' }}">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Добавить урок</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- ================= ЗАДАНИЯ ================= -->
+               <!-- ================= ЗАДАНИЯ ================= -->
                 <li class="nav-header">Задачи по урокам</li>
 
                 <li class="nav-item {{ request()->routeIs('tasks.*') ? 'menu-open' : '' }}">

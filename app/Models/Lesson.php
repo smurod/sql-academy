@@ -84,4 +84,5 @@ class Lesson extends Model
     {
         return !empty($this->video());
     }
+
 }

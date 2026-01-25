@@ -8,12 +8,8 @@
             @csrf
 
             <div class="mb-3">
-                <label>Курс</label>
-                <select name="course_id" class="form-control" required>
-                    @foreach($courses as $course)
-                        <option value="{{ $course->id }}">{{ $course->title }}</option>
-                    @endforeach
-                </select>
+                <label>Курс: <strong>{{ $course->title }}</strong></label>
+
             </div>
 
             <div class="mb-3">

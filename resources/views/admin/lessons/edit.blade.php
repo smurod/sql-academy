@@ -1,4 +1,15 @@
 @extends('admin.layouts.app')
+@section('page-header')
+    <x-breadcrumb
+        title="Редактирование урока"
+        :items="[
+    ['label' => 'Home', 'url'=> route('dashboard')],
+    ['label' => 'Курсы', 'url'=> route('courses.index')],
+    ['label' => 'Список уроков', 'url'=> route('courses.lessons.index', $lesson->course)],
+    ['label' => 'Редактирование урока', 'url'=> route('lessons.edit', $lesson)]
+]"
+    ></x-breadcrumb>
+@endsection
 @section('content')
     <div class="col-md-12">
         <!--begin::Quick Example-->
@@ -51,7 +62,7 @@
 
                 <!--begin::Footer-->
                 <div class="card-footer">
-                    <a class="btn btn-outline-warning" href="{{route('lessons.index')}}">Отмена</a>
+                    <a class="btn btn-outline-warning" href="{{route('courses.lessons.index', $course)}}">Отмена</a>
                     <button type="submit" class="btn btn-success">
                         Сохранить
                     </button>

@@ -47,7 +47,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('courses', AdminCourseController::class);
     Route::resource('/tasks', TaskController::class);
     Route::resource('lessons-progress', LessonProgressController::class);
-    Route::resource('lessons', AdminLessonController::class);
+    Route::resource('courses.lessons', AdminLessonController::class)
+        ->only(['index', 'create', 'store']);
+    Route::resource('lessons', AdminLessonController::class)->except(['index']);
+
     Route::get('/dashboard', function () {
         return view('admin.home');
     })->middleware(['auth', 'verified'])->name('dashboard');

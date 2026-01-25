@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -18,7 +19,6 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-
         $data = $request->validate([
             'title' => 'required|string|max:255|min:3',
             'description' => 'required',
@@ -39,7 +39,8 @@ class CourseController extends Controller
     }
 
     public function show(Course $course){
-        return view('admin.courses.show', compact('course'));
+        $course->load('lessons');
+        return view('admin.lessons.index', compact('course'));
     }
     public function edit(Course $course){
         return view('admin.courses.edit', compact('course'));

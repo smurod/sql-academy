@@ -1,12 +1,18 @@
 @extends('admin.layouts.app')
+@section('page-header')
+    <x-breadcrumb
+        title="Редактирование курсов"
+        :items="[
+    ['label' => 'Home', 'url'=> route('dashboard')],
+    ['label' => 'Курсы', 'url'=> route('courses.index')],
+    ['label' => 'Редактирование курса', 'url'=> route('courses.edit', $course)],
+]"
+    ></x-breadcrumb>
+@endsection
 @section('content')
-
     <div class="col-md-12">
         <!--begin::Quick Example-->
         <div class="card card-primary card-outline mb-12">
-            <!--begin::Header-->
-            <div class="card-header"><div class="card-title">Добавление курса</div></div>
-            <!--end::Header-->
             <!--begin::Form-->
             <form action="{{route('courses.update', $course)}}" method="post">
                 @csrf

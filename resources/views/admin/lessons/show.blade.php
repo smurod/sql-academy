@@ -1,4 +1,15 @@
 @extends('admin.layouts.app')
+@section('page-header')
+    <x-breadcrumb
+        title="Подробности урока"
+        :items="[
+    ['label' => 'Home', 'url'=> route('dashboard')],
+    ['label' => 'Курсы', 'url'=> route('courses.index')],
+    ['label' => 'Список уроков', 'url'=> route('courses.lessons.index', $course)],
+    ['label' => 'Подробности урока', 'url'=> route('lessons.show', $lesson)]
+]"
+    ></x-breadcrumb>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -24,7 +35,7 @@
                                 <td>{{$lesson->title}}</td>
                                 <td>{{$lesson->theory_text}}</td>
                                 <td>{{$lesson->lesson_order}}</td>
-                                <td><a class="btn btn-outline-primary" href="{{route('lessons.index')}}">Назад</a></td>
+                                <td><a class="btn btn-outline-primary" href="{{ route('courses.lessons.index', $course) }}">Назад</a></td>
                             </tr>
                         </tbody>
 
