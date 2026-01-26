@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('parent_id')->nullable()->constrained('lessons')->cascadeOnDelete();
             $table->string('title');
-            $table->text('theory_text');
+            $table->string('slug');
+            $table->longText('content');
+            $table->enum('lesson_type', ['theory', 'practice', 'parent'])->default('theory');
             $table->integer('lesson_order');
             $table->timestamps();
         });

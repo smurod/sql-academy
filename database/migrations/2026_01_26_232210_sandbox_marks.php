@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('sandbox_marks', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->string('level');
-            $table->text('extra_info');
-            $table->timestamps();
+            $table->foreignId('student_id')->constrained('sandbox_students')->cascadeOnDelete();
+            $table->foreignId('subject_id')->constrained('sandbox_subjects')->cascadeOnDelete();
+            $table->integer('mark');
+            $table->date('mark_date');
         });
-
     }
 
     /**
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        schema::dropIfExists('sandbox_marks');
     }
 };

@@ -17,8 +17,14 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->string('title');
+            $table->string('description');
+            $table->string('database_schema', 50);
+            $table->text('solution_sql');
+            $table->json('expected_results');
+            $table->text('hint');
+            $table->integer('points')->default(0);
             $table->text('task_text');
-            $table->string('difficulty')->nullable(); // easy, medium, hard
+            $table->string('difficulty'); // easy, medium, hard
             $table->timestamps();
         });
 

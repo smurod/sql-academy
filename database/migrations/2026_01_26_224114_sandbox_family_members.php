@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('sandbox_family_members', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->string('level');
-            $table->text('extra_info');
-            $table->timestamps();
+            $table->string('status', 50);
+            $table->string('name', 100);
+            $table->date('birthday');
         });
-
     }
 
     /**
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        schema::drop('sandbox_family_members');
     }
 };

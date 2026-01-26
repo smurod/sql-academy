@@ -53,7 +53,7 @@
             <br><div class="col-md-12">
                 <a href="{{ route('courses.lessons.create', $course->id) }}"
                    class="btn btn-outline-success">
-                    ➕ Добавить урок
+                    + Добавить урок
                 </a>
             </div>
         </div>

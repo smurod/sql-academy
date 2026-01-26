@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('sandbox_pass_in_trip', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->string('level');
-            $table->text('extra_info');
-            $table->timestamps();
+            $table->foreignId('passenger_id')->constrained('sandbox_passengers')->cascadeOnDelete();
+            $table->foreignId('trip_id')->constrained('sandbox_trips')->cascadeOnDelete();
+            $table->string('price', 100);
         });
-
     }
 
     /**
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        schema::dropIfExists('sandbox_pass_in_trip');
     }
 };
