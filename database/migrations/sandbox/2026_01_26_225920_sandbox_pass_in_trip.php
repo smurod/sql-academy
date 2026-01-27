@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sandbox_passengers', function (Blueprint $table) {
+        Schema::create('pass_in_trip', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
+            $table->foreignId('passenger_id')->constrained('passengers')->cascadeOnDelete();
+            $table->foreignId('trip_id')->constrained('trips')->cascadeOnDelete();
+            $table->string('price', 100);
         });
     }
 
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('sandbox_passengers');
+        schema::dropIfExists('pass_in_trip');
     }
 };

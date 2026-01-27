@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sandbox_reservations', function (Blueprint $table) {
+        Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('sandbox_housing_users')->onDelete('cascade');
-            $table->foreignId('room_id')->constrained('sandbox_housing_rooms')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('housing_users')->onDelete('cascade');
+            $table->foreignId('room_id')->constrained('housing_rooms')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
             $table->decimal('total', 10,2);
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('sandbox_reservations');
+        schema::dropIfExists('reservations');
     }
 };

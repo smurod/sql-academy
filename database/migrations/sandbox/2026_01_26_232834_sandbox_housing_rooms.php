@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sandbox_housing_rooms', function (Blueprint $table) {
+        Schema::create('housing_rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owner_id')->constrained('sandbox_housing_users')->cascadeOnDelete();
+            $table->foreignId('owner_id')->constrained('housing_users')->cascadeOnDelete();
             $table->string('address', 255);
             $table->string('home_type', 50);
             $table->decimal('price', 10, 2);
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('sandbox_housing_rooms');
+        schema::dropIfExists('housing_rooms');
     }
 };

@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sandbox_payments', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('family_member_id')->constrained('sandbox_family_members')->cascadeOnDelete();
-            $table->foreignId('good_id')->constrained('sandbox_good_types')->cascadeOnDelete();
+            $table->foreignId('family_member_id')->constrained('family_members')->cascadeOnDelete();
+            $table->foreignId('good_id')->constrained('goods')->cascadeOnDelete();
             $table->decimal('amount', 10, 2);
             $table->decimal('unit_price', 10, 2);
             $table->date('payment_date');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::drop('sandbox_payments');
+        schema::dropIfExists('payments');
     }
 };

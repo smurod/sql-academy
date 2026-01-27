@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sandbox_teachers', function (Blueprint $table) {
+        Schema::create('goods', function (Blueprint $table) {
             $table->id();
-            $table->string('firs_name', 50);
-            $table->string('last_name', 50);
+            $table->string('name', 50);
+            $table->foreignId('type_id')->constrained('good_types');
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('sandbox_teachers');
+        schema::dropIfExists('goods');
     }
 };
