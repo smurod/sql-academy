@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sandbox_marks', function (Blueprint $table) {
+        Schema::create('good_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('sandbox_students')->cascadeOnDelete();
-            $table->foreignId('subject_id')->constrained('sandbox_subjects')->cascadeOnDelete();
-            $table->integer('mark');
-            $table->date('mark_date');
+            $table->string('name', 50);
         });
     }
 
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('sandbox_marks');
+        schema::drop('good_types');
     }
 };

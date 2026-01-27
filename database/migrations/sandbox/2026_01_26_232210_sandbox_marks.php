@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sandbox_housing_users', function (Blueprint $table) {
+        Schema::create('marks', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('email', 100)->unique();
-            $table->date('registration_date');
+            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
+            $table->foreignId('subject_id')->constrained('subjects')->cascadeOnDelete();
+            $table->integer('mark');
+            $table->date('mark_date');
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('sandbox_housing_users');
+        schema::dropIfExists('marks');
     }
 };

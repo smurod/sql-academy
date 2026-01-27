@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sandbox_student_in_class', function (Blueprint $table) {
+        Schema::create('family_members', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('sandbox_students')->cascadeOnDelete();
-            $table->foreignId('class_id')->constrained('sandbox_classes')->cascadeOnDelete();
+            $table->string('status', 50);
+            $table->string('name', 100);
+            $table->date('birthday');
         });
     }
 
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sandbox_student_in_class');
+        schema::drop('family_members');
     }
 };

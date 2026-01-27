@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sandbox_trips', function (Blueprint $table) {
+        Schema::create('trips', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained('sandbox_companies')->cascadeOnDelete();
+            $table->foreignId('company_id')->constrained('companies')->cascadeOnDelete();
             $table->string('plane', 50);
             $table->string('town_from', 100);
             $table->string('town_to', 100);
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('sandbox_trips');
+        schema::dropIfExists('trips');
     }
 };
