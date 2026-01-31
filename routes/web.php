@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Admin\LessonController as AdminLessonController;
 use App\Http\Controllers\Admin\LessonProgressController;
+use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\TaskAttemptController;
 use App\Http\Controllers\Admin\TaskController;
@@ -44,10 +45,11 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
 Route::get('auth/{provider}', [SocialController::class, 'redirectToProvider']);
 Route::get('auth/{provider}/callback', [SocialController::class, 'handleProviderCallback']);
 Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::resource('modules', ModuleController::class);
     Route::resource('courses', AdminCourseController::class);
     Route::resource('/tasks', TaskController::class);
     Route::resource('lessons-progress', LessonProgressController::class);
-    Route::resource('courses.lessons', AdminLessonController::class)
+    Route::resource('modules.lessons', AdminLessonController::class)
         ->only(['index', 'create', 'store']);
     Route::resource('lessons', AdminLessonController::class)->except(['index']);
 

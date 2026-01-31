@@ -4,8 +4,8 @@
         title="Список уроков"
         :items="[
     ['label' => 'Home', 'url'=> route('dashboard')],
-    ['label' => 'Курсы', 'url'=> route('courses.index')],
-    ['label' => 'Список уроков', 'url'=> route('courses.lessons.index', $course)],
+    ['label' => 'Модули', 'url'=> route('modules.index')],
+    ['label' => 'Список уроков', 'url'=> route('modules.lessons.index', $module)],
 ]"
     ></x-breadcrumb>
 @endsection
@@ -22,19 +22,17 @@
                             <th>Название урока</th>
                             <th>Теория урока</th>
                             <th>Позиция урока</th>
-                            <th>Показать</th>
                             <th>Изменить</th>
                             <th>Удалить</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($course->lessons as $lesson)
+                        @foreach($module->lessons as $lesson)
                         <tr class="align-middle">
                             <td>{{$lesson->id}}</td>
                             <td>{{$lesson->title}}</td>
                             <td>{{ Str::limit($lesson->theory_text, 70) }}</td>
                             <td>{{$lesson->lesson_order}}</td>
-                            <td><a class="btn btn-outline-info" href="{{route('lessons.show', $lesson)}}">Смотреть</a></td>
                             <td><a class="btn btn-outline-primary" href="{{route('lessons.edit', $lesson)}}">Изменить</a></td>
                             <td>
                                 <form action="{{route('lessons.destroy', $lesson)}}" method="post">
@@ -51,7 +49,7 @@
                 </div>
         </div>
             <br><div class="col-md-12">
-                <a href="{{ route('courses.lessons.create', $course->id) }}"
+                <a href="{{ route('modules.lessons.create', $module->id) }}"
                    class="btn btn-outline-success">
                     + Добавить урок
                 </a>

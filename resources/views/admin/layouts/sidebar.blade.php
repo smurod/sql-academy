@@ -29,25 +29,25 @@
 
 
                         <p>
-                            Курсы
+                            Модули
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
 
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('courses.index') }}"
-                               class="nav-link {{ request()->routeIs('courses.index') ? 'active' : '' }}">
+                            <a href="{{ route('modules.index') }}"
+                               class="nav-link {{ request()->routeIs('modules.index') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>Список курсов</p>
+                                <p>Список модулей</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('courses.create') }}"
-                               class="nav-link {{ request()->routeIs('courses.create') ? 'active' : '' }}">
+                            <a href="{{ route('modules.create') }}"
+                               class="nav-link {{ request()->routeIs('modules.create') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>Добавить курс</p>
+                                <p>Добавить модуль</p>
                             </a>
                         </li>
                     </ul>
