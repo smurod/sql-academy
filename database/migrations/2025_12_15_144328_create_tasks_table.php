@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
@@ -16,23 +13,24 @@ return new class extends Migration
             $table->foreignId('lesson_id')
                 ->constrained()
                 ->cascadeOnDelete();
+            $table->foreignId('author_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
+            $table->text('task_text');
             $table->string('database_schema', 50);
             $table->text('solution_sql');
             $table->json('expected_results');
-            $table->text('hint');
+            $table->unsignedTinyInteger('difficulty_percent')->default(15);
+            $table->boolean('is_free')->default(true);
+            $table->text('hint')->nullable();
             $table->integer('points')->default(0);
-            $table->text('task_text');
-            $table->string('difficulty'); // easy, medium, hard
+            $table->string('sql_type', 20)->default('select');
             $table->timestamps();
         });
-
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('tasks');

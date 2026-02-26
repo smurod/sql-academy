@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             TaskSeeder::class,
             TaskAttemptSeeder::class,
             LessonProgressSeeder::class,
-
+            TasksSeeder::class,
         ]);
         User::factory()->create([
             'name' => 'Test User',
