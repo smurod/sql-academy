@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Lesson;
 use App\Models\Task;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -49,4 +50,15 @@ class TaskController extends Controller
         $task->delete();
         return redirect()->route('tasks.index');
     }
+    public function check(Request $request, Task $task): JsonResponse
+    {
+        $request->validate([
+            'sql' => 'required|string|max:5000',
+        ]);
+
+        $result = $this->checker->check($task, $request->input('sql'));
+
+        return response()->json($result);
+    }
+
 }

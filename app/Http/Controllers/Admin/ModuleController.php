@@ -3,32 +3,38 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Module;
+use App\Services\DeleteModulesChecker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ModuleController
 {
-    public function index(){
+    public function index()
+    {
         $modules = Module::all();
         return view('admin.modules.index', compact('modules'));
     }
-    public function create(){
+
+    public function create()
+    {
         $module = Module::all();
         return view('admin.modules.create', compact('module'));
     }
 
     public function store(Request $request)
     {
-         $data = $request->validate([
+        $data = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'order_index' => 'integer|min:0',
         ]);
-         $data['course_id'] = 1;
+        $data['course_id'] = 1;
 
         Module::create($data);
 
         return redirect()->route('modules.index');
     }
+
     public function show(Module $module)
     {
         $lessons = $module->lessons()->orderBy('lesson_order', 'asc')->get();
@@ -44,7 +50,7 @@ class ModuleController
     public function update(Request $request, Module $module)
     {
         $data = $request->validate([
-            'title'       => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'required|string',
             'order_index' => 'required|integer',
         ]);
@@ -60,4 +66,6 @@ class ModuleController
 
         return redirect()->route('modules.index')->with('success', 'Модуль удален');
     }
+
+
 }

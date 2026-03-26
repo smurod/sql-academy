@@ -1,88 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <base href="/">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Title -->
-    <title> EdullAll - LMS, Tutors, Education & Online Course Html Template</title>
-    <link rel="shortcut icon" href="{{ asset('assets/public/images/logo/favicon.png') }}">
-
-    <link rel="stylesheet" href="{{ asset('assets/public/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/css/slick.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/css/magnific-popup.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/css/jquery-ui.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/css/plyr.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/css/animate.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/css/aos.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/public/css/main.css') }}"></head>
-<body>
-<!-- ==================== Header Start Here ==================== -->
-<header class="header">
-    <div class="container container--xl">
-        <nav class="header-inner flex-between gap-8">
-
-            <div class="header-content-wrapper flex-align flex-grow-1">
-                <!-- Logo Start -->
-                <div class="logo">
-                    <a href="index.html" class="link">
-                        <img src="{{ Storage::url('sqlmastery.png') }}" alt="Logo">
-                    </a>
-                </div>
-                <!-- Logo End  -->
-
-                <!-- Menu Start  -->
-                <div class="header-menu d-lg-block d-none">
-
-                    <ul class="nav-menu flex-align ">
-                        <li class="nav-menu__item">
-                            <a href="{{route('public.courses.index')}}" class="nav-menu__link"> Курсы</a>
-                        </li>
-                        <li class="nav-menu__item">
-                            <a href="courses.index" class="nav-menu__link"> Тренажёр</a>
-                        </li>
-                        <li class="nav-menu__item has-submenu activePage">
-                            <a href="javascript:void(0)" class="nav-menu__link"> Ещё</a>
-                            <ul class="nav-submenu scroll-sm">
-                                <li class="nav-submenu__item activePage">
-                                    <a href="index.html" class="nav-submenu__link hover-bg-neutral-30"> Песочница</a>
-                                </li>
-                                <li class="nav-submenu__item">
-                                    <a href="index-2.html" class="nav-submenu__link hover-bg-neutral-30"> Статьи и туториалы</a>
-                                </li>
-                                <li class="nav-submenu__item">
-                                    <a href="index-3.html" class="nav-submenu__link hover-bg-neutral-30"> Справочник</a>
-                                </li>
-                                <li class="nav-submenu__item">
-                                    <a href="index-4.html" class="nav-submenu__link hover-bg-neutral-30"> Вопросы с собеседований</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                    </ul>
-                </div>
-                <!-- Menu End  -->
+<nav class="navbar" id="navbar">
+    <div class="nav-inner">
+        <a href="{{ url('/') }}" class="nav-logo">
+            <div class="nav-logo-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                    <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
+                    <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
+                </svg>
             </div>
-
-            <!-- Header Right start -->
-            <div class="header-right flex-align">
-                <form action="#" class="search-form position-relative d-xl-block d-none">
-                    <input type="text" class="common-input rounded-pill bg-main-25 pe-44 border-neutral-30" placeholder="Search...">
-                    <button type="submit" class="w-36 h-36 bg-main-600 hover-bg-main-700 rounded-circle flex-center text-md text-white position-absolute top-50 translate-middle-y inset-inline-end-0 me-8">
-                        <i class="ph-bold ph-magnifying-glass"></i>
-                    </button>
-                </form>
-                <a href="{{route('login')}}" class="info-action w-52 h-52 bg-main-25 hover-bg-main-600 border border-neutral-30 rounded-circle flex-center text-2xl text-neutral-500 hover-text-white hover-border-main-600">
-                    <i class="ph ph-user-circle"></i>
-                </a>
-                <button type="button" class="toggle-mobileMenu d-lg-none text-neutral-200 flex-center">
-                    <i class="ph ph-list"></i>
-                </button>
-            </div>
-            <!-- Header Right End  -->
-        </nav>
+            <span class="nav-logo-text">SQL <span>Academy</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="{{ route('public.courses.index') }}" class="nav-link {{ request()->is('*course*') ? 'active' : '' }}">
+                <i class="bi bi-book"></i><span>Курс</span>
+            </a>
+            <a href="{{ route('public.tasks.index') }}" class="nav-link {{ request()->is('*tasks*') ? 'active' : '' }}">
+                <i class="bi bi-code-square"></i><span>Тренажёр</span>
+            </a>
+            <a href="{{ route('sandbox.form') }}" class="nav-link {{ request()->is('*sandbox*') ? 'active' : '' }}">
+                <i class="bi bi-terminal"></i><span>Песочница</span>
+            </a>
+            <a href="{{ url('/interviews') }}" class="nav-link {{ request()->is('interviews*') ? 'active' : '' }}">
+                <i class="bi bi-briefcase"></i><span>Собеседования</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <a href="{{ route('login') }}" class="btn-login">Войти</a>
+        </div>
+        <button class="burger" id="burgerBtn"><i class="bi bi-list"></i></button>
     </div>
-</header>
-<!-- ==================== Header End Here ==================== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="{{ url('/course') }}" class="mobile-link {{ request()->is('course*') ? 'active' : '' }}">
+            <i class="bi bi-book"></i> Курс
+        </a>
+        <a href="{{ url('/tasks') }}" class="mobile-link {{ request()->is('tasks*') ? 'active' : '' }}">
+            <i class="bi bi-code-square"></i> Тренажёр
+        </a>
+        <a href="{{ url('/sandbox') }}" class="mobile-link {{ request()->is('sandbox*') ? 'active' : '' }}">
+            <i class="bi bi-terminal"></i> Песочница
+        </a>
+        <a href="{{ url('/interviews') }}" class="mobile-link {{ request()->is('interviews*') ? 'active' : '' }}">
+            <i class="bi bi-briefcase"></i> Собеседования
+        </a>
+        <button class="mobile-login">Войти</button>
+    </div>
+</nav>

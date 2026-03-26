@@ -287,13 +287,99 @@
 @endsection
 
 @section('content')
+    @php
+        $modules = [
+            [
+                'number' => 0,
+                'name' => 'Введение',
+                'description' => 'В этом коротком модуле мы познакомимся с тем, как работает платформа данного курса, и узнаем, как получить максимум от него. А также получим информацию о нашем сообществе.',
+                'lessons' => [
+                    ['title' => 'Введение', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Структура курса', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Сообщество', 'url' => '#', 'is_test' => false],
+                ],
+            ],
+            [
+                'number' => 1,
+                'name' => 'Фундаментальные основы',
+                'description' => 'Этот модуль сделан для того, чтобы бегло ознакомиться с фундаментальными знаниями о базах данных и восполнить потенциальные пробелы. Также в этом модуле мы познакомимся с терминологией реляционных СУБД.',
+                'lessons' => [
+                    ['title' => 'Базы данных и СУБД', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Типы баз данных', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Реляционные базы данных', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Key-value базы данных', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Документоориентированные базы данных', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Структура реляционных баз данных', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Вводная информация о SQL', 'url' => '#', 'is_test' => false],
+                ],
+            ],
+            [
+                'number' => 2,
+                'name' => 'Основы SQL',
+                'description' => 'Здесь мы начнём писать первые запросы, научимся выбирать данные из таблиц, фильтровать их, сортировать и ограничивать результаты выборки.',
+                'lessons' => [
+                    ['title' => 'Первый запрос SELECT', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Выбор отдельных столбцов', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Фильтрация с WHERE', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Сортировка ORDER BY', 'url' => '#', 'is_test' => false],
+                    ['title' => 'LIMIT и выборка части данных', 'url' => '#', 'is_test' => false],
+                ],
+            ],
+            [
+                'number' => 3,
+                'name' => 'Фильтрация и условия',
+                'description' => 'Разберём более сложные условия отбора записей, работу с диапазонами, списками значений, NULL и шаблонами поиска.',
+                'lessons' => [
+                    ['title' => 'LIKE и шаблоны', 'url' => '#', 'is_test' => false],
+                    ['title' => 'IN и NOT IN', 'url' => '#', 'is_test' => false],
+                    ['title' => 'BETWEEN', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Работа с NULL', 'url' => '#', 'is_test' => false],
+                ],
+            ],
+            [
+                'number' => 4,
+                'name' => 'Агрегация данных',
+                'description' => 'Научимся использовать агрегатные функции, группировать строки, вычислять метрики и фильтровать результаты после группировки.',
+                'lessons' => [
+                    ['title' => 'COUNT, SUM, AVG', 'url' => '#', 'is_test' => false],
+                    ['title' => 'MIN и MAX', 'url' => '#', 'is_test' => false],
+                    ['title' => 'GROUP BY', 'url' => '#', 'is_test' => false],
+                    ['title' => 'HAVING', 'url' => '#', 'is_test' => false],
+                ],
+            ],
+            [
+                'number' => 5,
+                'name' => 'Соединение таблиц',
+                'description' => 'Раздел, в котором мы научимся объединять данные из нескольких таблиц с помощью INNER JOIN, LEFT JOIN и других видов соединений.',
+                'lessons' => [
+                    ['title' => 'Введение в JOIN', 'url' => '#', 'is_test' => false],
+                    ['title' => 'INNER JOIN', 'url' => '#', 'is_test' => false],
+                    ['title' => 'LEFT JOIN', 'url' => '#', 'is_test' => false],
+                    ['title' => 'RIGHT JOIN', 'url' => '#', 'is_test' => false],
+                    ['title' => 'FULL OUTER JOIN', 'url' => '#', 'is_test' => false],
+                ],
+            ],
+            [
+                'number' => 6,
+                'name' => 'Продвинутый SQL',
+                'description' => 'Финальный блок, посвящённый подзапросам, CTE, оконным функциям, CASE, UNION и другим инструментам, которые отличают уверенного SQL-разработчика.',
+                'lessons' => [
+                    ['title' => 'Подзапросы', 'url' => '#', 'is_test' => false],
+                    ['title' => 'CASE', 'url' => '#', 'is_test' => false],
+                    ['title' => 'CTE', 'url' => '#', 'is_test' => false],
+                    ['title' => 'Оконные функции', 'url' => '#', 'is_test' => false],
+                    ['title' => 'UNION и рекурсивные запросы', 'url' => '#', 'is_test' => false],
+                ],
+            ],
+        ];
+    @endphp
 
     <div class="course-page">
         <div class="course-wrap">
             <div class="course-intro">
                 <h1>Интерактивный курс по SQL</h1>
                 <p>
-                    Всесторонний курс по MySQL, спроектированный так, чтобы навсегда изменить твоё
+                    Всесторонний курс по MySQL и PostgreSQL, спроектированный так, чтобы навсегда изменить твоё
                     отношение к SQL. Мы вместе пройдём путь, чтобы понять как этот язык работает, и получим все
                     необходимые навыки для эффективного применения его на работе.
                 </p>
@@ -303,8 +389,8 @@
                 @foreach($modules as $module)
                     <div class="module-container">
                         <div class="module-side">
-                            <div class="module-number">Модуль {{ $module['order_index'] }}</div>
-                            <div class="module-name">{{ $module['title'] }}</div>
+                            <div class="module-number">Модуль {{ $module['number'] }}</div>
+                            <div class="module-name">{{ $module['name'] }}</div>
                             <div class="module-desc">{{ $module['description'] }}</div>
                         </div>
 
@@ -318,7 +404,7 @@
                                             <div class="line {{ $loop->last ? 'hidden' : '' }}"></div>
                                         </div>
 
-                                        <a href="{{ route('public.courses.show', $lesson) }}" class="lesson-link {{ $lesson['is_test'] ? 'is-test' : '' }}">
+                                        <a href="{{ $lesson['url'] }}" class="lesson-link {{ $lesson['is_test'] ? 'is-test' : '' }}">
                                             <span>{{ $lesson['title'] }}</span>
                                         </a>
                                     </div>
