@@ -11,13 +11,13 @@
             <span class="nav-logo-text">SQL <span>Academy</span></span>
         </a>
         <div class="nav-links">
-            <a href="{{ url('/course') }}" class="nav-link {{ request()->is('course*') ? 'active' : '' }}">
+            <a href="{{ route('public.courses.index') }}" class="nav-link {{ request()->is('*course*') ? 'active' : '' }}">
                 <i class="bi bi-book"></i><span>Курс</span>
             </a>
-            <a href="{{ url('/tasks') }}" class="nav-link {{ request()->is('tasks*') ? 'active' : '' }}">
+            <a href="{{ route('public.tasks.index') }}" class="nav-link {{ request()->is('*tasks*') ? 'active' : '' }}">
                 <i class="bi bi-code-square"></i><span>Тренажёр</span>
             </a>
-            <a href="{{ url('/sandbox') }}" class="nav-link {{ request()->is('sandbox*') ? 'active' : '' }}">
+            <a href="{{ route('sandbox.form') }}" class="nav-link {{ request()->is('*sandbox*') ? 'active' : '' }}">
                 <i class="bi bi-terminal"></i><span>Песочница</span>
             </a>
             <a href="{{ url('/interviews') }}" class="nav-link {{ request()->is('interviews*') ? 'active' : '' }}">
@@ -25,9 +25,7 @@
             </a>
         </div>
         <div class="nav-right">
-            <button class="nav-icon-btn"><i class="bi bi-translate"></i></button>
-            <button class="nav-icon-btn"><i class="bi bi-moon-stars"></i></button>
-            <button class="btn-login">Войти</button>
+            <a href="{{ route('login') }}" class="btn-login">Войти</a>
         </div>
         <button class="burger" id="burgerBtn"><i class="bi bi-list"></i></button>
     </div>

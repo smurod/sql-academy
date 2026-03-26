@@ -10,6 +10,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ── FULL-HEIGHT PAGES (sandbox, tasks/show, course/show) ── */
+        .page-content.full-height {
+            padding-top: 72px;
+        }
+
+        /* Для обычных страниц с footer — плавный переход */
+        .page-content > .section:first-child,
+        .page-content > div:first-child {
+            position: relative;
+        }
+
+        /* Разделитель между full-height контентом и footer */
+        .page-footer-separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
@@ -322,7 +339,7 @@
 </head>
 <body>
 
-<!-- Loading Screen -->
+<!-- Loading Screen
 <div class="loading-screen" id="loadingScreen">
     <div class="loader">
         <div class="loader-ring"></div>
@@ -339,6 +356,7 @@
     <div class="loading-text">SQL Academy</div>
     <div class="loading-bar"><div class="loading-bar-fill"></div></div>
 </div>
+-->
 
 <!-- Scroll Progress -->
 <div class="scroll-progress" id="scrollProgress"></div>
@@ -348,7 +366,7 @@
 
 @include('public.layouts.header')
 
-<div class="page-content">
+<div class="page-content @yield('page-class')">
     @yield('content')
 </div>
 

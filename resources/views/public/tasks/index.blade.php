@@ -4,6 +4,171 @@
 
 @section('styles')
     <style>
+
+        /* Поиск */
+        .tasks-search {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .tasks-search i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .tasks-search input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .tasks-search input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        /* Фильтр-кнопки */
+        .filter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .filter-btn.active {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .filter-btn .count {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.1rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+        }
+
+        .filter-btn.active .count {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        /* Категории */
+        .category-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .category-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .category-tab:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--text-primary);
+        }
+
+        .category-tab.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .category-tab .count {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.1rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+        }
+
+        .category-tab.active .count {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .tasks-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .page-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .page-btn:hover:not(.disabled):not(.active) {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            cursor: default;
+        }
+
+        .page-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
         /* ── TASKS PAGE ── */
         .tasks-page {
             padding: 2rem 0 4rem;
@@ -531,317 +696,111 @@
 
             {{-- Filters --}}
             <div class="tasks-filters">
-                <div class="tasks-search">
+                <form method="GET" action="{{ route('tasks.index') }}" class="tasks-search">
+                    {{-- Сохраняем текущие фильтры --}}
+                    @if($category !== 'all')
+                        <input type="hidden" name="category" value="{{ $category }}">
+                    @endif
+                    @if($status !== 'all')
+                        <input type="hidden" name="status" value="{{ $status }}">
+                    @endif
+
                     <i class="bi bi-search"></i>
-                    <input type="text" placeholder="Поиск задачи по названию или номеру..." />
-                </div>
-                <button class="filter-btn active">
-                    <i class="bi bi-grid-3x3"></i> Все
-                </button>
-                <button class="filter-btn">
-                    <i class="bi bi-check-circle"></i> Решённые
-                </button>
-                <button class="filter-btn">
-                    <i class="bi bi-circle"></i> Нерешённые
-                </button>
+                    <input type="text"
+                           name="search"
+                           value="{{ $search }}"
+                           placeholder="Поиск задачи по названию или номеру..."
+                           autocomplete="off" />
+                </form>
+
+                @php
+                    $statusButtons = [
+                        'all'      => ['icon' => 'bi-grid-3x3',      'label' => 'Все'],
+                        'solved'   => ['icon' => 'bi-check-circle',   'label' => 'Решённые'],
+                        'unsolved' => ['icon' => 'bi-circle',         'label' => 'Нерешённые'],
+                    ];
+                @endphp
+
+                @foreach($statusButtons as $key => $btn)
+                    <a href="{{ route('tasks.index', array_merge(
+                request()->query(),
+                ['status' => $key, 'page' => 1]
+            )) }}"
+                       class="filter-btn {{ $status === $key ? 'active' : '' }}">
+                        <i class="bi {{ $btn['icon'] }}"></i> {{ $btn['label'] }}
+                        <span class="count">{{ $statusCounts[$key] }}</span>
+                    </a>
+                @endforeach
             </div>
 
             {{-- Category Tabs --}}
             <div class="category-tabs">
-                <button class="category-tab active">
-                    Все задачи <span class="count">80</span>
-                </button>
-                <button class="category-tab">
-                    SELECT <span class="count">25</span>
-                </button>
-                <button class="category-tab">
-                    JOIN <span class="count">18</span>
-                </button>
-                <button class="category-tab">
-                    Агрегатные функции <span class="count">12</span>
-                </button>
-                <button class="category-tab">
-                    Подзапросы <span class="count">10</span>
-                </button>
-                <button class="category-tab">
-                    INSERT / UPDATE / DELETE <span class="count">8</span>
-                </button>
-                <button class="category-tab">
-                    Оконные функции <span class="count">7</span>
-                </button>
+                @php
+                    $categories = [
+                        'all'       => 'Все задачи',
+                        'select'    => 'SELECT',
+                        'join'      => 'JOIN',
+                        'aggregate' => 'Агрегатные функции',
+                        'subquery'  => 'Подзапросы',
+                        'dml'       => 'INSERT / UPDATE / DELETE',
+                        'window'    => 'Оконные функции',
+                    ];
+                @endphp
+
+                @foreach($categories as $key => $label)
+                    <a href="{{ route('tasks.index', array_merge(
+                request()->query(),
+                ['category' => $key, 'page' => 1]
+            )) }}"
+                       class="category-tab {{ $category === $key ? 'active' : '' }}">
+                        {{ $label }}
+                        <span class="count">{{ $categoryCounts[$key] }}</span>
+                    </a>
+                @endforeach
             </div>
 
             {{-- Task List --}}
             <div class="tasks-list">
 
-                {{-- Solved Task --}}
-                <a href="{{ url('/tasks/1') }}" class="task-card solved">
-                    <div class="task-number solved">1</div>
-                    <div class="task-info">
-                        <div class="task-info-top">
-                            <span class="task-title">Выбрать все данные из таблицы</span>
-                            <div class="task-tags">
-                                <span class="task-tag select">SELECT</span>
+                @foreach($tasks as $task)
+                    <a href="{{ route('public.tasks.show', $task) }}" class="task-card ">
+                        <div class="task-number solved">{{$task->task_number}}</div>
+                        <div class="task-info">
+                            <div class="task-info-top">
+                                <span class="task-title">{{ $task->title }}</span>
+                                <div class="task-tags">
+                                    <span class="task-tag select">{{ $task->sql_type }}</span>
+                                </div>
                             </div>
+                            <div class="task-desc">{{ $task->description }}</div>
                         </div>
-                        <div class="task-desc">Получите все строки и столбцы из таблицы Passenger</div>
-                    </div>
-                    <div class="task-meta">
-                        <div class="task-difficulty easy">
-                            <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Легко
-                        </div>
-                        <div class="task-stat">
-                            <i class="bi bi-people"></i> 12,450
-                        </div>
-                        <div class="task-status solved">
-                            <i class="bi bi-check-lg"></i>
-                        </div>
-                    </div>
-                    <i class="bi bi-chevron-right task-arrow"></i>
-                </a>
+                        <div class="task-meta">
+                                @php
+                                    $p = $task->difficulty_percent;
+                                    $diffClass = $p <= 30 ? 'easy' : ($p <= 60 ? 'medium' : 'hard');
+                                    $diffLabel = $p <= 30 ? 'Легко' : ($p <= 60 ? 'Средне' : 'Сложно');
+                                @endphp
 
-                {{-- Solved Task --}}
-                <a href="{{ url('/tasks/2') }}" class="task-card solved">
-                    <div class="task-number solved">2</div>
-                    <div class="task-info">
-                        <div class="task-info-top">
-                            <span class="task-title">Выбрать определённые столбцы</span>
-                            <div class="task-tags">
-                                <span class="task-tag select">SELECT</span>
+                                <div class="task-difficulty {{ $diffClass }}">
+                                    <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i>
+                                    {{ $diffLabel }}
+                                </div>
+                            <div class="task-stat">
+                                <i class="bi bi-people"></i> 12,450
+                            </div>
+                            <div class="task-status solved">
+                                <i class="bi bi-check-lg"></i>
                             </div>
                         </div>
-                        <div class="task-desc">Выведите имя и возраст всех пассажиров</div>
-                    </div>
-                    <div class="task-meta">
-                        <div class="task-difficulty easy">
-                            <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Легко
-                        </div>
-                        <div class="task-stat">
-                            <i class="bi bi-people"></i> 11,230
-                        </div>
-                        <div class="task-status solved">
-                            <i class="bi bi-check-lg"></i>
-                        </div>
-                    </div>
-                    <i class="bi bi-chevron-right task-arrow"></i>
-                </a>
+                        <i class="bi bi-chevron-right task-arrow"></i>
+                    </a>
 
-                {{-- Solved Task --}}
-                <a href="{{ url('/tasks/3') }}" class="task-card solved">
-                    <div class="task-number solved">3</div>
-                    <div class="task-info">
-                        <div class="task-info-top">
-                            <span class="task-title">Фильтрация с WHERE</span>
-                            <div class="task-tags">
-                                <span class="task-tag select">SELECT</span>
-                            </div>
-                        </div>
-                        <div class="task-desc">Выведите рейсы, вылетающие из Москвы</div>
-                    </div>
-                    <div class="task-meta">
-                        <div class="task-difficulty easy">
-                            <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Легко
-                        </div>
-                        <div class="task-stat">
-                            <i class="bi bi-people"></i> 10,890
-                        </div>
-                        <div class="task-status solved">
-                            <i class="bi bi-check-lg"></i>
-                        </div>
-                    </div>
-                    <i class="bi bi-chevron-right task-arrow"></i>
-                </a>
-
-                {{-- Unsolved / Current --}}
-                <a href="{{ url('/tasks/4') }}" class="task-card unsolved">
-                    <div class="task-number unsolved">4</div>
-                    <div class="task-info">
-                        <div class="task-info-top">
-                            <span class="task-title">Сортировка результатов</span>
-                            <div class="task-tags">
-                                <span class="task-tag select">SELECT</span>
-                            </div>
-                        </div>
-                        <div class="task-desc">Выведите пассажиров, отсортированных по имени в алфавитном порядке</div>
-                    </div>
-                    <div class="task-meta">
-                        <div class="task-difficulty easy">
-                            <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Легко
-                        </div>
-                        <div class="task-stat">
-                            <i class="bi bi-people"></i> 9,456
-                        </div>
-                        <div class="task-status unsolved">
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                    <i class="bi bi-chevron-right task-arrow"></i>
-                </a>
-
-                <a href="{{ url('/tasks/5') }}" class="task-card unsolved">
-                    <div class="task-number unsolved">5</div>
-                    <div class="task-info">
-                        <div class="task-info-top">
-                            <span class="task-title">Использование DISTINCT</span>
-                            <div class="task-tags">
-                                <span class="task-tag select">SELECT</span>
-                            </div>
-                        </div>
-                        <div class="task-desc">Получите уникальные города отправления рейсов</div>
-                    </div>
-                    <div class="task-meta">
-                        <div class="task-difficulty easy">
-                            <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Легко
-                        </div>
-                        <div class="task-stat">
-                            <i class="bi bi-people"></i> 8,234
-                        </div>
-                        <div class="task-status unsolved">
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                    <i class="bi bi-chevron-right task-arrow"></i>
-                </a>
-
-                <a href="{{ url('/tasks/6') }}" class="task-card unsolved">
-                    <div class="task-number unsolved">6</div>
-                    <div class="task-info">
-                        <div class="task-info-top">
-                            <span class="task-title">Агрегатная функция COUNT</span>
-                            <div class="task-tags">
-                                <span class="task-tag aggregate">AGGREGATE</span>
-                            </div>
-                        </div>
-                        <div class="task-desc">Подсчитайте общее количество пассажиров</div>
-                    </div>
-                    <div class="task-meta">
-                        <div class="task-difficulty medium">
-                            <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Средне
-                        </div>
-                        <div class="task-stat">
-                            <i class="bi bi-people"></i> 7,123
-                        </div>
-                        <div class="task-status unsolved">
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                    <i class="bi bi-chevron-right task-arrow"></i>
-                </a>
-
-                <a href="{{ url('/tasks/7') }}" class="task-card unsolved">
-                    <div class="task-number unsolved">7</div>
-                    <div class="task-info">
-                        <div class="task-info-top">
-                            <span class="task-title">Группировка с GROUP BY</span>
-                            <div class="task-tags">
-                                <span class="task-tag aggregate">AGGREGATE</span>
-                            </div>
-                        </div>
-                        <div class="task-desc">Подсчитайте количество рейсов из каждого города</div>
-                    </div>
-                    <div class="task-meta">
-                        <div class="task-difficulty medium">
-                            <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Средне
-                        </div>
-                        <div class="task-stat">
-                            <i class="bi bi-people"></i> 6,780
-                        </div>
-                        <div class="task-status unsolved">
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                    <i class="bi bi-chevron-right task-arrow"></i>
-                </a>
-
-                <a href="{{ url('/tasks/8') }}" class="task-card unsolved">
-                    <div class="task-number unsolved">8</div>
-                    <div class="task-info">
-                        <div class="task-info-top">
-                            <span class="task-title">Соединение двух таблиц</span>
-                            <div class="task-tags">
-                                <span class="task-tag join">JOIN</span>
-                            </div>
-                        </div>
-                        <div class="task-desc">Выведите имена пассажиров вместе с номерами их рейсов</div>
-                    </div>
-                    <div class="task-meta">
-                        <div class="task-difficulty medium">
-                            <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Средне
-                        </div>
-                        <div class="task-stat">
-                            <i class="bi bi-people"></i> 5,890
-                        </div>
-                        <div class="task-status unsolved">
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                    <i class="bi bi-chevron-right task-arrow"></i>
-                </a>
-
-                <a href="{{ url('/tasks/9') }}" class="task-card unsolved">
-                    <div class="task-number unsolved">9</div>
-                    <div class="task-info">
-                        <div class="task-info-top">
-                            <span class="task-title">Сложный JOIN с фильтрацией</span>
-                            <div class="task-tags">
-                                <span class="task-tag join">JOIN</span>
-                                <span class="task-tag aggregate">AGGREGATE</span>
-                            </div>
-                        </div>
-                        <div class="task-desc">Найдите пассажиров, летавших более 2 раз</div>
-                    </div>
-                    <div class="task-meta">
-                        <div class="task-difficulty hard">
-                            <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Сложно
-                        </div>
-                        <div class="task-stat">
-                            <i class="bi bi-people"></i> 3,456
-                        </div>
-                        <div class="task-status unsolved">
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                    <i class="bi bi-chevron-right task-arrow"></i>
-                </a>
-
-                <a href="{{ url('/tasks/10') }}" class="task-card unsolved">
-                    <div class="task-number unsolved">10</div>
-                    <div class="task-info">
-                        <div class="task-info-top">
-                            <span class="task-title">Подзапрос в WHERE</span>
-                            <div class="task-tags">
-                                <span class="task-tag subquery">SUBQUERY</span>
-                            </div>
-                        </div>
-                        <div class="task-desc">Найдите рейсы, на которых летел самый старший пассажир</div>
-                    </div>
-                    <div class="task-meta">
-                        <div class="task-difficulty hard">
-                            <i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Сложно
-                        </div>
-                        <div class="task-stat">
-                            <i class="bi bi-people"></i> 2,345
-                        </div>
-                        <div class="task-status unsolved">
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                    <i class="bi bi-chevron-right task-arrow"></i>
-                </a>
+                @endforeach
 
             </div>
 
             {{-- Pagination --}}
-            <div class="tasks-pagination">
-                <button class="page-btn disabled"><i class="bi bi-chevron-left"></i></button>
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-                <button class="page-btn">4</button>
-                <button class="page-btn">...</button>
-                <button class="page-btn">8</button>
-                <button class="page-btn"><i class="bi bi-chevron-right"></i></button>
-            </div>
+            {{ $tasks->links('vendor.pagination.tasks') }}
 
         </div>
     </div>

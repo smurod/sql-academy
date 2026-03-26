@@ -13,19 +13,14 @@
                     <span class="nav-logo-text">SQL <span>Academy</span></span>
                 </a>
                 <p>Онлайн платформа для изучения и практики SQL. Бесплатный интерактивный курс с сертификатом.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="bi bi-telegram"></i></a>
-                    <a href="#" class="social-link"><i class="bi bi-github"></i></a>
-                    <a href="#" class="social-link"><i class="bi bi-youtube"></i></a>
-                    <a href="#" class="social-link"><i class="bi bi-discord"></i></a>
-                </div>
+
             </div>
             <div class="footer-col">
                 <h4>Обучение</h4>
                 <ul>
-                    <li><a href="{{ url('/course') }}">Курс SQL</a></li>
-                    <li><a href="{{ url('/tasks') }}">SQL Тренажёр</a></li>
-                    <li><a href="{{ url('/sandbox') }}">Песочница</a></li>
+                    <li><a href="{{ route('public.courses.index') }}">Курс SQL</a></li>
+                    <li><a href="{{ route('public.tasks.index') }}">SQL Тренажёр</a></li>
+                    <li><a href="{{ route('sandbox.form') }}">Песочница</a></li>
                     <li><a href="#">Справочник SQL</a></li>
                 </ul>
             </div>

@@ -677,7 +677,7 @@
             <div class="hero-content">
                 <div class="hero-badge">
                     <span class="pulse"></span>
-                    Более 150 000 пользователей
+                    Более {{ $users->count() }} пользователей
                 </div>
 
                 <h1 class="hero-title">
@@ -693,23 +693,20 @@
                 </p>
 
                 <div class="hero-btns">
-                    <a href="{{ url('/course') }}" class="btn-primary">
+                    <a href="{{ route('public.courses.index') }}" class="btn-primary">
                         <span>Начать обучение бесплатно</span>
                         <i class="bi bi-arrow-right"></i>
                     </a>
-                    <button class="btn-outline">
-                        <i class="bi bi-play-circle"></i>
-                        <span>Смотреть демо</span>
-                    </button>
+
                 </div>
 
                 <div class="hero-stats">
                     <div class="hero-stat">
-                        <div class="mini-stat-val">80+</div>
+                        <div class="mini-stat-val">{{ $tasks->count() }}+</div>
                         <div class="mini-stat-label">SQL задач</div>
                     </div>
                     <div class="hero-stat">
-                        <div class="mini-stat-val">30+</div>
+                        <div class="mini-stat-val">{{ $lessons->count() }}+</div>
                         <div class="mini-stat-label">Уроков</div>
                     </div>
                     <div class="hero-stat">
@@ -812,7 +809,7 @@
 
                     <div class="editor-run">
                         <div class="run-info">
-                            <span class="run-label"><i class="bi bi-database"></i> PostgreSQL 15</span>
+                            <span class="run-label"><i class="bi bi-database"></i> MySQL 8.2</span>
                             <span class="run-status"><i class="bi bi-lightning-charge-fill"></i> Готов</span>
                         </div>
                         <button class="run-btn"><i class="bi bi-play-fill"></i> Выполнить</button>
@@ -870,7 +867,7 @@
                         </div>
                         <h3>Интерактивный курс</h3>
                         <p>Пошаговое обучение SQL от основ до продвинутых тем. Каждый урок содержит теорию и практические задания.</p>
-                        <a href="{{ url('/course') }}" class="feature-link">Начать курс <i class="bi bi-arrow-right"></i></a>
+                        <a href="{{ route('public.courses.index') }}" class="feature-link">Начать курс <i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
 
@@ -881,7 +878,7 @@
                         </div>
                         <h3>SQL Тренажёр</h3>
                         <p>Более 80 задач для практики на реальных базах данных. Мгновенная проверка результатов прямо в браузере.</p>
-                        <a href="{{ url('/tasks') }}" class="feature-link">К задачам <i class="bi bi-arrow-right"></i></a>
+                        <a href="{{ route('public.tasks.index') }}" class="feature-link">К задачам <i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
 
@@ -903,7 +900,7 @@
                         </div>
                         <h3>Песочница SQL</h3>
                         <p>Свободная среда для экспериментов с SQL запросами. Создавайте свои таблицы и тестируйте запросы.</p>
-                        <a href="{{ url('/sandbox') }}" class="feature-link">Открыть <i class="bi bi-arrow-right"></i></a>
+                        <a href="{{ route('sandbox.form') }}" class="feature-link">Открыть <i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
 
@@ -957,7 +954,7 @@
                     </div>
 
                     <div>
-                        <a href="{{ url('/course') }}" class="btn-primary" style="width: fit-content;">
+                        <a href="{{ route('public.courses.index') }}" class="btn-primary" style="width: fit-content;">
                             <span>Начать курс</span>
                             <i class="bi bi-arrow-right"></i>
                         </a>
@@ -1039,17 +1036,17 @@
             <div class="stats-card reveal-scale">
                 <div class="stat-item">
                     <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
-                    <div class="stat-value">150,000+</div>
+                    <div class="stat-value">{{ $users->count() }}</div>
                     <div class="stat-label">Пользователей</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-icon"><i class="bi bi-code-slash"></i></div>
-                    <div class="stat-value">80+</div>
+                    <div class="stat-value">{{ $tasks->count() }}+</div>
                     <div class="stat-label">SQL задач</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-icon"><i class="bi bi-journal-text"></i></div>
-                    <div class="stat-value">30+</div>
+                    <div class="stat-value">{{ $lessons->count() }}+</div>
                     <div class="stat-label">Интерактивных уроков</div>
                 </div>
                 <div class="stat-item">
@@ -1115,14 +1112,14 @@
             <div class="cta-box reveal-scale">
                 <div class="cta-icon"><i class="bi bi-rocket-takeoff"></i></div>
                 <h2 class="cta-title">Готовы начать изучение SQL?</h2>
-                <p class="cta-desc">Присоединяйтесь к более чем 150 000 пользователей. Это абсолютно бесплатно!</p>
+                <p class="cta-desc">Присоединяйтесь к более чем {{ $users->count() }} пользователей. Это абсолютно бесплатно!</p>
                 <div class="cta-features">
                     <div class="cta-feature"><i class="bi bi-check-circle-fill"></i><span>Бесплатный доступ</span></div>
-                    <div class="cta-feature"><i class="bi bi-check-circle-fill"></i><span>80+ практических задач</span></div>
+                    <div class="cta-feature"><i class="bi bi-check-circle-fill"></i><span>{{ $tasks->count() }}+ практических задач</span></div>
                     <div class="cta-feature"><i class="bi bi-check-circle-fill"></i><span>Сертификат</span></div>
                     <div class="cta-feature"><i class="bi bi-check-circle-fill"></i><span>Без рекламы</span></div>
                 </div>
-                <a href="{{ url('/course') }}" class="btn-primary">
+                <a href="{{ route('register') }}" class="btn-primary">
                     <span>Создать аккаунт бесплатно</span>
                     <i class="bi bi-arrow-right"></i>
                 </a>

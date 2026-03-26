@@ -15,10 +15,166 @@ class TaskController extends Controller
         private SqlCheckerService $checker
     ) {}
 
-    public function index()
+    // app/Http/Controllers/TaskController.php
+
+    public function index(Request $request)
     {
-        $tasks = Task::orderBy('id')->get();
-        return view('public.tasks.index', compact('tasks'));
+        $user = auth()->user();
+
+        $query = Task::query();
+
+        // ===== ПОИСК =====
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%")
+                    ->orWhere('task_number', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // ===== ФИЛЬТР ПО СТАТУСУ =====
+        $status = $request->input('status', 'all');
+
+        if ($user) {
+            $solvedTaskIds = TaskSolution::where('user_id', $user->id)
+                ->where('status', 'solved')
+                ->pluck('task_id')
+                ->toArray();
+
+            if ($status === 'solved') {
+                $query->whereIn('id', $solvedTaskIds);
+            } elseif ($status === 'unsolved') {
+                $query->whereNotIn('id', $solvedTaskIds);
+            }
+        }
+
+        // ===== ФИЛЬТР ПО КАТЕГОРИИ =====
+        $category = $request->input('category', 'all');
+
+        $categoryFilters = [
+            'select'    => function ($q) {
+                $q->where('sql_type', 'select');
+            },
+            'join'      => function ($q) {
+                $q->where(function ($sub) {
+                    $sub->where('tags', 'LIKE', '%JOIN%')
+                        ->orWhere('description', 'LIKE', '%JOIN%');
+                });
+            },
+            'aggregate' => function ($q) {
+                $q->where(function ($sub) {
+                    $sub->where('tags', 'LIKE', '%Aggregate%')
+                        ->orWhere('description', 'LIKE', '%COUNT%')
+                        ->orWhere('description', 'LIKE', '%SUM%')
+                        ->orWhere('description', 'LIKE', '%AVG%')
+                        ->orWhere('description', 'LIKE', '%MIN%')
+                        ->orWhere('description', 'LIKE', '%MAX%');
+                });
+            },
+            'subquery'  => function ($q) {
+                $q->where(function ($sub) {
+                    $sub->where('tags', 'LIKE', '%Subquery%')
+                        ->orWhere('tags', 'LIKE', '%NOT EXISTS%')
+                        ->orWhere('tags', 'LIKE', '%NOT IN%')
+                        ->orWhere('description', 'LIKE', '%подзапрос%');
+                });
+            },
+            'dml'       => function ($q) {
+                $q->whereIn('sql_type', ['insert', 'update', 'delete']);
+            },
+            'window'    => function ($q) {
+                $q->where(function ($sub) {
+                    $sub->where('tags', 'LIKE', '%Window%')
+                        ->orWhere('description', 'LIKE', '%ROW_NUMBER%')
+                        ->orWhere('description', 'LIKE', '%RANK%')
+                        ->orWhere('description', 'LIKE', '%LAG%')
+                        ->orWhere('description', 'LIKE', '%LEAD%')
+                        ->orWhere('description', 'LIKE', '%NTILE%');
+                });
+            },
+        ];
+
+        if ($category !== 'all' && isset($categoryFilters[$category])) {
+            $categoryFilters[$category]($query);
+        }
+
+        // ===== ПОДСЧЁТ ДЛЯ ТАБОВ =====
+        $categoryCounts = $this->getCategoryCounts();
+
+        // ===== ПОДСЧЁТ ДЛЯ СТАТУСОВ =====
+        $statusCounts = $this->getStatusCounts($user);
+
+        // ===== ПАГИНАЦИЯ =====
+        $tasks = $query->orderBy('task_order')->paginate(10)
+            ->appends($request->query());
+
+        // ===== ПРОГРЕСС =====
+        $totalTasks    = Task::count();
+        $solvedCount   = $user ? count($solvedTaskIds ?? []) : 0;
+        $progressPercent = $totalTasks > 0
+            ? round(($solvedCount / $totalTasks) * 100)
+            : 0;
+
+        return view('public.tasks.index', compact(
+            'tasks',
+            'totalTasks',
+            'solvedCount',
+            'progressPercent',
+            'search',
+            'status',
+            'category',
+            'categoryCounts',
+            'statusCounts',
+            'solvedTaskIds'
+        ));
+    }
+
+    private function getCategoryCounts(): array
+    {
+        return [
+            'all'       => Task::count(),
+            'select'    => Task::where('sql_type', 'select')->count(),
+            'join'      => Task::where(function ($q) {
+                $q->where('tags', 'LIKE', '%JOIN%')
+                    ->orWhere('description', 'LIKE', '%JOIN%');
+            })->count(),
+            'aggregate' => Task::where(function ($q) {
+                $q->where('tags', 'LIKE', '%Aggregate%')
+                    ->orWhere('description', 'LIKE', '%COUNT%')
+                    ->orWhere('description', 'LIKE', '%SUM%')
+                    ->orWhere('description', 'LIKE', '%AVG%');
+            })->count(),
+            'subquery'  => Task::where(function ($q) {
+                $q->where('tags', 'LIKE', '%Subquery%')
+                    ->orWhere('tags', 'LIKE', '%NOT EXISTS%')
+                    ->orWhere('description', 'LIKE', '%подзапрос%');
+            })->count(),
+            'dml'       => Task::whereIn('sql_type', ['insert', 'update', 'delete'])->count(),
+            'window'    => Task::where(function ($q) {
+                $q->where('tags', 'LIKE', '%Window%')
+                    ->orWhere('description', 'LIKE', '%ROW_NUMBER%')
+                    ->orWhere('description', 'LIKE', '%RANK%');
+            })->count(),
+        ];
+    }
+
+    private function getStatusCounts($user): array
+    {
+        $total = Task::count();
+
+        if (!$user) {
+            return ['all' => $total, 'solved' => 0, 'unsolved' => $total];
+        }
+
+        $solved = TaskSolution::where('user_id', $user->id)
+            ->where('status', 'solved')
+            ->count();
+
+        return [
+            'all'      => $total,
+            'solved'   => $solved,
+            'unsolved' => $total - $solved,
+        ];
     }
 
     public function show(Task $task)
