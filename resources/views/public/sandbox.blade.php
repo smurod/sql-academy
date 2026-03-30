@@ -1,7 +1,6 @@
 @extends('public.layouts.app')
 
 @section('title', 'SQL Песочница — Свободный редактор')
-
 @section('styles')
     <style>
         .sandbox-wrapper { padding: 2rem 0 4rem; }

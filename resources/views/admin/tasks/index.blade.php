@@ -23,14 +23,8 @@
                             <td>{{$task->id}}</td>
                             <td>{{$task->lesson_id}}</td>
                             <td>{{$task->title}}</td>
-                            <td>{{$task->task_text}}</td>
-                            <td>
-                                @if(!empty($task->difficulty))
-                                    {{$task->difficulty}}
-                                @else
-                                    Не указано
-                                @endif
-                            </td>
+                            <td>{{ Str::limit($task->task_text, 20) }}</td>
+                            <td>{{ $task->difficulty_percent}}</td>
                             <td><a class="btn btn-outline-primary" href="{{route('tasks.show', $task)}}">Смотреть</a></td>
                             <td><a class="btn btn-outline-info" href="{{route('tasks.edit', $task)}}">Изменить</a></td>
                             <td>

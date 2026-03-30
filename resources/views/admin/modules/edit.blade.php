@@ -59,6 +59,22 @@
                             </div>
                         </div>
                         <!--end::Col-->
+                        <!--begin::Col-->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Slug модуля <span class="text-danger">*</span></label>
+                                <input
+                                    type="text"
+                                    name="slug"
+                                    id="slug"
+                                    class="form-control"
+                                    placeholder="Введите Slug модуля"
+                                    value="{{ old('slug', $module->slug) }}"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <!--end::Col-->
 
                         <!--begin::Col-->
                         <div class="col-md-6">
