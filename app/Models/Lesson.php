@@ -43,6 +43,10 @@ class Lesson extends Model
     {
         return $this->belongsTo(Course::class);
     }
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function getLectureAttribute() { return $this->content['lecture'] ?? null; }
     public function getCodeAttribute() { return $this->content['code'] ?? null; }

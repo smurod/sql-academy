@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Task extends Model
 {
     protected $fillable = [
+        'task_number',
         'lesson_id',
         'author_id',
         'title',
@@ -21,13 +22,20 @@ class Task extends Model
         'hint',
         'points',
         'sql_type',
+        'task_order',
+        'tags',
+        'company',
     ];
 
+    // Преобразование типов (важно для is_free как boolean и expected_results как json)
     protected $casts = [
-        'expected_results' => 'array',
-        'is_free'          => 'boolean',
+        'is_free' => 'boolean',
         'difficulty_percent' => 'integer',
-        'points'           => 'integer',
+        'points' => 'integer',
+        'task_order' => 'integer',
+        'lesson_id' => 'integer',
+        'author_id' => 'integer',
+        'expected_results' => 'array', // Laravel автоматически сериализует JSON
     ];
 
     // ==================

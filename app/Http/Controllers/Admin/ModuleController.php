@@ -25,6 +25,7 @@ class ModuleController
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
+            'slug'        => 'required|string|max:255|unique:modules,slug',
             'description' => 'required|string',
             'order_index' => 'integer|min:0',
         ]);
@@ -51,6 +52,7 @@ class ModuleController
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
+            'slug'        => 'required|string|max:255|unique:modules,slug',
             'description' => 'required|string',
             'order_index' => 'required|integer',
         ]);

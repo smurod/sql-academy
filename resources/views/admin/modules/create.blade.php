@@ -35,7 +35,6 @@
             <form action="{{ route('modules.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                <!-- Скрытое поле с course_id = 1 -->
                 <input type="hidden" name="course_id" value="1">
 
                 <!--begin::Body-->
@@ -52,6 +51,22 @@
                                     id="title"
                                     class="form-control"
                                     placeholder="Введите название модуля"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <!--end::Col-->
+
+                        <!--begin::Col-->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Slug модуля <span class="text-danger">*</span></label>
+                                <input
+                                    type="text"
+                                    name="slug"
+                                    id="slug"
+                                    class="form-control"
+                                    placeholder="Введите Slug модуля"
                                     required
                                 />
                             </div>

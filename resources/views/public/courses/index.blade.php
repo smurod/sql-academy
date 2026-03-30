@@ -1,7 +1,6 @@
 @extends('public.layouts.app')
 
 @section('title', 'Курс SQL — Программа обучения')
-
 @section('styles')
     <style>
         .course-page {
