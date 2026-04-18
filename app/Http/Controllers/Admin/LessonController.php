@@ -25,37 +25,27 @@ class LessonController extends Controller
     public function store(Request $request, Module $module)
     {
         $data = $request->validate([
-            'title' => 'required|string|max:255',
+            'title'        => 'required|string|max:255',
             'lesson_order' => 'required|integer',
-            'lecture' => 'nullable|string',
-            'code' => 'nullable|string',
-            'presentation' => 'nullable|file|mimes:pdf,ppt,pptx',
-            'video' => 'nullable|file|mimes:mp4,mov,avi',
+            'lesson_type'  => 'required|in:theory,practice,parent',
+            'content'      => 'nullable|string',
         ]);
 
-        $content = [
-            'lecture' => $data['lecture'] ?? null,
-            'code' => $data['code'] ?? null,
-            'presentation' => $request->hasFile('presentation')
-                ? $request->file('presentation')->store('presentations', 'public')
-                : null,
-            'video' => $request->hasFile('video')
-                ? $request->file('video')->store('videos', 'public')
-                : null,
-        ];
-
         $module->lessons()->create([
-            'course_id' => 1,
-            'title' => $data['title'],
-            'slug' => \Str::slug($data['title']),
+            'course_id'    => 1,
+            'title'        => $data['title'],
+            'slug'         => \Str::slug($data['title']),
             'lesson_order' => $data['lesson_order'],
-            'content' => json_encode($content),
+            'lesson_type'  => $data['lesson_type'],
+            'content'      => $data['content'] ?? null,
+            // ❌ Убрали: json_encode, lecture, code, presentation, video
         ]);
 
         return redirect()
             ->route('modules.show', $module)
             ->with('success', 'Урок создан');
     }
+
 
 
     public function show(Lesson $lesson)
@@ -71,47 +61,28 @@ class LessonController extends Controller
         return view('admin.lessons.edit', compact('lesson', 'module'));
     }
 
+
     public function update(Request $request, Lesson $lesson)
     {
         $data = $request->validate([
-            'title' => 'required|string|max:255',
+            'title'        => 'required|string|max:255',
             'lesson_order' => 'required|integer',
-            'lecture' => 'nullable|string',
-            'code' => 'nullable|string',
-            'presentation' => 'nullable|file|mimes:pdf,ppt,pptx',
-            'video' => 'nullable|file|mimes:mp4,mov,avi',
+            'lesson_type'  => 'required|in:theory,practice,parent',
+            'content'      => 'nullable|string',
         ]);
 
-         $content = $lesson->content ?? [
-            'lecture' => null,
-            'code' => null,
-            'presentation' => null,
-            'video' => null,
-        ];
-
-        $content['lecture'] = $data['lecture'] ?? $content['lecture'];
-        $content['code'] = $data['code'] ?? $content['code'];
-
-        if ($request->hasFile('presentation')) {
-            $content['presentation'] = $request->file('presentation')->store('presentations', 'public');
-        }
-
-        if ($request->hasFile('video')) {
-            $content['video'] = $request->file('video')->store('videos', 'public');
-        }
-
         $lesson->update([
-            'title' => $data['title'],
-            'slug' => \Str::slug($data['title']),
+            'title'        => $data['title'],
+            'slug'         => \Str::slug($data['title']),
             'lesson_order' => $data['lesson_order'],
-            'content' => $content,
+            'lesson_type'  => $data['lesson_type'],
+            'content'      => $data['content'] ?? $lesson->content,
         ]);
 
         return redirect()
             ->route('modules.show', $lesson->module_id)
             ->with('success', 'Урок успешно обновлён');
     }
-
 
     public function destroy(Lesson $lesson)
     {

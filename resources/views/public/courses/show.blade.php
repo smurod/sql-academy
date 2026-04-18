@@ -3,6 +3,12 @@
 @section('title', 'Урок: ' . $lesson->title)
 
 @section('styles')
+    {{-- Prism.js тема для подсветки кода --}}
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+
     <style>
         .lesson-page {
             display: flex;
@@ -10,6 +16,7 @@
             overflow: hidden;
         }
 
+        /* ── Сайдбар ── */
         .lesson-sidebar {
             width: 320px;
             min-width: 320px;
@@ -122,6 +129,7 @@
             margin-top: 0.125rem;
         }
 
+        /* ── Основная область ── */
         .lesson-main {
             flex: 1;
             display: flex;
@@ -200,81 +208,137 @@
             font-weight: 500;
         }
 
-        .lhb-type.practice { background: rgba(34,197,94,0.1); color: var(--success); }
-        .lhb-type.theory { background: rgba(59,130,246,0.1); color: var(--primary); }
+        .lhb-type.practice { background: rgba(34,197,94,0.1);  color: var(--success); }
+        .lhb-type.theory   { background: rgba(59,130,246,0.1); color: var(--primary); }
+        .lhb-type.parent   { background: rgba(168,85,247,0.1); color: #c084fc; }
 
+        /* ── Скролл-область контента ── */
         .lesson-content {
             flex: 1;
             overflow-y: auto;
             padding: 2rem;
         }
 
-        .lesson-content h1,
-        .lesson-content h2 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 1.25rem;
-            letter-spacing: -0.02em;
+        /* ── HTML контент из TinyMCE ── */
+        .lesson-body {
+            max-width: 820px;
         }
 
-        .lesson-content h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin: 2rem 0 0.75rem;
+        .lesson-body h1,
+        .lesson-body h2 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
             color: var(--text-primary);
         }
 
-        .lesson-content p,
-        .lesson-content li {
+        .lesson-body h2:first-child {
+            margin-top: 0;
+        }
+
+        .lesson-body h3 {
+            font-size: 1.08rem;
+            font-weight: 700;
+            margin: 1.75rem 0 0.65rem;
+            color: var(--text-primary);
+        }
+
+        .lesson-body p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.85;
+            margin-bottom: 1rem;
+        }
+
+        .lesson-body ul,
+        .lesson-body ol {
+            padding-left: 1.35rem;
+            margin-bottom: 1rem;
+        }
+
+        .lesson-body li {
             color: var(--text-secondary);
             font-size: 0.95rem;
             line-height: 1.8;
-            margin-bottom: 1rem;
+            margin-bottom: 0.35rem;
         }
 
-        .lesson-content ul {
-            padding-left: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .theory-code-block {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            margin: 1.25rem 0;
-        }
-
-        .theory-code-header {
-            padding: 0.5rem 1rem;
-            background: rgba(0,0,0,0.3);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .theory-code-header span {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+        /* Инлайн код */
+        .lesson-body code:not(pre code) {
+            background: rgba(59,130,246,0.12);
+            color: #60a5fa;
+            padding: 0.18rem 0.45rem;
+            border-radius: 6px;
             font-family: 'JetBrains Mono', monospace;
+            font-size: 0.86em;
         }
 
-        .theory-code-body {
-            padding: 1rem 1.25rem;
+        /* Блоки кода — Prism.js стилизация */
+        .lesson-body pre {
+            border-radius: 12px !important;
+            margin: 1.25rem 0 !important;
             overflow-x: auto;
+            border: 1px solid rgba(255,255,255,0.06) !important;
         }
 
-        .theory-code-body pre {
-            margin: 0;
+        .lesson-body pre code {
+            font-family: 'JetBrains Mono', monospace !important;
+            font-size: 0.85rem !important;
+            line-height: 1.75 !important;
+        }
+
+        /* Таблицы */
+        .lesson-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .lesson-body th {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 700;
             color: var(--text-primary);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            line-height: 1.8;
         }
 
+        .lesson-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.55rem 1rem;
+            color: var(--text-secondary);
+        }
+
+        .lesson-body tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* Пустой контент */
+        .lesson-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            gap: 1rem;
+        }
+
+        .lesson-empty i {
+            font-size: 3rem;
+            opacity: 0.4;
+        }
+
+        /* ── Навигация внизу ── */
         .lesson-footer-nav {
             display: flex;
             justify-content: space-between;
             gap: 1rem;
-            margin-top: 2rem;
+            margin-top: 2.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--border-color);
         }
@@ -289,21 +353,39 @@
             border-radius: 12px;
             border: 1px solid var(--border-color);
             background: rgba(255,255,255,0.03);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            max-width: 260px;
+        }
+
+        .lesson-footer-link span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .lesson-footer-link:hover {
             border-color: var(--primary);
             color: var(--primary);
+            background: rgba(59,130,246,0.06);
         }
 
         @media (max-width: 1024px) {
             .lesson-sidebar { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .lesson-content { padding: 1.25rem; }
+            .lhb-title { display: none; }
         }
     </style>
 @endsection
 
 @section('content')
     <div class="lesson-page">
+
+        {{-- ── Сайдбар со списком уроков ── --}}
         <aside class="lesson-sidebar">
             <div class="ls-header">
                 <a href="{{ route('public.courses.index') }}" class="ls-back">
@@ -321,15 +403,21 @@
 
             <div class="ls-lessons">
                 @foreach($moduleLessons as $moduleLesson)
-                    <a href="{{ route('public.courses.show', $moduleLesson) }}"
-                       class="ls-item {{ $moduleLesson->id === $lesson->id ? 'active' : '' }}">
-                        <div class="ls-dot">
-                            {{ $moduleLesson->lesson_order }}
-                        </div>
+                    <a
+                        href="{{ route('public.courses.show', $moduleLesson) }}"
+                        class="ls-item {{ $moduleLesson->id === $lesson->id ? 'active' : '' }}"
+                    >
+                        <div class="ls-dot">{{ $moduleLesson->lesson_order }}</div>
                         <div class="ls-item-info">
                             <div class="ls-item-title">{{ $moduleLesson->title }}</div>
                             <div class="ls-item-meta">
-                                {{ $moduleLesson->lesson_type === 'practice' ? 'Практика' : 'Теория' }}
+                                @if($moduleLesson->lesson_type === 'practice')
+                                    <i class="bi bi-code-slash"></i> Практика
+                                @elseif($moduleLesson->lesson_type === 'parent')
+                                    <i class="bi bi-folder"></i> Раздел
+                                @else
+                                    <i class="bi bi-book"></i> Теория
+                                @endif
                             </div>
                         </div>
                     </a>
@@ -337,11 +425,14 @@
             </div>
         </aside>
 
+        {{-- ── Основная область ── --}}
         <div class="lesson-main">
+
+            {{-- Верхняя панель навигации --}}
             <div class="lesson-header-bar">
                 <div class="lhb-left">
                     @if($previousLesson)
-                        <a href="{{ route('public.courses.show', $previousLesson) }}" class="lhb-nav">
+                        <a href="{{ route('public.courses.show', $previousLesson) }}" class="lhb-nav" title="{{ $previousLesson->title }}">
                             <i class="bi bi-chevron-left"></i>
                         </a>
                     @else
@@ -356,7 +447,7 @@
                     </div>
 
                     @if($nextLesson)
-                        <a href="{{ route('public.courses.show', $nextLesson) }}" class="lhb-nav">
+                        <a href="{{ route('public.courses.show', $nextLesson) }}" class="lhb-nav" title="{{ $nextLesson->title }}">
                             <i class="bi bi-chevron-right"></i>
                         </a>
                     @else
@@ -368,44 +459,40 @@
 
                 <div class="lhb-right">
                     <span class="lhb-type {{ $lesson->lesson_type }}">
-                        {{ $lesson->lesson_type === 'practice' ? 'Практика' : 'Теория' }}
+                        @if($lesson->lesson_type === 'practice')
+                            <i class="bi bi-code-slash"></i> Практика
+                        @elseif($lesson->lesson_type === 'parent')
+                            <i class="bi bi-folder"></i> Раздел
+                        @else
+                            <i class="bi bi-book"></i> Теория
+                        @endif
                     </span>
                 </div>
             </div>
 
+            {{-- Контент урока --}}
             <div class="lesson-content">
-                @if(!empty($lesson->lecture))
-                    @foreach($lesson->lecture as $block)
-                        @if($block['type'] === 'heading')
-                            <h2>{{ $block['text'] }}</h2>
-                        @elseif($block['type'] === 'paragraph')
-                            <p>{{ $block['text'] }}</p>
-                        @elseif($block['type'] === 'list')
-                            <ul>
-                                @foreach($block['items'] as $item)
-                                    <li>{{ $item }}</li>
-                                @endforeach
-                            </ul>
-                        @elseif($block['type'] === 'code')
-                            <div class="theory-code-block">
-                                <div class="theory-code-header">
-                                    <span>{{ strtoupper($block['language'] ?? 'CODE') }}</span>
-                                </div>
-                                <div class="theory-code-body">
-                                    <pre><code>{{ $block['content'] }}</code></pre>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
+                @if($lesson->content)
+                    {{--
+                        Выводим HTML из TinyMCE напрямую.
+                        Prism.js автоматически подсветит все
+                        <pre><code class="language-sql">...</code></pre>
+                    --}}
+                    <div class="lesson-body">
+                        {!! $lesson->content !!}
+                    </div>
                 @else
-                    <h2>{{ $lesson->title }}</h2>
-                    <p>Для этого урока пока нет содержимого.</p>
+                    <div class="lesson-empty">
+                        <i class="bi bi-file-earmark-x"></i>
+                        <p>Содержимое этого урока пока не добавлено.</p>
+                    </div>
                 @endif
 
+                {{-- Нижняя навигация между уроками --}}
                 <div class="lesson-footer-nav">
                     @if($previousLesson)
                         <a href="{{ route('public.courses.show', $previousLesson) }}" class="lesson-footer-link">
-                            <i class="bi bi-arrow-left"></i>
+                            <i class="bi bi-arrow-left" style="flex-shrink:0;"></i>
                             <span>{{ $previousLesson->title }}</span>
                         </a>
                     @else
@@ -413,13 +500,32 @@
                     @endif
 
                     @if($nextLesson)
-                        <a href="{{ route('public.courses.show', $nextLesson) }}" class="lesson-footer-link">
+                        <a href="{{ route('public.courses.show', $nextLesson) }}" class="lesson-footer-link" style="margin-left:auto;">
                             <span>{{ $nextLesson->title }}</span>
-                            <i class="bi bi-arrow-right"></i>
+                            <i class="bi bi-arrow-right" style="flex-shrink:0;"></i>
                         </a>
                     @endif
                 </div>
             </div>
+
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    {{-- Prism.js — подсветка синтаксиса --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Запускаем подсветку кода
+            Prism.highlightAll();
+        });
+    </script>
 @endsection

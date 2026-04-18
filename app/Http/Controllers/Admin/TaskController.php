@@ -56,7 +56,9 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Задание успешно создано!');
     }
 
-    public function show(Task $task) { /* ... */ }
+    public function show(Task $task) {
+        return view('admin.tasks.show', compact('task'));
+    }
 
     public function edit(Task $task)
     {

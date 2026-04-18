@@ -124,7 +124,7 @@
         .category-tab.active .count {
             background: rgba(255, 255, 255, 0.25);
         }
-        
+
         .tasks-pagination {
             display: flex;
             align-items: center;
