@@ -17,6 +17,7 @@ return [
     */
 
     'default' => env('DB_CONNECTION', 'sqlite'),
+    'default_sandbox' => env('DB_SANDBOX_CONNECTION', 'sandbox_template'),
 
     /*
     |--------------------------------------------------------------------------
@@ -35,8 +36,8 @@ return [
                 'host' => env('DB_HOST', '127.0.0.1'),
                 'port' => env('DB_PORT', '3306'),
                 'database' => env('DB_SANDBOX'),
-                'username' => env('DB_USERNAME', 'root'),
-                'password' => env('DB_PASSWORD', ''),
+                'username' => env('DB_USERNAME_2', 'root'),
+                'password' => env('DB_PASSWORD_2', ''),
                 'unix_socket' => env('DB_SOCKET', ''),
                 'charset' => 'utf8mb4',
                 'collation' => 'utf8mb4_unicode_ci',
@@ -49,9 +50,9 @@ return [
                 'driver' => 'mysql',
                 'host' => env('DB_HOST', '127.0.0.1'),
                 'port' => env('DB_PORT', '3306'),
-                'database' => '',
-                'username' => env('DB_USERNAME', 'root'),
-                'password' => env('DB_PASSWORD', ''),
+                'database' => env('DB_DATABASE_2'),
+                'username' => env('DB_USERNAME_2'),
+                'password' => env('DB_PASSWORD_2'),
                 'unix_socket' => env('DB_SOCKET', ''),
                 'charset' => 'utf8mb4',
                 'collation' => 'utf8mb4_unicode_ci',

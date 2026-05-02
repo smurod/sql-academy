@@ -9,17 +9,18 @@ class HousingSeeder extends Seeder
 {
     public function run(): void
     {
+        $connection = config('database.default_sandbox');
         // Отключить проверку foreign keys
-        DB::connection('sandbox_template')->statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::connection($connection)->statement('SET FOREIGN_KEY_CHECKS=0;');
 
         // Очистить таблицы
-        DB::connection('sandbox_template')->table('reviews')->truncate();
-        DB::connection('sandbox_template')->table('reservations')->truncate();
-        DB::connection('sandbox_template')->table('housing_rooms')->truncate();
-        DB::connection('sandbox_template')->table('housing_users')->truncate();
+        DB::connection($connection)->table('reviews')->truncate();
+        DB::connection($connection)->table('reservations')->truncate();
+        DB::connection($connection)->table('housing_rooms')->truncate();
+        DB::connection($connection)->table('housing_users')->truncate();
 
         // Включить обратно проверку foreign keys
-        DB::connection('sandbox_template')->statement('SET FOREIGN_KEY_CHECKS=1;');
+        DB::connection($connection)->statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // 1. ПОЛЬЗОВАТЕЛИ (как на SQL Academy)
         $housingUsers = [
@@ -40,7 +41,7 @@ class HousingSeeder extends Seeder
             ['id' => 15, 'name' => 'Morgan Freeman', 'email' => 'morgan.freeman@example.com', 'registration_date' => '2020-03-15'],
         ];
 
-        DB::connection('sandbox_template')->table('housing_users')->insert($housingUsers);
+        DB::connection($connection)->table('housing_users')->insert($housingUsers);
 
         // 2. ЖИЛЬЕ (ROOMS)
         $rooms = [
@@ -91,7 +92,7 @@ class HousingSeeder extends Seeder
             ['id' => 20, 'owner_id' => 13, 'address' => '9999, Magnolia Lane, Tampa', 'home_type' => 'house', 'price' => 380.00, 'has_tv' => 1, 'has_internet' => 1, 'has_kitchen' => 1, 'has_air_con' => 1],
         ];
 
-        DB::connection('sandbox_template')->table('housing_rooms')->insert($rooms);
+        DB::connection($connection)->table('housing_rooms')->insert($rooms);
 
         // 3. БРОНИРОВАНИЯ (RESERVATIONS)
         $reservations = [
@@ -120,7 +121,7 @@ class HousingSeeder extends Seeder
             ['id' => 20, 'user_id' => 6, 'room_id' => 19, 'start_date' => '2024-12-15', 'end_date' => '2024-12-22', 'total' => 910.00],
         ];
 
-        DB::connection('sandbox_template')->table('reservations')->insert($reservations);
+        DB::connection($connection)->table('reservations')->insert($reservations);
 
         // 4. ОТЗЫВЫ (REVIEWS)
         $reviews = [
@@ -146,7 +147,7 @@ class HousingSeeder extends Seeder
             ['id' => 20, 'reservation_id' => 20, 'rating' => 5],
         ];
 
-        DB::connection('sandbox_template')->table('reviews')->insert($reviews);
+        DB::connection($connection)->table('reviews')->insert($reviews);
 
         $this->command->info('✅ Housing data seeded successfully!');
     }

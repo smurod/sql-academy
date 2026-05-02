@@ -9,17 +9,19 @@ class AirlinesSeeder extends Seeder
 {
     public function run(): void
     {
+        $connection = config('database.default_sandbox');
+
         // Отключить проверку foreign keys
-        DB::connection('sandbox_template')->statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::connection($connection)->statement('SET FOREIGN_KEY_CHECKS=0;');
 
         // Очистить таблицы
-        DB::connection('sandbox_template')->table('pass_in_trip')->truncate();
-        DB::connection('sandbox_template')->table('passengers')->truncate();
-        DB::connection('sandbox_template')->table('trips')->truncate();
-        DB::connection('sandbox_template')->table('companies')->truncate();
+        DB::connection($connection)->table('pass_in_trip')->truncate();
+        DB::connection($connection)->table('passengers')->truncate();
+        DB::connection($connection)->table('trips')->truncate();
+        DB::connection($connection)->table('companies')->truncate();
 
         // Включить обратно проверку foreign keys
-        DB::connection('sandbox_template')->statement('SET FOREIGN_KEY_CHECKS=1;');
+        DB::connection($connection)->statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // 1. АВИАКОМПАНИИ (как на SQL Academy)
         $companies = [
@@ -30,7 +32,7 @@ class AirlinesSeeder extends Seeder
             ['id' => 5, 'name' => 'British_AW'],
         ];
 
-        DB::connection('sandbox_template')->table('companies')->insert($companies);
+        DB::connection($connection)->table('companies')->insert($companies);
 
         // 2. РЕЙСЫ (trips)
         $trips = [
@@ -65,7 +67,7 @@ class AirlinesSeeder extends Seeder
             ['id' => 20, 'company_id' => 5, 'plane' => 'Airbus A319', 'town_from' => 'Paris', 'town_to' => 'London', 'time_out' => '19:00:00', 'time_in' => '20:00:00'],
         ];
 
-        DB::connection('sandbox_template')->table('trips')->insert($trips);
+        DB::connection($connection)->table('trips')->insert($trips);
 
         // 3. ПАССАЖИРЫ
         $passengers = [
@@ -103,7 +105,7 @@ class AirlinesSeeder extends Seeder
             ['id' => 37, 'name' => 'Mullah Omar'],
         ];
 
-        DB::connection('sandbox_template')->table('passengers')->insert($passengers);
+        DB::connection($connection)->table('passengers')->insert($passengers);
 
         // 4. БИЛЕТЫ (pass_in_trip)
         $passInTrip = [
@@ -169,7 +171,7 @@ class AirlinesSeeder extends Seeder
             ['passenger_id' => 37, 'trip_id' => 19, 'price' => '900'],
         ];
 
-        DB::connection('sandbox_template')->table('pass_in_trip')->insert($passInTrip);
+        DB::connection($connection)->table('pass_in_trip')->insert($passInTrip);
 
         $this->command->info('✅ Airlines data seeded successfully!');
     }

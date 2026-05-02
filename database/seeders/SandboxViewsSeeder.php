@@ -9,7 +9,8 @@ class SandboxViewsSeeder extends Seeder
 {
     public function run(): void
     {
-        $conn = DB::connection('sandbox_template');
+        $connection = config('database.default_sandbox');
+        $conn = DB::connection($connection);
 
         $views = [
             // ✈️ Airlines

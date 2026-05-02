@@ -19,7 +19,11 @@ class DatabaseSeeder extends Seeder
             TasksSeeder::class,
             PremiumTasksSeeder::class,
             LessonTasksSeeder::class,
-            UserSeeder::class,
+            AirlinesSeeder::class,
+            FamilyBudgetSeeder::class,
+            HousingSeeder::class,
+            SandboxViewsSeeder::class,
+            SchoolSeeder::class,
         ]);
     }
 }

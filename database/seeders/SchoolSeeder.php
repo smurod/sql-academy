@@ -9,20 +9,21 @@ class SchoolSeeder extends Seeder
 {
     public function run(): void
     {
+        $connection = config('database.default_sandbox');
         // Отключить проверку foreign keys
-        DB::connection('sandbox_template')->statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::connection($connection)->statement('SET FOREIGN_KEY_CHECKS=0;');
 
         // Очистить таблицы
-        DB::connection('sandbox_template')->table('schedules')->truncate();
-        DB::connection('sandbox_template')->table('marks')->truncate();
-        DB::connection('sandbox_template')->table('student_in_class')->truncate();
-        DB::connection('sandbox_template')->table('students')->truncate();
-        DB::connection('sandbox_template')->table('teachers')->truncate();
-        DB::connection('sandbox_template')->table('subjects')->truncate();
-        DB::connection('sandbox_template')->table('classes')->truncate();
+        DB::connection($connection)->table('schedules')->truncate();
+        DB::connection($connection)->table('marks')->truncate();
+        DB::connection($connection)->table('student_in_class')->truncate();
+        DB::connection($connection)->table('students')->truncate();
+        DB::connection($connection)->table('teachers')->truncate();
+        DB::connection($connection)->table('subjects')->truncate();
+        DB::connection($connection)->table('classes')->truncate();
 
         // Включить обратно проверку foreign keys
-        DB::connection('sandbox_template')->statement('SET FOREIGN_KEY_CHECKS=1;');
+        DB::connection($connection)->statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // 1. КЛАССЫ
         $classes = [
@@ -50,7 +51,7 @@ class SchoolSeeder extends Seeder
             ['id' => 22, 'name' => '11b'],
         ];
 
-        DB::connection('sandbox_template')->table('classes')->insert($classes);
+        DB::connection($connection)->table('classes')->insert($classes);
 
         // 2. ПРЕДМЕТЫ
         $subjects = [
@@ -68,7 +69,7 @@ class SchoolSeeder extends Seeder
             ['id' => 12, 'name' => 'Computer Science'],
         ];
 
-        DB::connection('sandbox_template')->table('subjects')->insert($subjects);
+        DB::connection($connection)->table('subjects')->insert($subjects);
 
         // 3. УЧИТЕЛЯ
         $teachers = [
@@ -89,7 +90,7 @@ class SchoolSeeder extends Seeder
             ['id' => 15, 'first_name' => 'Jessica', 'last_name' => 'Anderson'],
         ];
 
-        DB::connection('sandbox_template')->table('teachers')->insert($teachers);
+        DB::connection($connection)->table('teachers')->insert($teachers);
 
         // 4. УЧЕНИКИ
         $students = [
@@ -115,7 +116,7 @@ class SchoolSeeder extends Seeder
             ['id' => 20, 'first_name' => 'Alexander', 'last_name' => 'Baker', 'birthday' => '2010-01-09', 'address' => '135 Redwood Avenue'],
         ];
 
-        DB::connection('sandbox_template')->table('students')->insert($students);
+        DB::connection($connection)->table('students')->insert($students);
 
         // 5. РАСПРЕДЕЛЕНИЕ УЧЕНИКОВ ПО КЛАССАМ
         $studentInClass = [
@@ -150,7 +151,7 @@ class SchoolSeeder extends Seeder
             ['student_id' => 20, 'class_id' => 21],
         ];
 
-        DB::connection('sandbox_template')->table('student_in_class')->insert($studentInClass);
+        DB::connection($connection)->table('student_in_class')->insert($studentInClass);
 
         // 6. РАСПИСАНИЕ (schedules) - уроки на неделю
         $schedules = [
@@ -198,7 +199,7 @@ class SchoolSeeder extends Seeder
             ['class_id' => 19, 'teacher_id' => 9, 'subject_id' => 9, 'lesson_date' => '2024-09-06 09:00:00'],
         ];
 
-        DB::connection('sandbox_template')->table('schedules')->insert($schedules);
+        DB::connection($connection)->table('schedules')->insert($schedules);
 
         // 7. ОЦЕНКИ (marks)
         $marks = [
@@ -237,7 +238,7 @@ class SchoolSeeder extends Seeder
             ['student_id' => 12, 'subject_id' => 12, 'mark' => 5, 'mark_date' => '2024-09-05'],
         ];
 
-        DB::connection('sandbox_template')->table('marks')->insert($marks);
+        DB::connection($connection)->table('marks')->insert($marks);
 
         $this->command->info('✅ School data seeded successfully!');
     }

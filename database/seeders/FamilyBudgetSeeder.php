@@ -13,16 +13,18 @@ class FamilyBudgetSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::connection('sandbox_template')->statement('SET FOREIGN_KEY_CHECKS=0;');
+        $connection = config('database.default_sandbox');
+
+        DB::connection($connection)->statement('SET FOREIGN_KEY_CHECKS=0;');
 
         // Очистить таблицы перед заполнением
-        DB::connection('sandbox_template')->table('payments')->truncate();
-        DB::connection('sandbox_template')->table('goods')->truncate();
-        DB::connection('sandbox_template')->table('family_members')->truncate();
-        DB::connection('sandbox_template')->table('good_types')->truncate();
+        DB::connection($connection)->table('payments')->truncate();
+        DB::connection($connection)->table('goods')->truncate();
+        DB::connection($connection)->table('family_members')->truncate();
+        DB::connection($connection)->table('good_types')->truncate();
 
         // Включить обратно проверку foreign keys
-        DB::connection('sandbox_template')->statement('SET FOREIGN_KEY_CHECKS=1;');
+        DB::connection($connection)->statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // 1. ТИПЫ ТОВАРОВ
         $goodTypes = [
@@ -33,7 +35,7 @@ class FamilyBudgetSeeder extends Seeder
             ['id' => 5, 'name' => 'household'],
         ];
 
-        DB::connection('sandbox_template')->table('good_types')->insert($goodTypes);
+        DB::connection($connection)->table('good_types')->insert($goodTypes);
 
         // 2. ТОВАРЫ
         $goods = [
@@ -68,7 +70,7 @@ class FamilyBudgetSeeder extends Seeder
             ['id' => 20, 'name' => 'toilet paper', 'type_id' => 5],
         ];
 
-        DB::connection('sandbox_template')->table('goods')->insert($goods);
+        DB::connection($connection)->table('goods')->insert($goods);
 
         // 3. ЧЛЕНЫ СЕМЬИ (как на SQL Academy - семья Quincey)
         $familyMembers = [
@@ -79,7 +81,7 @@ class FamilyBudgetSeeder extends Seeder
             ['id' => 5, 'status' => 'daughter', 'name' => 'Annie Quincey', 'birthday' => '1988-04-10'],
         ];
 
-        DB::connection('sandbox_template')->table('family_members')->insert($familyMembers);
+        DB::connection($connection)->table('family_members')->insert($familyMembers);
 
         // 4. ПОКУПКИ (PAYMENTS) - данные за 2005 год как на SQL Academy
         $payments = [
@@ -146,7 +148,7 @@ class FamilyBudgetSeeder extends Seeder
             ['family_member_id' => 3, 'good_id' => 9, 'amount' => 4.00, 'unit_price' => 20.00, 'payment_date' => '2005-12-28'],
         ];
 
-        DB::connection('sandbox_template')->table('payments')->insert($payments);
+        DB::connection($connection)->table('payments')->insert($payments);
 
         $this->command->info('✅ Family Budget data seeded successfully!');
     }
