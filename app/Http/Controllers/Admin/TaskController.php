@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Lesson;
 use App\Models\Task;
+use App\Models\UsersRating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

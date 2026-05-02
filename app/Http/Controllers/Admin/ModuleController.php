@@ -28,6 +28,7 @@ class ModuleController
             'slug'        => 'required|string|max:255|unique:modules,slug',
             'description' => 'required|string',
             'order_index' => 'integer|min:0',
+            'xp' => 'integer|min:1',
         ]);
         $data['course_id'] = 1;
 
@@ -52,9 +53,10 @@ class ModuleController
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'slug'        => 'required|string|max:255|unique:modules,slug',
+            'slug'        => 'required|string|max:255',
             'description' => 'required|string',
             'order_index' => 'required|integer',
+            'xp' => 'required|integer',
         ]);
 
         $module->update($data);

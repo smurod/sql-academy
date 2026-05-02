@@ -220,6 +220,11 @@
     <div class="admin-nav-section">
         <div class="admin-nav-title">Обучение</div>
         <div class="admin-nav-list">
+            <a href="{{route('users.index')}}" class="admin-nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}">
+                <i class="bi bi-person"></i>
+                <span>Список пользователей</span>
+            </a>
+
             <a href="{{ route('modules.index') }}" class="admin-nav-link {{ request()->routeIs('modules.index') ? 'active' : '' }}">
                 <i class="bi bi-collection-fill"></i>
                 <span>Список модулей</span>

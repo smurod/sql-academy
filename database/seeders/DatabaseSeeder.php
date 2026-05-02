@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
             LessonSeeder::class,
             TasksSeeder::class,
             PremiumTasksSeeder::class,
+            LessonTasksSeeder::class,
+            UserSeeder::class,
         ]);
-
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

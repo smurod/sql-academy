@@ -312,6 +312,22 @@
                                 class="admin-input"
                                 placeholder="Введите порядковый номер"
                                 value="{{ old('order_index', $module->order_index) }}"
+                                min="0"
+                                required
+                            />
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label for="order_index" class="admin-form-label">
+                                XP <span class="admin-required">*</span>
+                            </label>
+                            <input
+                                type="number"
+                                name="xp"
+                                id="xp"
+                                class="admin-input"
+                                value="{{ old('xp', $module->xp) }}"
+                                placeholder="Введите XP"
                                 min="1"
                                 required
                             />

@@ -118,19 +118,14 @@
             max-width: 360px;
         }
 
-        .lessons-side {
-            min-width: 0;
-        }
-
-        .lessons-inner {
-            width: 100%;
-            padding-top: 0.05rem;
-        }
+        .lessons-side { min-width: 0; }
+        .lessons-inner { width: 100%; padding-top: 0.05rem; }
 
         .lesson-row {
             display: flex;
             align-items: stretch;
             min-height: 54px;
+            cursor: pointer;
         }
 
         .lesson-connector {
@@ -146,30 +141,78 @@
             width: 2px;
             flex: 1;
             background: rgba(255,255,255,0.12);
+            transition: background 0.25s ease;
         }
 
         .lesson-connector .line.hidden {
             background: transparent;
         }
 
+        /* ── БАЗОВАЯ ТОЧКА ── */
         .lesson-connector .dot {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: rgba(255,255,255,0.14);
             flex-shrink: 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* ── COMPLETED ── */
+        .lesson-connector .dot.completed {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow:
+                0 0 0 3px rgba(59, 130, 246, 0.15),
+                0 4px 14px var(--glow-primary);
+        }
+
+        /* ── SVG галочка строго по центру ── */
+        .lesson-connector .dot.completed svg {
+            width: 10px;
+            height: 10px;
+            display: block;
+            flex-shrink: 0;
+            stroke: #ffffff;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        /* ── HOVER: обычная точка ── */
+        .lesson-row:hover .lesson-connector .dot:not(.completed) {
+            background: rgba(255,255,255,0.26);
+            transform: scale(1.18);
+        }
+
+        /* ── HOVER: completed точка ── */
+        .lesson-row:hover .lesson-connector .dot.completed {
+            transform: scale(1.2) rotate(-8deg);
+            box-shadow:
+                0 0 0 4px rgba(59, 130, 246, 0.2),
+                0 6px 20px var(--glow-primary);
+        }
+
+        /* ── HOVER: линии ── */
+        .lesson-row:hover .lesson-connector .line:not(.hidden) {
+            background: rgba(255,255,255,0.22);
+        }
+
+        /* ── LESSON LINK ── */
         .lesson-link {
             flex: 1;
             display: flex;
             align-items: center;
-            padding: 0 0 0 0.2rem;
-            color: rgba(255,255,255,0.92);
+            padding: 0 0 0 0.4rem;
+            color: rgba(255,255,255,0.65);
             text-decoration: none;
             font-size: 0.98rem;
             line-height: 1.45;
-            transition: color 0.2s ease;
+            transition: color 0.22s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             min-width: 0;
         }
 
@@ -178,12 +221,14 @@
             max-width: 100%;
         }
 
-        .lesson-link:hover {
+        /* ── HOVER: текст белый + сдвиг ── */
+        .lesson-row:hover .lesson-link {
             color: #ffffff;
+            transform: translateX(5px);
         }
 
         .lesson-link.is-test {
-            color: rgba(255,255,255,0.92);
+            color: rgba(255,255,255,0.65);
         }
 
         .lesson-row.branch-start .lesson-connector .line.bottom-rounded {
@@ -204,10 +249,6 @@
 
         .module-container:hover .module-name {
             color: #ffffff;
-        }
-
-        .module-container:hover .lesson-connector .dot {
-            background: rgba(255,255,255,0.18);
         }
 
         .module-container:hover .lesson-connector .line:not(.hidden) {
@@ -274,8 +315,13 @@
             }
 
             .lesson-connector .dot {
-                width: 13px;
-                height: 13px;
+                width: 15px;
+                height: 15px;
+            }
+
+            .lesson-connector .dot.completed svg {
+                width: 8px;
+                height: 8px;
             }
 
             .lesson-connector .line {
@@ -286,7 +332,6 @@
 @endsection
 
 @section('content')
-
     <div class="course-page">
         <div class="course-wrap">
             <div class="course-intro">
@@ -310,14 +355,24 @@
                         <div class="lessons-side">
                             <div class="lessons-inner">
                                 @foreach($module['lessons'] as $lesson)
+                                    @php
+                                        $lessonCompleted = auth()->check() && isset($completedLessons) && in_array($lesson->id, $completedLessons);
+                                    @endphp
+
                                     <div class="lesson-row">
                                         <div class="lesson-connector">
                                             <div class="line {{ $loop->first ? 'hidden' : '' }}"></div>
-                                            <div class="dot"></div>
+
+                                            <div class="dot {{ $lessonCompleted ? 'completed' : '' }}">
+                                                @if($lessonCompleted)
+                                                @endif
+                                            </div>
+
                                             <div class="line {{ $loop->last ? 'hidden' : '' }}"></div>
                                         </div>
 
-                                        <a href="{{ route('public.courses.show', $lesson) }}" class="lesson-link {{ $lesson['is_test'] ? 'is-test' : '' }}">
+                                        <a href="{{ route('public.courses.show', $lesson) }}"
+                                           class="lesson-link {{ $lesson['is_test'] ? 'is-test' : '' }}">
                                             <span>{{ $lesson['title'] }}</span>
                                         </a>
                                     </div>

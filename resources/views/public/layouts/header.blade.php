@@ -24,8 +24,8 @@
                 <i class="bi bi-terminal"></i><span>Песочница</span>
             </a>
 
-            <a href="{{ url('/interviews') }}" class="nav-link {{ request()->is('interviews*') ? 'active' : '' }}">
-                <i class="bi bi-briefcase"></i><span>Собеседования</span>
+            <a href="{{ route('rating.index') }}" class="nav-link {{ request()->routeIs('rating.*') ? 'active' : '' }}">
+                <i class="bi bi-trophy"></i> <span>Рейтинг</span>
             </a>
 
             @role('admin')

@@ -25,6 +25,7 @@ class LessonSeeder extends Seeder
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 1,
             'title'        => 'Введение',
@@ -57,6 +58,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 1,
             'title'        => 'Структура курса',
@@ -88,6 +90,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 1,
             'title'        => 'Сообщество',
@@ -122,6 +125,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 2,
             'title'        => 'Базы данных и СУБД',
@@ -164,6 +168,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 2,
             'title'        => 'Типы баз данных',
@@ -199,6 +204,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 2,
             'title'        => 'Реляционные базы данных',
@@ -245,6 +251,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 2,
             'title'        => 'Key-value базы данных',
@@ -283,6 +290,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 2,
             'title'        => 'Документоориентированные базы данных',
@@ -329,6 +337,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 2,
             'title'        => 'Структура реляционных баз данных',
@@ -373,6 +382,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 2,
             'title'        => 'Вводная информация о SQL',
@@ -424,6 +434,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Базовый синтаксис SQL запроса',
@@ -481,6 +492,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Литералы',
@@ -537,6 +549,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Применение функций',
@@ -596,6 +609,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Исключение дубликатов, DISTINCT',
@@ -648,6 +662,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Условный оператор WHERE',
@@ -711,6 +726,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Операторы IS NULL, BETWEEN, IN',
@@ -773,6 +789,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Оператор LIKE',
@@ -829,6 +846,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Регулярные выражения',
@@ -891,6 +909,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Сортировка, оператор ORDER BY',
@@ -954,6 +973,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Группировка, оператор GROUP BY',
@@ -1016,6 +1036,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Агрегатные функции',
@@ -1085,6 +1106,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 3,
             'title'        => 'Оператор HAVING',
@@ -1158,6 +1180,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'Многотабличные запросы, оператор JOIN',
@@ -1221,6 +1244,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'INNER JOIN',
@@ -1278,6 +1302,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'OUTER JOIN',
@@ -1335,6 +1360,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'Ограничение выборки, оператор LIMIT',
@@ -1397,6 +1423,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'Подзапросы',
@@ -1454,6 +1481,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'Подзапросы с одной строкой и одним столбцом',
@@ -1512,6 +1540,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'Подзапросы с несколькими строками и одним столбцом',
@@ -1581,6 +1610,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'Многостолбцовые подзапросы',
@@ -1642,6 +1672,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'Коррелированные подзапросы',
@@ -1708,6 +1739,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'Обобщённое табличное выражение, WITH',
@@ -1777,6 +1809,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'Объединение запросов, оператор UNION',
@@ -1839,6 +1872,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'Условная логика, оператор CASE',
@@ -1915,6 +1949,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 4,
             'title'        => 'Условная функция IF',
@@ -1987,6 +2022,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 5,
             'title'        => 'Добавление данных, оператор INSERT',
@@ -2056,6 +2092,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 5,
             'title'        => 'Обновление данных, оператор UPDATE',
@@ -2127,6 +2164,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 5,
             'title'        => 'Удаление данных, оператор DELETE',
@@ -2200,6 +2238,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Работа с типами данных',
@@ -2261,6 +2300,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Числовой тип данных',
@@ -2322,6 +2362,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Дата и время',
@@ -2389,6 +2430,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Функции преобразования типов, CAST',
@@ -2453,6 +2495,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Оконные функции',
@@ -2515,6 +2558,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Партиции в оконных функциях',
@@ -2579,6 +2623,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Сортировка внутри окна',
@@ -2646,6 +2691,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Рамки окон в оконных функциях',
@@ -2715,6 +2761,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Типы оконных функций',
@@ -2782,6 +2829,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Транзакции',
@@ -2850,6 +2898,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Блокировки в СУБД',
@@ -2911,6 +2960,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Создание транзакций',
@@ -2984,6 +3034,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Хранимые процедуры и функции',
@@ -3037,6 +3088,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Хранимые функции',
@@ -3124,6 +3176,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Хранимые процедуры',
@@ -3207,6 +3260,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Операторы IF, CASE, WHILE в хранимых процедурах',
@@ -3300,6 +3354,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 6,
             'title'        => 'Планировщик событий',
@@ -3377,6 +3432,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 7,
             'title'        => 'Создание и удаление баз данных',
@@ -3433,6 +3489,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 7,
             'title'        => 'Создание и удаление таблиц',
@@ -3507,6 +3564,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 7,
             'title'        => 'Типы данных для колонок таблиц',
@@ -3584,6 +3642,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 7,
             'title'        => 'Строковый тип данных',
@@ -3651,6 +3710,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 7,
             'title'        => 'Числовой тип данных',
@@ -3714,6 +3774,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 7,
             'title'        => 'Дата и время',
@@ -3781,6 +3842,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 7,
             'title'        => 'Представления, VIEW',
@@ -3856,6 +3918,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 7,
             'title'        => 'Индексы в SQL',
@@ -3942,6 +4005,7 @@ HTML,
 
         $lessons[] = [
             'id'           => $id++,
+            'xp' => 10,
             'course_id'    => 1,
             'module_id'    => 7,
             'title'        => 'Ограничения столбцов (Constraints)',

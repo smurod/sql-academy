@@ -52,6 +52,12 @@ class Task extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    public function solutions()
+    {
+        return $this->hasMany(UsersRating::class, 'source_id')
+            ->where('type', 'task');
+    }
+
     // ==================
     // Аксессоры
     // ==================

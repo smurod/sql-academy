@@ -316,6 +316,22 @@
                             />
                         </div>
 
+                        <div class="admin-form-group">
+                            <label for="order_index" class="admin-form-label">
+                                XP <span class="admin-required">*</span>
+                            </label>
+                            <input
+                                type="number"
+                                name="xp"
+                                id="xp"
+                                class="admin-input"
+                                value="{{ old('xp') }}"
+                                placeholder="Введите XP"
+                                min="1"
+                                required
+                            />
+                        </div>
+
                         <div class="admin-form-group full">
                             <label for="description" class="admin-form-label">Описание</label>
                             <textarea

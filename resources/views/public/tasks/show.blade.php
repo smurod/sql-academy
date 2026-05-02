@@ -1504,7 +1504,6 @@
                     <div class="results-header">
                         <div class="results-tabs">
                             <button class="results-tab active">Результат</button>
-                            <button class="results-tab">Ожидаемый</button>
                         </div>
                         <span class="results-info" id="resultsInfo"></span>
                     </div>
@@ -1575,7 +1574,7 @@
             var schemaData = @json($schemaData);
             var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
             var runUrl = '{{ route("public.tasks.run", $task) }}';
-            var checkUrl = '{{ route("public.tasks.check", $task) }}';
+            var checkUrl = '{{ route("public.tasks.check", $task) }}'
 
             var editor = document.getElementById('sqlEditor');
             var runBtn = document.getElementById('runBtn');

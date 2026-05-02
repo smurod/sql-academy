@@ -8,11 +8,13 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SqlSandboxController;
 use App\Http\Controllers\Admin\TaskAttemptController;
 use App\Http\Controllers\Admin\TaskController as AdminTaskController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\Public\CourseController as PublicCourseController;
 use App\Http\Controllers\Public\MainController;
 use App\Http\Controllers\Public\TaskController as PublicTaskController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Public\UsersRatingController;
 
 
 Route::redirect('/', '/public/home');
@@ -31,6 +33,8 @@ Route::get('/preview', function () {
 Route::get('/app', function () {
     return view('admin.layouts.app');
 });
+
+Route::get('/public/rating', [UsersRatingController::class, 'index'])->name('rating.index');
 
 
 Route::get('auth/{provider}', [SocialController::class, 'redirectToProvider'])
@@ -64,7 +68,7 @@ Route::prefix('public')->group(function () {
             Route::post('/', 'execute')->middleware('auth')->name('execute');
         });
 
-    Route::middleware(['auth', 'permission:solve tasks'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
         Route::post('/tasks/{task}/check', [PublicTaskController::class, 'check'])->name('public.tasks.check');
         Route::post('/tasks/{task}/run', [PublicTaskController::class, 'run'])->name('public.tasks.run');
     });
@@ -87,6 +91,7 @@ Route::prefix('admin')
             return view('admin.home');
         })->name('dashboard');
 
+        Route::resource('users', UserController::class);
         Route::resource('modules', ModuleController::class);
         Route::resource('courses', AdminCourseController::class);
         Route::resource('tasks', AdminTaskController::class);
@@ -97,5 +102,8 @@ Route::prefix('admin')
 
         Route::resource('lessons', AdminLessonController::class)->except(['index']);
     });
+
+Route::middleware('auth')->post('/lesson/{lesson}/complete', [\App\Http\Controllers\Public\UserProgressController::class, 'complete'])
+    ->name('public.lesson.complete');
 
 require __DIR__.'/auth.php';

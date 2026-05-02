@@ -93,7 +93,7 @@ class TasksSeeder extends Seeder
             $this->task(
                 id: 1,
                 taskNumber: 1,
-                lessonId: 6,    // Оператор SELECT
+                lessonId: 6,
                 title: 'Имена пассажиров',
                 description: 'Простой SELECT из одной таблицы',
                 taskText: 'Вывести имена всех когда-либо обслуживаемых пассажиров авиакомпаний.',

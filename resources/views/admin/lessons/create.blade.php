@@ -249,8 +249,7 @@
         }
     </style>
 
-    {{-- TinyMCE --}}
-    <script src="https://cdn.tiny.cloud/1/YOUR_API_KEY/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/1gx3mseo0ncr0k0keywgot76yjkbhesu7g40bcmzhzghddrx/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
 
     <script>
         tinymce.init({
@@ -338,6 +337,21 @@
                                 class="admin-input"
                                 value="{{ old('title') }}"
                                 placeholder="Введите название урока"
+                                required
+                            />
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label for="lesson_order" class="admin-form-label">
+                                XP <span class="admin-required">*</span>
+                            </label>
+                            <input
+                                type="number"
+                                name="xp"
+                                id="xp"
+                                class="admin-input"
+                                placeholder="Введите XP"
+                                value="{{ old('xp') }}"
                                 required
                             />
                         </div>

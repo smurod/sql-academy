@@ -202,10 +202,10 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>ID курса</th>
                         <th>Название</th>
                         <th>Описание</th>
                         <th>Очередность</th>
+                        <th>XP</th>
                         <th>Список уроков</th>
                         <th>Изменить</th>
                         <th>Удалить</th>
@@ -216,10 +216,6 @@
                         <tr>
                             <td>
                                 <span class="admin-id-badge">#{{ $module->id }}</span>
-                            </td>
-
-                            <td>
-                                <span class="admin-course-badge">#{{ $module->course_id }}</span>
                             </td>
 
                             <td>
@@ -234,6 +230,10 @@
 
                             <td>
                                 <span class="admin-order-badge">{{ $module->order_index }}</span>
+                            </td>
+
+                            <td>
+                                <span class="admin-course-badge">{{ $module->xp }}</span>
                             </td>
 
                             <td>

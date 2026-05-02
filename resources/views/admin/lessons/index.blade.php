@@ -227,6 +227,7 @@
                         <th>Содержимое</th>
                         <th>Тип</th>
                         <th>Позиция</th>
+                        <th>XP</th>
                         <th>Изменить</th>
                         <th>Удалить</th>
                     </tr>
@@ -273,6 +274,10 @@
 
                             <td>
                                 <span class="admin-order-badge">{{ $lesson->lesson_order }}</span>
+                            </td>
+
+                            <td>
+                                <span class="admin-order-badge">{{ $lesson->xp }}</span>
                             </td>
 
                             <td>

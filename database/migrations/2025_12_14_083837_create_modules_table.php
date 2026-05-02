@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->integer('order_index')->default(0);
+            $table->integer('xp');
             $table->timestamps();
         });
     }

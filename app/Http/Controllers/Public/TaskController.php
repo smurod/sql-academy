@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Public;
 
+use App\Models\UsersRating;
 use Illuminate\Routing\Controller;
 use App\Models\Task;
 use App\Services\SqlCheckerService;
@@ -17,35 +18,106 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $user = auth()->user();
-        $query = Task::query();
+        $userId = auth()->id();
 
-        $solvedTaskIds = [];
+        // 1. Получаем ID решенных задач (уникальные)
+        $solvedTaskIds = $userId
+            ? UsersRating::where('user_id', $userId)
+                ->where('type', 'task')
+                ->distinct()
+                ->pluck('source_id')
+                ->toArray()
+            : [];
+
+        $solvedTasksCount = count($solvedTaskIds);
+
+        // 2. Инициализируем фильтры
         $search = $request->input('search', '');
         $status = $request->input('status', 'all');
         $category = $request->input('category', 'all');
 
+       $baseQuery = Task::query()->withCount(['solutions as solved_by_count' => function ($q) {
+            $q->select(\DB::raw('count(distinct user_id)'));
+        }]);
         if ($search) {
-            $query->where(function ($q) use ($search) {
+            $baseQuery->where(function ($q) use ($search) {
                 $q->where('title', 'LIKE', "%{$search}%")
                     ->orWhere('task_number', 'LIKE', "%{$search}%")
                     ->orWhere('description', 'LIKE', "%{$search}%");
             });
         }
 
-        $totalTasks = Task::count();
-        $solvedCount = count($solvedTaskIds);
-        $progressPercent = $totalTasks > 0 ? round(($solvedCount / $totalTasks) * 100) : 0;
+        // 4. Считаем СТАТУСЫ (только для найденных задач)
+        $statusCounts = [
+            'all'      => (clone $baseQuery)->count(),
+            'solved'   => (clone $baseQuery)->whereIn('id', $solvedTaskIds)->count(),
+            'unsolved' => (clone $baseQuery)->whereNotIn('id', $solvedTaskIds)->count(),
+        ];
 
-        $categoryCounts = $this->getCategoryCounts();
-        $statusCounts = ['all' => $totalTasks, 'solved' => 0, 'unsolved' => $totalTasks];
+        // 5. Считаем КАТЕГОРИИ (только для найденных задач)
+        // Это решит проблему, когда во вкладках висят пустые цифры
+        $categoryCounts = $this->getDynamicCategoryCounts(clone $baseQuery);
 
-        $tasks = $query->orderBy('task_order')->paginate(10)->appends($request->query());
+        // 6. Применяем фильтр КАТЕГОРИИ к основному запросу
+        if ($category !== 'all') {
+            if ($category === 'dml') {
+                $baseQuery->whereIn('sql_type', ['insert', 'update', 'delete']);
+            } else {
+                $baseQuery->where('sql_type', $category);
+            }
+        }
 
-        return view('public.tasks.index', compact(
-            'tasks', 'totalTasks', 'solvedCount', 'progressPercent',
-            'search', 'status', 'category', 'categoryCounts', 'statusCounts', 'solvedTaskIds'
-        ));
+        // 7. Применяем фильтр СТАТУСА к основному запросу
+        if ($status === 'solved') {
+            $baseQuery->whereIn('id', $solvedTaskIds);
+        } elseif ($status === 'unsolved') {
+            $baseQuery->whereNotIn('id', $solvedTaskIds);
+        }
+
+        // 8. Финальная пагинация
+        $tasks = $baseQuery->orderBy('task_order')
+            ->paginate(10)
+            ->appends($request->query());
+
+        // Общий прогресс пользователя (по всей базе, не по поиску)
+        $totalTasksGlobal = Task::count();
+        $progressPercent = $totalTasksGlobal > 0
+            ? round(($solvedTasksCount / $totalTasksGlobal) * 100)
+            : 0;
+
+        return view('public.tasks.index', [
+            'tasks'            => $tasks,
+            'totalTasks'       => $totalTasksGlobal,
+            'solvedTasksCount' => $solvedTasksCount,
+            'progressPercent'  => $progressPercent,
+            'search'           => $search,
+            'status'           => $status,
+            'category'         => $category,
+            'categoryCounts'   => $categoryCounts,
+            'statusCounts'     => $statusCounts,
+            'solvedTaskIds'    => $solvedTaskIds
+        ]);
+    }
+
+    /**
+     * Вспомогательный метод для подсчета количества задач в каждой категории с учетом поиска
+     */
+    private function getDynamicCategoryCounts($query)
+    {
+        $counts = $query->select('sql_type', \DB::raw('count(*) as total'))
+            ->groupBy('sql_type')
+            ->pluck('total', 'sql_type')
+            ->toArray();
+
+        return [
+            'all'       => array_sum($counts),
+            'select'    => $counts['select'] ?? 0,
+            'join'      => $counts['join'] ?? 0,
+            'aggregate' => $counts['aggregate'] ?? 0,
+            'subquery'  => $counts['subquery'] ?? 0,
+            'window'    => $counts['window'] ?? 0,
+            'dml'       => ($counts['insert'] ?? 0) + ($counts['update'] ?? 0) + ($counts['delete'] ?? 0),
+        ];
     }
 
     private function getCategoryCounts(): array
@@ -131,16 +203,37 @@ class TaskController extends Controller
     public function check(Request $request, Task $task): JsonResponse
     {
         $request->validate(['sql' => 'required|string|max:5000']);
+
         $result = $this->checker->check($task, $request->input('sql'));
 
-        // Если check вернул ok — добавим также rows для отображения
-        if ($result['status'] === 'ok') {
+        \Log::info('CHECK RESULT', ['status' => $result['status'] ?? 'no status', 'task_id' => $task->id]);
+
+        if (($result['status'] ?? '') === 'ok') {
+            $user = auth()->user();
+
+            \Log::info('USER', ['user' => $user?->id ?? 'null']);
+
+            if ($user) {
+                $rating = UsersRating::firstOrCreate(
+                    [
+                        'user_id'   => $user->id,
+                        'type'      => 'task',
+                        'source_id' => $task->id,
+                    ],
+                    [
+                        'xp' => $task->points ?? 10,
+                    ]
+                );
+
+                \Log::info('RATING SAVED', ['id' => $rating->id, 'wasRecentlyCreated' => $rating->wasRecentlyCreated]);
+            }
+
             try {
                 $conn = DB::connection('sandbox_template');
                 $sql = trim($request->input('sql'));
                 if (preg_match('/^\s*select/i', $sql)) {
                     $rows = $conn->select($sql);
-                    $result['rows'] = $rows;
+                    $result['rows']  = $rows;
                     $result['count'] = count($rows);
                 }
             } catch (\Throwable $e) {
@@ -151,14 +244,6 @@ class TaskController extends Controller
         return response()->json($result);
     }
 
-    // ═══════════════════════════════════════════
-    //  ERD SCHEMA — Читает из INFORMATION_SCHEMA
-    // ═══════════════════════════════════════════
-
-    /**
-     * Маппинг database_schema задачи → список VIEW-таблиц (как видит студент)
-     * Ключ = имя VIEW, значение = реальная таблица в sandbox
-     */
     private const SCHEMA_TABLES = [
         'aviation' => ['passengers', 'companies', 'trips', 'pass_in_trip'],
         'family'   => ['family_members', 'goods', 'good_types', 'payments'],
@@ -175,7 +260,7 @@ class TaskController extends Controller
     /**
      * Получить ERD-данные для задачи (формат как в sandbox)
      */
-    private function getErdSchemaForTask(Task $task): array
+    public function getErdSchemaForTask(Task $task): array
     {
         $schemaKey = $task->database_schema;
         $realTables = self::SCHEMA_TABLES[$schemaKey] ?? [];

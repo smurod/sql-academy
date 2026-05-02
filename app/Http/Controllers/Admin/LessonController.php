@@ -29,6 +29,7 @@ class LessonController extends Controller
             'lesson_order' => 'required|integer',
             'lesson_type'  => 'required|in:theory,practice,parent',
             'content'      => 'nullable|string',
+            'xp' => 'nullable|integer',
         ]);
 
         $module->lessons()->create([
@@ -38,6 +39,7 @@ class LessonController extends Controller
             'lesson_order' => $data['lesson_order'],
             'lesson_type'  => $data['lesson_type'],
             'content'      => $data['content'] ?? null,
+            'xp'           => $data['xp'] ?? 0,
             // ❌ Убрали: json_encode, lecture, code, presentation, video
         ]);
 
@@ -69,6 +71,7 @@ class LessonController extends Controller
             'lesson_order' => 'required|integer',
             'lesson_type'  => 'required|in:theory,practice,parent',
             'content'      => 'nullable|string',
+            'xp' => 'nullable|integer',
         ]);
 
         $lesson->update([
@@ -77,6 +80,7 @@ class LessonController extends Controller
             'lesson_order' => $data['lesson_order'],
             'lesson_type'  => $data['lesson_type'],
             'content'      => $data['content'] ?? $lesson->content,
+            'xp'           => $data['xp'] ?? 0,
         ]);
 
         return redirect()

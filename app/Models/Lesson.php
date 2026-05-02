@@ -10,16 +10,6 @@ class Lesson extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'course_id',
-        'module_id',
-        'title',
-        'slug',
-        'content',
-        'lesson_order',
-        'lesson_type'
-    ];
-
     protected static function boot()
     {
         parent::boot();
@@ -29,6 +19,17 @@ class Lesson extends Model
             }
         });
     }
+
+    protected $fillable = [
+        'course_id',
+        'module_id',
+        'title',
+        'slug',
+        'content',
+        'lesson_order',
+        'xp',
+        'lesson_type'
+    ];
 
     public function module()
     {
@@ -43,5 +44,14 @@ class Lesson extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+    public function progresses()
+    {
+        return $this->hasMany(LessonProgress::class);
+    }
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'lesson_tasks', 'lesson_id', 'task_id')
+            ->orderBy('task_order');
     }
 }
