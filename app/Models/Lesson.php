@@ -10,20 +10,6 @@ class Lesson extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'course_id',
-        'module_id',
-        'title',
-        'slug',
-        'content',
-        'lesson_order',
-        'lesson_type'
-    ];
-
-    protected $casts = [
-        'content' => 'array',
-    ];
-
     protected static function boot()
     {
         parent::boot();
@@ -34,6 +20,17 @@ class Lesson extends Model
         });
     }
 
+    protected $fillable = [
+        'course_id',
+        'module_id',
+        'title',
+        'slug',
+        'content',
+        'lesson_order',
+        'xp',
+        'lesson_type'
+    ];
+
     public function module()
     {
         return $this->belongsTo(Module::class);
@@ -43,17 +40,18 @@ class Lesson extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
     public function getRouteKeyName()
     {
         return 'slug';
     }
-
-    public function getLectureAttribute() { return $this->content['lecture'] ?? null; }
-    public function getCodeAttribute() { return $this->content['code'] ?? null; }
-    public function getPresentationAttribute() { return $this->content['presentation'] ?? null; }
-    public function getVideoAttribute() { return $this->content['video'] ?? null; }
-
-    public function hasCode(): bool { return !empty($this->getCodeAttribute()); }
-    public function hasPresentation(): bool { return !empty($this->getPresentationAttribute()); }
-    public function hasVideo(): bool { return !empty($this->getVideoAttribute()); }
+    public function progresses()
+    {
+        return $this->hasMany(LessonProgress::class);
+    }
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'lesson_tasks', 'lesson_id', 'task_id')
+            ->orderBy('task_order');
+    }
 }

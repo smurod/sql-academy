@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Список курсов — SQLMastery Admin')
+@section('title', 'Список пользователей — SQLMastery Admin')
 
 @section('page-header')
     <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;">
@@ -8,43 +8,19 @@
             <div class="admin-breadcrumbs">
                 <a href="{{ route('dashboard') }}">Главная</a>
                 <i class="bi bi-chevron-right"></i>
-                <span>Курсы</span>
+                <span>Пользователи</span>
             </div>
 
-            <h1 class="admin-page-title">Список <span>курсов</span></h1>
+            <h1 class="admin-page-title">Список <span>пользователей</span></h1>
             <p class="admin-page-subtitle">
-                Управление курсами платформы: просмотр, переход к урокам, редактирование и удаление.
+                Просмотр, редактирование, удаление и управление правами доступа пользователей.
             </p>
-        </div>
-
-        <div>
-            <a href="{{ route('courses.create') }}" class="admin-index-create-btn">
-                <i class="bi bi-plus-circle-fill"></i>
-                <span>Добавить курс</span>
-            </a>
         </div>
     </div>
 @endsection
 
 @section('content')
     <style>
-        .admin-index-create-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: .65rem;
-            padding: .95rem 1.2rem;
-            border-radius: 14px;
-            font-weight: 600;
-            color: #fff;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            box-shadow: 0 12px 28px rgba(59,130,246,0.24);
-            transition: all .25s ease;
-        }
-
-        .admin-index-create-btn:hover {
-            transform: translateY(-2px);
-        }
-
         .admin-table-card {
             position: relative;
             border-radius: 24px;
@@ -68,11 +44,6 @@
             z-index: 1;
             padding: 1.3rem 1.4rem;
             border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
         }
 
         .admin-table-head h2 {
@@ -96,7 +67,7 @@
         .admin-table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 980px;
+            min-width: 900px;
         }
 
         .admin-table th {
@@ -136,18 +107,17 @@
             font-size: .8rem;
         }
 
-        .admin-course-title {
+        .admin-user-name {
             font-weight: 700;
             color: var(--text-primary);
         }
 
-        .admin-course-desc {
+        .admin-user-email {
             color: var(--text-secondary);
-            line-height: 1.55;
-            max-width: 320px;
+            font-size: .85rem;
         }
 
-        .admin-level-badge {
+        .admin-status-badge {
             display: inline-flex;
             align-items: center;
             gap: .35rem;
@@ -158,34 +128,73 @@
             border: 1px solid transparent;
         }
 
-        .admin-level-beginner {
+        .admin-status-active {
             color: #86efac;
             background: rgba(34,197,94,0.10);
             border-color: rgba(34,197,94,0.18);
         }
 
-        .admin-level-middle {
-            color: #fcd34d;
-            background: rgba(245,158,11,0.10);
-            border-color: rgba(245,158,11,0.18);
-        }
-
-        .admin-level-advanced {
+        .admin-status-inactive {
             color: #fca5a5;
             background: rgba(239,68,68,0.10);
             border-color: rgba(239,68,68,0.18);
         }
 
-        .admin-level-empty {
-            color: var(--text-muted);
-            background: var(--bg-soft);
-            border-color: var(--border-color);
+        .admin-role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            padding: .4rem .7rem;
+            border-radius: 999px;
+            font-size: .78rem;
+            font-weight: 600;
+            border: 1px solid transparent;
         }
 
-        .admin-actions {
-            display: flex;
-            gap: .55rem;
-            flex-wrap: wrap;
+        .admin-role-admin {
+            color: #c4b5fd;
+            background: rgba(139,92,246,0.10);
+            border-color: rgba(139,92,246,0.18);
+        }
+
+        .admin-role-user {
+            color: #93c5fd;
+            background: rgba(59,130,246,0.10);
+            border-color: rgba(59,130,246,0.18);
+        }
+
+        .admin-verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .3rem;
+            font-size: .82rem;
+        }
+
+        .admin-verified-yes {
+            color: #86efac;
+        }
+
+        .admin-verified-no {
+            color: var(--text-muted);
+        }
+
+        .admin-provider-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: .35rem .6rem;
+            border-radius: 999px;
+            font-size: .76rem;
+            font-weight: 600;
+            background: var(--bg-soft);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            text-transform: capitalize;
+        }
+
+        .admin-date-text {
+            color: var(--text-secondary);
+            font-size: .85rem;
+            white-space: nowrap;
         }
 
         .admin-action-btn {
@@ -201,6 +210,7 @@
             color: var(--text-primary);
             transition: all .22s ease;
             cursor: pointer;
+            text-decoration: none;
         }
 
         .admin-action-btn:hover {
@@ -212,18 +222,15 @@
             background: rgba(59,130,246,0.08);
         }
 
-        .admin-action-btn.info:hover {
-            border-color: rgba(6,182,212,0.2);
-            background: rgba(6,182,212,0.08);
-        }
-
         .admin-action-btn.danger:hover {
             border-color: rgba(239,68,68,0.2);
             background: rgba(239,68,68,0.08);
         }
 
-        .admin-inline-form {
-            margin: 0;
+        .admin-actions-cell {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: nowrap;
         }
 
         .admin-empty-state {
@@ -236,81 +243,94 @@
 
     <div class="admin-table-card">
         <div class="admin-table-head">
-            <div>
-                <h2>Курсы платформы</h2>
-                <p>Всего курсов: {{ $courses->count() }}</p>
-            </div>
+            <h2>Пользователи</h2>
+            <p>Всего пользователей: {{ $users->count() }}</p>
         </div>
 
-        @if($courses->count())
+        @if($users->count())
             <div class="admin-table-wrap">
                 <table class="admin-table">
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Название</th>
-                        <th>Описание</th>
-                        <th>Уровень</th>
-                        <th>Уроки</th>
-                        <th>Изменить</th>
-                        <th>Удалить</th>
+                        <th>Имя / Email</th>
+                        <th>Роль</th>
+                        <th>Статус</th>
+                        <th>Email подтверждён</th>
+                        <th>Провайдер</th>
+                        <th>Дата регистрации</th>
+                        <th>Действия</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($courses as $course)
+                    @foreach($users as $user)
                         <tr>
                             <td>
-                                <span class="admin-id-badge">#{{ $course->id }}</span>
+                                <span class="admin-id-badge">#{{ $user->id }}</span>
                             </td>
 
                             <td>
-                                <div class="admin-course-title">{{ $course->title }}</div>
+                                <div class="admin-user-name">{{ $user->name }}</div>
+                                <div class="admin-user-email">{{ $user->email }}</div>
                             </td>
 
                             <td>
-                                <div class="admin-course-desc">
-                                    {{ \Illuminate\Support\Str::limit(strip_tags($course->description), 80) }}
-                                </div>
-                            </td>
-
-                            <td>
-                                @if(!empty($course->level))
-                                    <span class="admin-level-badge
-                                        @if($course->level === 'beginner') admin-level-beginner
-                                        @elseif($course->level === 'middle') admin-level-middle
-                                        @else admin-level-advanced
-                                        @endif
-                                    ">
-                                        {{ ucfirst($course->level) }}
+                                @if($user->is_admin)
+                                    <span class="admin-role-badge admin-role-admin">
+                                        <i class="bi bi-shield-fill-check"></i> Админ
                                     </span>
                                 @else
-                                    <span class="admin-level-badge admin-level-empty">Не указано</span>
+                                    <span class="admin-role-badge admin-role-user">
+                                        <i class="bi bi-person-fill"></i> Пользователь
+                                    </span>
                                 @endif
                             </td>
 
                             <td>
-                                <a href="{{ route('courses.show', $course) }}" class="admin-action-btn primary">
-                                    <i class="bi bi-journal-text"></i>
-                                    <span>Список уроков</span>
-                                </a>
+                                @if($user->is_active)
+                                    <span class="admin-status-badge admin-status-active">
+                                        <i class="bi bi-check-circle-fill"></i> Активен
+                                    </span>
+                                @else
+                                    <span class="admin-status-badge admin-status-inactive">
+                                        <i class="bi bi-x-circle-fill"></i> Заблокирован
+                                    </span>
+                                @endif
                             </td>
 
                             <td>
-                                <a href="{{ route('courses.edit', $course) }}" class="admin-action-btn info">
-                                    <i class="bi bi-pencil-square"></i>
-                                    <span>Изменить</span>
-                                </a>
+                                @if($user->email_verified_at)
+                                    <span class="admin-verified-badge admin-verified-yes">
+                                        <i class="bi bi-patch-check-fill"></i> Да
+                                    </span>
+                                @else
+                                    <span class="admin-verified-badge admin-verified-no">
+                                        <i class="bi bi-patch-exclamation"></i> Нет
+                                    </span>
+                                @endif
                             </td>
 
                             <td>
-                                <form action="{{ route('courses.destroy', $course) }}" method="POST" class="admin-inline-form">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="admin-action-btn danger">
-                                        <i class="bi bi-trash3"></i>
-                                        <span>Удалить</span>
-                                    </button>
-                                </form>
+                                @if($user->provider)
+                                    <span class="admin-provider-badge">{{ $user->provider }}</span>
+                                @else
+                                    <span style="color:var(--text-muted);font-size:.85rem;">—</span>
+                                @endif
+                            </td>
+
+                            <td>
+                                <span class="admin-date-text">
+                                    {{ $user->created_at->format('d.m.Y') }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <div class="admin-actions-cell">
+                                    <a class="admin-action-btn primary"
+                                       href="{{ route('users.show', $user) }}">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -319,7 +339,7 @@
             </div>
         @else
             <div class="admin-empty-state">
-                Пока что курсы не добавлены.
+                Пользователи ещё не зарегистрированы.
             </div>
         @endif
     </div>

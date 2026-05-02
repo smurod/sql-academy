@@ -1504,7 +1504,6 @@
                     <div class="results-header">
                         <div class="results-tabs">
                             <button class="results-tab active">Результат</button>
-                            <button class="results-tab">Ожидаемый</button>
                         </div>
                         <span class="results-info" id="resultsInfo"></span>
                     </div>
@@ -1575,7 +1574,7 @@
             var schemaData = @json($schemaData);
             var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
             var runUrl = '{{ route("public.tasks.run", $task) }}';
-            var checkUrl = '{{ route("public.tasks.check", $task) }}';
+            var checkUrl = '{{ route("public.tasks.check", $task) }}'
 
             var editor = document.getElementById('sqlEditor');
             var runBtn = document.getElementById('runBtn');
@@ -1935,20 +1934,30 @@
                 });
             }
 
-            runBtn.addEventListener('click', executeRun);
-            checkBtn.addEventListener('click', executeCheck);
 
-            document.getElementById('resetBtn').addEventListener('click', function() {
-                editor.value = '';
-                resultsBody.innerHTML = '<div class="result-empty"><i class="bi bi-terminal"></i><span>Выполните запрос, чтобы увидеть результат</span></div>';
-                resultsInfo.textContent = '';
-                editor.focus();
+            var isAuth = {{ auth()->check() ? 'true' : 'false' }};
+            var loginUrl = '{{ url("/login") }}';
+
+            function requireAuth(callback) {
+                if (!isAuth) {
+                    window.location.href = loginUrl;
+                    return;
+                }
+                callback();
+            }
+
+            runBtn.addEventListener('click', function() {
+                requireAuth(executeRun);
+            });
+
+            checkBtn.addEventListener('click', function() {
+                requireAuth(executeCheck);
             });
 
             editor.addEventListener('keydown', function(e) {
                 if (e.ctrlKey && e.key === 'Enter') {
                     e.preventDefault();
-                    executeRun();
+                    requireAuth(executeRun);
                 }
                 if (e.key === 'Tab') {
                     e.preventDefault();
@@ -1957,6 +1966,15 @@
                     this.selectionStart = this.selectionEnd = start + 2;
                 }
             });
+
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                editor.value = '';
+                resultsBody.innerHTML = '<div class="result-empty"><i class="bi bi-terminal"></i><span>Выполните запрос, чтобы увидеть результат</span></div>';
+                resultsInfo.textContent = '';
+                editor.focus();
+            });
+
+
 
             function measureCard(tableName) {
                 var card = erdState.cards[tableName];

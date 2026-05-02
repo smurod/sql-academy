@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
-use App\Http\Controllers\Admin\Controller;
+
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -12,44 +14,52 @@ class SocialController extends Controller
     {
         return Socialite::driver($provider)->redirect();
     }
+
     public function handleProviderCallback($provider)
     {
         try {
             $socialUser = Socialite::driver($provider)->user();
         } catch (\Exception $e) {
-            // обработка ошибок (например, редирект на страниц входа с ошибкой)
-            return redirect('/login')->with('error', 'Ошибка
-входа через ' . $provider);
+            return redirect('/login')->with('error', 'Ошибка входа через ' . $provider);
         }
-        // ищем пользователя по provider_id или email
+
         $user = User::where('provider', $provider)
             ->where('provider_id', $socialUser->getId())
             ->first();
-        if (!$user) {
-            // можно попробовать найти по email и привязать
+
+        if (! $user) {
             $user = User::where('email', $socialUser->getEmail())->first();
         }
-        if (!$user) {
-            // создаём нового пользователя
+
+        if (! $user) {
             $user = User::create([
                 'name' => $socialUser->getName() ?? $socialUser->getNickname() ?? 'User',
                 'email' => $socialUser->getEmail(),
-                'password' => bcrypt(Str::random(16)), // парольне обязателен
+                'password' => bcrypt(Str::random(16)),
                 'provider' => $provider,
                 'provider_id' => $socialUser->getId(),
-                // при необходимости сохраняйте токены:
-                //'access_token' => $socialUser->token,
             ]);
+
+            $user->assignRole('student');
         } else {
-            // если пользователь найден по email, привяжемпровайдера
-            if (!$user->provider || !$user->provider_id) {
+            if (! $user->provider || ! $user->provider_id) {
                 $user->update([
                     'provider' => $provider,
                     'provider_id' => $socialUser->getId(),
                 ]);
             }
+
+            if (! $user->hasAnyRole(['admin', 'student'])) {
+                $user->assignRole('student');
+            }
         }
-        Auth::login($user, true); // логин пользователя
-        return redirect()->intended('/admin/dashboard');
+
+        Auth::login($user, true);
+
+        session()->forget('url.intended');
+
+        return redirect(
+            $user->hasRole('admin') ? '/admin/dashboard' : '/public/home'
+        );
     }
 }

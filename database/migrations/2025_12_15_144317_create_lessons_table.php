@@ -17,6 +17,7 @@ return new class extends Migration
             $table->longText('content')->nullable();
             $table->enum('lesson_type', ['theory', 'practice', 'parent'])->default('theory');
             $table->integer('lesson_order');
+            $table->integer('xp');
             $table->timestamps();
         });
     }

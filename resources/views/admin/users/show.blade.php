@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Просмотр задания — SQLMastery Admin')
+@section('title', 'Просмотр пользователя — SQLMastery Admin')
 
 @section('page-header')
     <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;">
@@ -8,23 +8,17 @@
             <div class="admin-breadcrumbs">
                 <a href="{{ route('dashboard') }}">Главная</a>
                 <i class="bi bi-chevron-right"></i>
-                <a href="{{ route('tasks.index') }}">Задания</a>
+                <a href="{{ route('users.index') }}">Пользователи</a>
                 <i class="bi bi-chevron-right"></i>
-                <span>Просмотр задания</span>
+                <span>Просмотр пользователя</span>
             </div>
 
-            <h1 class="admin-page-title">Просмотр <span>задания</span></h1>
+            <h1 class="admin-page-title">Просмотр <span>пользователя</span></h1>
             <p class="admin-page-subtitle">
-                Детальный просмотр задания, связанного урока, текста и параметров сложности.
+                Детальная информация о пользователе, его статусе и правах доступа.
             </p>
         </div>
 
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
-            <a href="{{ route('tasks.edit', $task) }}" class="admin-show-btn primary">
-                <i class="bi bi-pencil-square"></i>
-                <span>Редактировать</span>
-            </a>
-        </div>
     </div>
 @endsection
 
@@ -69,12 +63,6 @@
             margin: 0;
         }
 
-        .admin-show-head p {
-            margin-top: .35rem;
-            color: var(--text-secondary);
-            font-size: .9rem;
-        }
-
         .admin-show-body {
             position: relative;
             z-index: 1;
@@ -107,7 +95,6 @@
         .admin-info-box div {
             color: var(--text-primary);
             font-weight: 600;
-            line-height: 1.5;
         }
 
         .admin-show-section + .admin-show-section {
@@ -127,7 +114,6 @@
             padding: 1rem 1.1rem;
             color: var(--text-secondary);
             line-height: 1.7;
-            white-space: pre-wrap;
         }
 
         .admin-show-footer {
@@ -137,15 +123,13 @@
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            gap: .75rem;
             flex-wrap: wrap;
+            gap: .75rem;
         }
 
         .admin-show-btn {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: .65rem;
             padding: .92rem 1.2rem;
             border-radius: 14px;
@@ -160,18 +144,9 @@
             border-color: var(--border-color);
         }
 
-        .admin-show-btn.secondary:hover {
-            transform: translateY(-2px);
-        }
-
         .admin-show-btn.primary {
             color: #fff;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            box-shadow: 0 12px 28px rgba(59,130,246,0.24);
-        }
-
-        .admin-show-btn.primary:hover {
-            transform: translateY(-2px);
         }
 
         .admin-side-body {
@@ -186,38 +161,12 @@
             margin-bottom: .8rem;
         }
 
-        .admin-side-list {
-            display: flex;
-            flex-direction: column;
-            gap: .85rem;
-        }
-
         .admin-side-item {
-            display: flex;
-            gap: .75rem;
-            align-items: flex-start;
             padding: .9rem;
             border-radius: 16px;
             background: var(--bg-soft);
             border: 1px solid var(--border-color);
-        }
-
-        .admin-side-item i {
-            color: var(--accent);
-            font-size: 1rem;
-            margin-top: .1rem;
-        }
-
-        .admin-side-item strong {
-            display: block;
-            font-size: .92rem;
-            margin-bottom: .25rem;
-        }
-
-        .admin-side-item span {
-            color: var(--text-secondary);
-            font-size: .84rem;
-            line-height: 1.5;
+            margin-bottom: .75rem;
         }
 
         @media (max-width: 1200px) {
@@ -225,66 +174,78 @@
                 grid-template-columns: 1fr;
             }
         }
-
-        @media (max-width: 900px) {
-            .admin-show-info-grid {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 
     <div class="admin-show-layout">
+
         <div class="admin-show-card">
             <div class="admin-show-head">
-                <h2>{{ $task->title }}</h2>
-                <p>Просмотр содержимого задания и его основных параметров.</p>
+                <h2>{{ $user->name }}</h2>
             </div>
 
             <div class="admin-show-body">
+
                 <div class="admin-show-info-grid">
                     <div class="admin-info-box">
                         <label>ID</label>
-                        <div>#{{ $task->id }}</div>
+                        <div>#{{ $user->id }}</div>
                     </div>
 
                     <div class="admin-info-box">
-                        <label>ID урока</label>
-                        <div>{{ $task->lesson_id ?? 'Не указан' }}</div>
-                    </div>
-
-                    <div class="admin-info-box">
-                        <label>Сложность</label>
+                        <label>Роль</label>
                         <div>
-                            @if(!empty($task->difficulty))
-                                {{ $task->difficulty }}
-                            @else
-                                Не указано
-                            @endif
+                            {{ $user->is_admin ? 'Администратор' : 'Пользователь' }}
+                        </div>
+                    </div>
+
+                    <div class="admin-info-box">
+                        <label>Статус</label>
+                        <div>
+                            {{ $user->is_active ? 'Активен' : 'Заблокирован' }}
                         </div>
                     </div>
                 </div>
 
                 <div class="admin-show-section">
-                    <div class="admin-show-section-title">Название</div>
-                    <div class="admin-show-block">{{ $task->title }}</div>
+                    <div class="admin-show-section-title">Email</div>
+                    <div class="admin-show-block">
+                        {{ $user->email }}
+                    </div>
                 </div>
 
                 <div class="admin-show-section">
-                    <div class="admin-show-section-title">Текст задания</div>
-                    <div class="admin-show-block">{{ $task->task_text }}</div>
+                    <div class="admin-show-section-title">Email подтверждён</div>
+                    <div class="admin-show-block">
+                        @if($user->email_verified_at)
+                            Да ({{ $user->email_verified_at->format('d.m.Y H:i') }})
+                        @else
+                            Нет
+                        @endif
+                    </div>
                 </div>
+
+                <div class="admin-show-section">
+                    <div class="admin-show-section-title">Провайдер авторизации</div>
+                    <div class="admin-show-block">
+                        {{ $user->provider ?? 'Не используется' }}
+                    </div>
+                </div>
+
+                <div class="admin-show-section">
+                    <div class="admin-show-section-title">Дата регистрации</div>
+                    <div class="admin-show-block">
+                        {{ $user->created_at->format('d.m.Y H:i') }}
+                    </div>
+                </div>
+
             </div>
 
             <div class="admin-show-footer">
-                <a href="{{ route('tasks.index') }}" class="admin-show-btn secondary">
+                <a href="{{ route('users.index') }}" class="admin-show-btn secondary">
                     <i class="bi bi-arrow-left"></i>
-                    <span>Назад</span>
+                    Назад
                 </a>
 
-                <a href="{{ route('tasks.edit', $task) }}" class="admin-show-btn primary">
-                    <i class="bi bi-pencil-square"></i>
-                    <span>Редактировать</span>
-                </a>
             </div>
         </div>
 
@@ -292,32 +253,22 @@
             <div class="admin-side-body">
                 <div class="admin-side-title">Информация</div>
 
-                <div class="admin-side-list">
-                    <div class="admin-side-item">
-                        <i class="bi bi-list-check"></i>
-                        <div>
-                            <strong>Просмотр задания</strong>
-                            <span>На этой странице отображаются основные сведения о выбранном SQL-задании.</span>
-                        </div>
-                    </div>
+                <div class="admin-side-item">
+                    <strong>Просмотр профиля</strong>
+                    <div>Здесь отображаются основные данные выбранного пользователя.</div>
+                </div>
 
-                    <div class="admin-side-item">
-                        <i class="bi bi-pencil-square"></i>
-                        <div>
-                            <strong>Редактирование</strong>
-                            <span>Если данные неактуальны, вы можете сразу перейти к редактированию задания.</span>
-                        </div>
-                    </div>
+                <div class="admin-side-item">
+                    <strong>Редактирование</strong>
+                    <div>Вы можете изменить роль, статус или другие параметры пользователя.</div>
+                </div>
 
-                    <div class="admin-side-item">
-                        <i class="bi bi-arrow-return-left"></i>
-                        <div>
-                            <strong>Навигация</strong>
-                            <span>Используйте кнопку «Назад», чтобы быстро вернуться к общему списку заданий.</span>
-                        </div>
-                    </div>
+                <div class="admin-side-item">
+                    <strong>Безопасность</strong>
+                    <div>Проверьте подтверждение email и способ авторизации.</div>
                 </div>
             </div>
         </div>
+
     </div>
 @endsection

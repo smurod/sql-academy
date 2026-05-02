@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 class CourseController extends Controller
 {
     public function index(){
+        if (!auth()->user()->can('view admin panel')) {
+            abort(403);
+        }
+
         $courses = Course::all();
         return view('admin.courses.index', compact('courses'));
     }

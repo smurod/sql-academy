@@ -2,8 +2,6 @@
     <div class="sandbox-results-header">
         <div class="sr-tabs">
             <button type="button" class="sr-tab active">Результат</button>
-            <button type="button" class="sr-tab">История</button>
-            <button type="button" class="sr-tab">Сообщения</button>
         </div>
         <span class="sr-info" id="sbResultsInfo">
             @isset($result)

@@ -124,7 +124,7 @@
         .category-tab.active .count {
             background: rgba(255, 255, 255, 0.25);
         }
-        
+
         .tasks-pagination {
             display: flex;
             align-items: center;
@@ -685,18 +685,18 @@
                     </div>
                     <div class="tasks-progress-text">
                         <strong>Ваш прогресс</strong>
-                        <span>24 из 80 задач решено</span>
+                        <span>{{ $solvedTasksCount }} из {{ $totalTasks }} задач решено</span>
                     </div>
                 </div>
                 <div class="tasks-progress-track">
-                    <div class="tasks-progress-fill" style="width: 30%;"></div>
+                    <div class="tasks-progress-fill" style="width: {{ $progressPercent }}%;"></div>
                 </div>
-                <div class="tasks-progress-percent">30%</div>
+                <div class="tasks-progress-percent">{{ $progressPercent }}%</div>
             </div>
 
             {{-- Filters --}}
             <div class="tasks-filters">
-                <form method="GET" action="{{ route('tasks.index') }}" class="tasks-search">
+                <form method="GET" action="{{ route('public.tasks.index') }}" class="tasks-search">
                     {{-- Сохраняем текущие фильтры --}}
                     @if($category !== 'all')
                         <input type="hidden" name="category" value="{{ $category }}">
@@ -722,10 +722,10 @@
                 @endphp
 
                 @foreach($statusButtons as $key => $btn)
-                    <a href="{{ route('tasks.index', array_merge(
+                    <a href="{{ route('public.tasks.index', array_merge(
                 request()->query(),
                 ['status' => $key, 'page' => 1]
-            )) }}"
+                )) }}"
                        class="filter-btn {{ $status === $key ? 'active' : '' }}">
                         <i class="bi {{ $btn['icon'] }}"></i> {{ $btn['label'] }}
                         <span class="count">{{ $statusCounts[$key] }}</span>
@@ -748,7 +748,7 @@
                 @endphp
 
                 @foreach($categories as $key => $label)
-                    <a href="{{ route('tasks.index', array_merge(
+                    <a href="{{ route('public.tasks.index', array_merge(
                 request()->query(),
                 ['category' => $key, 'page' => 1]
             )) }}"
@@ -763,8 +763,14 @@
             <div class="tasks-list">
 
                 @foreach($tasks as $task)
-                    <a href="{{ route('public.tasks.show', $task) }}" class="task-card ">
-                        <div class="task-number solved">{{$task->task_number}}</div>
+                    @php
+                        $isSolved = in_array($task->id, $solvedTaskIds);
+                    @endphp
+                    <a href="{{ route('public.tasks.show', $task) }}"
+                       class="task-card {{ $isSolved ? 'solved' : 'unsolved' }}">
+                        <div class="task-number {{ $isSolved ? 'solved' : 'unsolved' }}">
+                            {{ $task->task_number }}
+                        </div>
                         <div class="task-info">
                             <div class="task-info-top">
                                 <span class="task-title">{{ $task->title }}</span>
@@ -786,10 +792,14 @@
                                     {{ $diffLabel }}
                                 </div>
                             <div class="task-stat">
-                                <i class="bi bi-people"></i> 12,450
+                                <i class="bi bi-people"></i> {{ number_format($task->solved_by_count ?? 0) }}
                             </div>
-                            <div class="task-status solved">
-                                <i class="bi bi-check-lg"></i>
+                            <div class="task-status {{ $isSolved ? 'solved' : 'unsolved' }}">
+                                @if($isSolved)
+                                    <i class="bi bi-check-lg"></i>
+                                @else
+                                    <i class="bi bi-circle"></i>
+                                @endif
                             </div>
                         </div>
                         <i class="bi bi-chevron-right task-arrow"></i>

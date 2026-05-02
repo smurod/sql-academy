@@ -1,272 +1,345 @@
-<!doctype html>
-<html lang="en">
-<!--begin::Head-->
-<head>
-    <link rel="stylesheet" href="{{asset('assets/admin/dist/jquery.cleditor.css')}}"/>
-    <script src="{{asset('assets/admin/dist/jquery-3.7.1.min.js')}}"></script>
-    <script src="{{asset('assets/admin/dist/jquery.cleditor.min.js')}}"></script>
+<header class="admin-header">
+    <style>
+        .admin-header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            height: var(--header-height);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 1rem;
+            padding: 0 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--header-bg);
+            backdrop-filter: blur(18px);
+        }
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AdminLTE v4 | Dashboard</title>
-    <!--begin::Primary Meta Tags-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="AdminLTE v4 | Dashboard" />
-    <meta name="author" content="ColorlibHQ" />
-    <meta
-        name="description"
-        content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS."
-    />
-    <meta
-        name="keywords"
-        content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard"
-    />
-    <!--end::Primary Meta Tags-->
-    <!--begin::Fonts-->
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
-        integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q="
-        crossorigin="anonymous"
-    />
-    <!--end::Fonts-->
-    <!--begin::Third Party Plugin(OverlayScrollbars)-->
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css"
-        integrity="sha256-tZHrRjVqNSRyWg2wbppGnT833E/Ys0DHWGwT04GiqQg="
-        crossorigin="anonymous"
-    />
-    <!--end::Third Party Plugin(OverlayScrollbars)-->
-    <!--begin::Third Party Plugin(Bootstrap Icons)-->
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-        integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI="
-        crossorigin="anonymous"
-    />
-    <!--end::Third Party Plugin(Bootstrap Icons)-->
-    <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="{{asset('assets/admin/dist/css/adminlte.css')}}"/>
-    <!--end::Required Plugin(AdminLTE)-->
-    <!-- apexcharts -->
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
-        integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0="
-        crossorigin="anonymous"
-    />
-    <!-- jsvectormap -->
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
-        integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4="
-        crossorigin="anonymous"
-    />
-</head>
-<!--end::Head-->
-<!--begin::Body-->
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
-<!--begin::App Wrapper-->
-<div class="app-wrapper">
-    <!--begin::Header-->
-    <nav class="app-header navbar navbar-expand bg-body">
-        <!--begin::Container-->
-        <div class="container-fluid">
-            <!--begin::Start Navbar Links-->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
-                        <i class="bi bi-list"></i>
-                    </a>
-                </li>
-                <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
-                <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
-            </ul>
-            <!--end::Start Navbar Links-->
-            <!--begin::End Navbar Links-->
-            <ul class="navbar-nav ms-auto">
-                <!--begin::Navbar Search-->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="bi bi-search"></i>
-                    </a>
-                </li>
-                <!--end::Navbar Search-->
-                <!--begin::Messages Dropdown Menu-->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                        <i class="bi bi-chat-text"></i>
-                        <span class="navbar-badge badge text-bg-danger">3</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                        <a href="#" class="dropdown-item">
-                            <!--begin::Message-->
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <img
-                                        src="{{asset('assets/admin/dist/assets/img/user1-128x128.jpg')}}"
-                                        alt="User Avatar"
-                                        class="img-size-50 rounded-circle me-3"
-                                    />
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h3 class="dropdown-item-title">
-                                        Brad Diesel
-                                        <span class="float-end fs-7 text-danger"
-                                        ><i class="bi bi-star-fill"></i
-                                            ></span>
-                                    </h3>
-                                    <p class="fs-7">Call me whenever you can...</p>
-                                    <p class="fs-7 text-secondary">
-                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                    </p>
-                                </div>
-                            </div>
-                            <!--end::Message-->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!--begin::Message-->
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <img
-                                        src="{{asset('assets/admin/dist/assets/img/user8-128x128.jpg')}}"
-                                        alt="User Avatar"
-                                        class="img-size-50 rounded-circle me-3"
-                                    />
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h3 class="dropdown-item-title">
-                                        John Pierce
-                                        <span class="float-end fs-7 text-secondary">
-                          <i class="bi bi-star-fill"></i>
-                        </span>
-                                    </h3>
-                                    <p class="fs-7">I got your message bro</p>
-                                    <p class="fs-7 text-secondary">
-                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                    </p>
-                                </div>
-                            </div>
-                            <!--end::Message-->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!--begin::Message-->
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <img
-                                        src="{{asset('assets/admin/dist/assets/img/user3-128x128.jpg')}}"
-                                        alt="User Avatar"
-                                        class="img-size-50 rounded-circle me-3"
-                                    />
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h3 class="dropdown-item-title">
-                                        Nora Silvester
-                                        <span class="float-end fs-7 text-warning">
-                          <i class="bi bi-star-fill"></i>
-                        </span>
-                                    </h3>
-                                    <p class="fs-7">The subject goes here</p>
-                                    <p class="fs-7 text-secondary">
-                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                    </p>
-                                </div>
-                            </div>
-                            <!--end::Message-->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                    </div>
-                </li>
-                <!--end::Messages Dropdown Menu-->
-                <!--begin::Notifications Dropdown Menu-->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                        <i class="bi bi-bell-fill"></i>
-                        <span class="navbar-badge badge text-bg-warning">15</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                        <span class="dropdown-item dropdown-header">15 Notifications</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="bi bi-envelope me-2"></i> 4 new messages
-                            <span class="float-end text-secondary fs-7">3 mins</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="bi bi-people-fill me-2"></i> 8 friend requests
-                            <span class="float-end text-secondary fs-7">12 hours</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
-                            <span class="float-end text-secondary fs-7">2 days</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
-                    </div>
-                </li>
-                <!--end::Notifications Dropdown Menu-->
-                <!--begin::Fullscreen Toggle-->
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-lte-toggle="fullscreen">
-                        <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
-                        <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>
-                    </a>
-                </li>
-                <!--end::Fullscreen Toggle-->
-                <!--begin::User Menu Dropdown-->
-                <li class="nav-item dropdown user-menu">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img
-                            src="{{asset('assets/admin/dist/assets/img/user2-160x160.jpg')}}"
-                            class="user-image rounded-circle shadow"
-                            alt="User Image"
-                        />
-                        <span class="d-none d-md-inline">{{ auth()->user()->email }}</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                        <!--begin::User Image-->
-                        <li class="user-header text-bg-primary">
-                            <img
-                                src="{{asset('assets/admin/dist/assets/img/user2-160x160.jpg')}}"
-                                class="rounded-circle shadow"
-                                alt="User Image"
-                            />
-                            <p>
-                                {{ auth()->user()->name }} - Web Developer
-                                <small>Member since Nov. 2023</small>
-                            </p>
-                        </li>
-                        <!--end::User Image-->
-                        <!--begin::Menu Body-->
-                        <li class="user-body">
-                            <!--begin::Row-->
-                            <div class="row">
-                                <div class="col-4 text-center"><a href="#">Followers</a></div>
-                                <div class="col-4 text-center"><a href="#">Sales</a></div>
-                                <div class="col-4 text-center"><a href="#">Friends</a></div>
-                            </div>
-                            <!--end::Row-->
-                        </li>
-                        <!--end::Menu Body-->
-                        <!--begin::Menu Footer-->
-                        <li class="user-footer">
-                            <a href="#" class="btn btn-default btn-flat">Profile</a>
-                            <form action="{{route('logout')}}" method="post">
-                                @csrf
-                                <input type="submit" value="Sign out" class="btn btn-default btn-flat float-end">
-                            </form>
-                        </li>
-                        <!--end::Menu Footer-->
-                    </ul>
-                </li>
-                <!--end::User Menu Dropdown-->
-            </ul>
-            <!--end::End Navbar Links-->
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: .9rem;
+            min-width: 0;
+        }
+
+        .admin-sidebar-toggle {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-soft);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .25s ease;
+            flex-shrink: 0;
+        }
+
+        .admin-sidebar-toggle:hover {
+            color: var(--text-primary);
+            border-color: rgba(59,130,246,0.18);
+            transform: translateY(-2px);
+        }
+
+        .admin-search {
+            position: relative;
+            width: min(460px, 100%);
+        }
+
+        .admin-search i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .admin-search input {
+            width: 100%;
+            padding: .95rem 1rem .95rem 2.9rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-soft);
+            color: var(--text-primary);
+            outline: none;
+            transition: all .25s ease;
+        }
+
+        .admin-search input:focus {
+            border-color: rgba(59,130,246,0.28);
+            box-shadow: 0 0 0 4px rgba(59,130,246,0.08);
+        }
+
+        .admin-header-right {
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+        }
+
+        .admin-icon-btn {
+            width: 46px;
+            height: 46px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            background: var(--bg-soft);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .25s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .admin-icon-btn:hover {
+            color: var(--text-primary);
+            border-color: rgba(59,130,246,0.20);
+            transform: translateY(-2px);
+        }
+
+        .admin-site-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .65rem;
+            padding: .9rem 1rem;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-soft);
+            color: var(--text-secondary);
+            transition: all .25s ease;
+            font-size: .92rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .admin-site-link:hover {
+            color: var(--text-primary);
+            border-color: rgba(59,130,246,0.22);
+            transform: translateY(-2px);
+            background: rgba(59,130,246,0.06);
+        }
+
+        .admin-user-dropdown {
+            position: relative;
+        }
+
+        .admin-user-box {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: .35rem .7rem .35rem .35rem;
+            background: var(--bg-soft);
+            cursor: pointer;
+            transition: all .25s ease;
+            user-select: none;
+        }
+
+        .admin-user-box:hover {
+            border-color: rgba(59,130,246,0.18);
+        }
+
+        .admin-user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .admin-user-meta strong {
+            display: block;
+            font-size: .9rem;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .admin-user-meta span {
+            display: block;
+            margin-top: .12rem;
+            font-size: .76rem;
+            color: var(--text-muted);
+            line-height: 1.2;
+        }
+
+        .admin-user-caret {
+            color: var(--text-muted);
+            font-size: .85rem;
+            margin-left: .15rem;
+        }
+
+        .admin-user-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: 240px;
+            background: var(--dropdown-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+            padding: .6rem;
+            display: none;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+        }
+
+        .admin-user-menu.open {
+            display: block;
+        }
+
+        .admin-user-menu a,
+        .admin-user-menu button {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            padding: .85rem .9rem;
+            border-radius: 12px;
+            text-align: left;
+            font-size: .92rem;
+            cursor: pointer;
+        }
+
+        .admin-user-menu a:hover,
+        .admin-user-menu button:hover {
+            background: var(--bg-soft);
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 1100px) {
+            .admin-header {
+                grid-template-columns: 1fr;
+                height: auto;
+                padding: 1rem;
+            }
+
+            .admin-header-right {
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .admin-search {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-site-link span {
+                display: none;
+            }
+
+            .admin-site-link {
+                padding: .9rem;
+            }
+        }
+    </style>
+
+    <div class="admin-header-left">
+        <button class="admin-sidebar-toggle" id="adminSidebarToggle" type="button" title="Свернуть / развернуть меню">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <div class="admin-search">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Поиск по админке...">
         </div>
-        <!--end::Container-->
-    </nav>
-    <!--end::Header-->
+    </div>
+
+    <div class="admin-header-right">
+        <button class="admin-icon-btn" id="themeToggleBtn" type="button" title="Сменить тему">
+            <i class="bi bi-sun-fill" id="themeToggleIcon"></i>
+        </button>
+
+        <a href="{{ route('public.home') }}" class="admin-site-link" target="_blank" title="Открыть публичный сайт">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <span>Открыть сайт</span>
+        </a>
+
+        <div class="admin-user-dropdown">
+            <div class="admin-user-box" id="adminUserToggle">
+                <div class="admin-user-avatar">
+                    {{ mb_substr(auth()->user()->name ?? auth()->user()->email, 0, 1) }}
+                </div>
+                <div class="admin-user-meta">
+                    <strong>{{ \Illuminate\Support\Str::limit(auth()->user()->name ?? 'Admin', 18) }}</strong>
+                    <span>{{ auth()->user()->email }}</span>
+                </div>
+                <i class="bi bi-chevron-down admin-user-caret"></i>
+            </div>
+
+            <div class="admin-user-menu" id="adminUserMenu">
+                <a href="{{ route('profile.edit') }}">
+                    <i class="bi bi-person-circle"></i>
+                    <span>Профиль</span>
+                </a>
+
+                <a href="{{ route('public.home') }}" target="_blank">
+                    <i class="bi bi-house-door"></i>
+                    <span>Перейти на сайт</span>
+                </a>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Выйти</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const userToggle = document.getElementById('adminUserToggle');
+            const userMenu = document.getElementById('adminUserMenu');
+
+            if (userToggle && userMenu) {
+                userToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    userMenu.classList.toggle('open');
+                });
+
+                document.addEventListener('click', function (e) {
+                    if (!userMenu.contains(e.target) && !userToggle.contains(e.target)) {
+                        userMenu.classList.remove('open');
+                    }
+                });
+            }
+
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const themeToggleIcon = document.getElementById('themeToggleIcon');
+
+            function syncThemeIcon() {
+                const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                themeToggleIcon.className = current === 'dark'
+                    ? 'bi bi-sun-fill'
+                    : 'bi bi-moon-stars-fill';
+            }
+
+            syncThemeIcon();
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', function () {
+                    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                    const next = current === 'dark' ? 'light' : 'dark';
+
+                    document.documentElement.setAttribute('data-theme', next);
+                    localStorage.setItem('admin-theme', next);
+                    syncThemeIcon();
+                });
+            }
+        });
+    </script>
+</header>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Lesson;
 use App\Models\Task;
+use App\Models\UsersRating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,7 +57,9 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Задание успешно создано!');
     }
 
-    public function show(Task $task) { /* ... */ }
+    public function show(Task $task) {
+        return view('admin.tasks.show', compact('task'));
+    }
 
     public function edit(Task $task)
     {

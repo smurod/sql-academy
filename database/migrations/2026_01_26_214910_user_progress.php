@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('lesson_id')->constrained('lessons')->cascadeOnDelete();
-            $table->boolean('is_completed')->default(false);
-            $table->timestamp('completed_at')->nullable();
+
+            $table->unique(['user_id', 'lesson_id']);
             $table->timestamps();
         });
     }
