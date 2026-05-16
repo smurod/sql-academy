@@ -28,7 +28,7 @@
                 <i class="bi bi-trophy"></i> <span>Рейтинг</span>
             </a>
 
-            @role('admin')
+            @role('admin|superadmin')
             <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('admin*') ? 'active' : '' }}">
                 <i class="bi bi-shield-lock"></i><span>Админка</span>
             </a>
@@ -73,7 +73,7 @@
             <i class="bi bi-briefcase"></i> Собеседования
         </a>
 
-        @role('admin')
+        @role('admin|superadmin')
         <a href="{{ route('dashboard') }}" class="mobile-link {{ request()->is('admin*') ? 'active' : '' }}">
             <i class="bi bi-shield-lock"></i> Админка
         </a>

@@ -82,10 +82,10 @@ Route::post('/tasks/{task}/attempt', [TaskAttemptController::class, 'store'])
 
 Route::get('/admin', function () {
     return redirect()->route('dashboard');
-})->middleware(['auth', 'role:admin']);
+})->middleware(['auth', 'role:admin|superadmin']);
 
 Route::prefix('admin')
-    ->middleware(['auth', 'role:admin'])
+    ->middleware(['auth', 'role:admin|superadmin'])
     ->group(function () {
         Route::get('/dashboard', function () {
             return view('admin.home');
