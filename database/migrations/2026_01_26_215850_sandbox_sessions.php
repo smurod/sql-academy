@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('database_name', 100);
             $table->string('database_schema', 50);
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('expires_at');
+            $table->timestamp('expires_at')->nullable();
             $table->boolean('is_active')->default(true);
 
             $table->index(['user_id', 'is_active']);
