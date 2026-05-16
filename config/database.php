@@ -4,60 +4,22 @@ use Illuminate\Support\Str;
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Default Database Connection Name
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify which of the database connections below you wish
-    | to use as your default connection for database operations. This is
-    | the connection which will be utilized unless another connection
-    | is explicitly specified when you execute a query / statement.
-    |
-    */
-
     'default' => env('DB_CONNECTION', 'sqlite'),
     'default_sandbox' => env('DB_SANDBOX_CONNECTION', 'sandbox_template'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Database Connections
-    |--------------------------------------------------------------------------
-    |
-    | Below are all of the database connections defined for your application.
-    | An example configuration is provided for each database system which
-    | is supported by Laravel. You're free to add / remove connections.
-    |
-    */
 
     'connections' => [
             'sandbox_template' => [
                 'driver' => 'mysql',
-                'host' => env('DB_HOST', '127.0.0.1'),
-                'port' => env('DB_PORT', '3306'),
-                'database' => env('DB_SANDBOX'),
-                'username' => env('DB_USERNAME_2', 'root'),
-                'password' => env('DB_PASSWORD_2', ''),
-                'unix_socket' => env('DB_SOCKET', ''),
+                'host' => env('DB_SANDBOX_HOST', '127.0.0.1'),
+                'port' => env('DB_SANDBOX_PORT', '3306'),
+                'database' => env('DB_SANDBOX_DATABASE'),
+                'username' => env('DB_SANDBOX_USERNAME'),
+                'password' => env('DB_SANDBOX_PASSWORD'),
+                'unix_socket' => env('DB_SANDBOX_SOCKET', ''),
                 'charset' => 'utf8mb4',
                 'collation' => 'utf8mb4_unicode_ci',
                 'prefix' => '',
                 'strict' => true,
-                'engine' => null,
-            ],
-
-            'sandbox' => [
-                'driver' => 'mysql',
-                'host' => env('DB_HOST', '127.0.0.1'),
-                'port' => env('DB_PORT', '3306'),
-                'database' => env('DB_DATABASE_2'),
-                'username' => env('DB_USERNAME_2'),
-                'password' => env('DB_PASSWORD_2'),
-                'unix_socket' => env('DB_SOCKET', ''),
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'prefix' => '',
-                'strict' => false,
                 'engine' => null,
             ],
 
@@ -145,32 +107,10 @@ return [
 
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Migration Repository Table
-    |--------------------------------------------------------------------------
-    |
-    | This table keeps track of all the migrations that have already run for
-    | your application. Using this information, we can determine which of
-    | the migrations on disk haven't actually been run on the database.
-    |
-    */
-
     'migrations' => [
         'table' => 'migrations',
         'update_date_on_publish' => true,
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Redis Databases
-    |--------------------------------------------------------------------------
-    |
-    | Redis is an open source, fast, and advanced key-value store that also
-    | provides a richer body of commands than a typical key-value system
-    | such as Memcached. You may define your connection settings here.
-    |
-    */
 
     'redis' => [
 
