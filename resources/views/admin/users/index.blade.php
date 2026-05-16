@@ -239,6 +239,55 @@
             padding: 2rem 1.5rem;
             color: var(--text-secondary);
         }
+        .admin-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+
+            padding: .45rem 2.25rem .45rem .75rem;
+            border-radius: .75rem;
+
+            border: 1px solid rgba(255, 255, 255, .14);
+            background-color: rgba(255, 255, 255, .06);
+            color: var(--text-color, #e9eef7);
+
+            font-size: .9rem;
+            font-weight: 600;
+            line-height: 1.2;
+
+            outline: none;
+            transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+        }
+
+        /* стрелка */
+        .admin-select {
+            background-image:
+                linear-gradient(45deg, transparent 50%, rgba(255,255,255,.75) 50%),
+                linear-gradient(135deg, rgba(255,255,255,.75) 50%, transparent 50%),
+                linear-gradient(to right, transparent, transparent);
+            background-position:
+                calc(100% - 16px) 55%,
+                calc(100% - 10px) 55%,
+                100% 0;
+            background-size: 6px 6px, 6px 6px, 2.5rem 2.5rem;
+            background-repeat: no-repeat;
+        }
+
+        .admin-select:hover {
+            background-color: rgba(255, 255, 255, .09);
+            border-color: rgba(255, 255, 255, .22);
+        }
+
+        .admin-select:focus {
+            border-color: rgba(99, 102, 241, .65); /* индиго */
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, .18);
+        }
+
+        .admin-select option {
+            color: #111827;
+        }
+
+        .hidden { display: none !important; }
     </style>
 
     <div class="admin-table-card">
@@ -275,14 +324,45 @@
                             </td>
 
                             <td>
-                                @if($user->is_admin)
+                                @php
+                                    $isFounder = $user->hasRole('superadmin') || $user->email === 'smurod8880@gmail.com';
+                                    $currentRole = $user->hasRole('admin') ? 'admin' : 'student';
+                                @endphp
+
+                                @if($isFounder)
                                     <span class="admin-role-badge admin-role-admin">
-                                        <i class="bi bi-shield-fill-check"></i> Админ
+                                        <i class="bi bi-stars"></i> Суперадмин
                                     </span>
                                 @else
-                                    <span class="admin-role-badge admin-role-user">
-                                        <i class="bi bi-person-fill"></i> Пользователь
-                                    </span>
+                                    <div style="display:flex; gap:.5rem; align-items:center; flex-wrap:wrap;">
+                                        <button type="button"
+                                                class="admin-role-badge {{ $currentRole === 'admin' ? 'admin-role-admin' : 'admin-role-user' }}"
+                                                onclick="this.nextElementSibling.classList.toggle('hidden')">
+                                            @if($currentRole === 'admin')
+                                                <i class="bi bi-shield-fill-check"></i> Админ
+                                            @else
+                                                <i class="bi bi-person-fill"></i> Ученик
+                                            @endif
+                                        </button>
+
+                                        <form class="hidden"
+                                              method="POST"
+                                              action="{{ route('users.updateRole', $user) }}"
+                                              onsubmit="return confirm('Изменить роль пользователя {{ $user->email }}?')"
+                                              style="display:flex; gap:.5rem; align-items:center;">
+                                            @csrf
+                                            @method('PATCH')
+
+                                            <select name="role" class="admin-select">
+                                                <option value="student" @selected($currentRole === 'student')>Ученик</option>
+                                                <option value="admin" @selected($currentRole === 'admin')>Админ</option>
+                                            </select>
+
+                                            <button type="submit" class="admin-action-btn primary">
+                                                OK
+                                            </button>
+                                        </form>
+                                    </div>
                                 @endif
                             </td>
 

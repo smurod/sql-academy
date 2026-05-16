@@ -39,8 +39,9 @@ class RolePermissionSeeder extends Seeder
         // ─────────────────────────────────────────
         // 2. Создаём роли
         // ─────────────────────────────────────────
-        $studentRole = Role::firstOrCreate(['name' => 'student']);
-        $adminRole   = Role::firstOrCreate(['name' => 'admin']);
+        $studentRole    = Role::firstOrCreate(['name' => 'student']);
+        $adminRole      = Role::firstOrCreate(['name' => 'admin']);
+        $superadminRole = Role::firstOrCreate(['name' => 'superadmin']);
 
         $teacher = Role::where('name', 'teacher')->first();
         if ($teacher) {
@@ -59,6 +60,9 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         $adminRole->syncPermissions(
+            Permission::pluck('name')->toArray()
+        );
+        $superadminRole->syncPermissions(
             Permission::pluck('name')->toArray()
         );
 
@@ -84,7 +88,7 @@ class RolePermissionSeeder extends Seeder
             ]
         );
 
-        $admin->syncRoles(['admin']);
+        $admin->syncRoles(['superadmin']);
 
         // ─────────────────────────────────────────
         // 5. Тестовый студент (опционально)

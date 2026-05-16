@@ -194,7 +194,13 @@
                     <div class="admin-info-box">
                         <label>Роль</label>
                         <div>
-                            {{ $user->is_admin ? 'Администратор' : 'Пользователь' }}
+                            @if($user->hasRole('superadmin'))
+                                Суперадмин
+                            @elseif($user->hasRole('admin'))
+                                Администратор
+                            @else
+                                Ученик
+                            @endif
                         </div>
                     </div>
 

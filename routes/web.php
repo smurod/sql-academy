@@ -92,6 +92,8 @@ Route::prefix('admin')
         })->name('dashboard');
 
         Route::resource('users', UserController::class);
+        Route::patch('users/{user}/role', [UserController::class, 'updateRole'])
+            ->name('users.updateRole');
         Route::resource('modules', ModuleController::class);
         Route::resource('courses', AdminCourseController::class);
         Route::resource('tasks', AdminTaskController::class);
