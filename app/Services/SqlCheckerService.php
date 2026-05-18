@@ -11,7 +11,12 @@ class SqlCheckerService
     /**
      * Соединение для песочницы
      */
-    private string $connection = 'sandbox_template';
+    private string $connection;
+
+    public function __construct()
+    {
+        $this->connection = config('database.sandbox_connection');
+    }
 
     /**
      * Главная точка входа

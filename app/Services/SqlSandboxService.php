@@ -6,6 +6,13 @@ use Illuminate\Support\Facades\DB;
 
 class SqlSandboxService
 {
+    private string $connection;
+
+    public function __construct()
+    {
+        $this->connection = config('database.sandbox_connection');
+    }
+
     private function isAllowedSql(string $sql): bool
     {
         $sql = strtolower(trim($sql));
@@ -53,7 +60,7 @@ class SqlSandboxService
     private function runSelect(string $sql): array
     {
         try {
-            $data = DB::connection(config('database.default_sandbox'))->select($sql);
+            $data = DB::connection($this->connection)->select($sql);
 
             return $this->success($data);
         } catch (\Throwable $e) {
@@ -71,7 +78,7 @@ class SqlSandboxService
             ];
         }
 
-        $conn = DB::connection(config('database.default_sandbox'));
+        $conn = DB::connection($this->connection);
 
         $conn->beginTransaction();
 
