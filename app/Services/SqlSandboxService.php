@@ -10,7 +10,7 @@ class SqlSandboxService
 
     public function __construct()
     {
-        $this->connection = config('database.sandbox_connection');
+        $this->connection = config('database.default_sandbox', 'sandbox_template');
     }
 
     private function isAllowedSql(string $sql): bool
