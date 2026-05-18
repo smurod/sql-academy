@@ -14,30 +14,30 @@ class SandboxViewsSeeder extends Seeder
 
         $views = [
             // ✈️ Airlines
-            'Passenger'       => 'passengers',
-            'Company'         => 'companies',
-            'Trip'            => 'trips',
+            'PassengerView'       => 'passengers',
+            'CompanyView'         => 'companies',
+            'TripView'            => 'trips',
             // Pass_in_trip совпадает
 
             // 👨‍👩‍👧 Family
-            'FamilyMembers'   => 'family_members',
-            'Goods'           => 'goods',
-            'GoodTypes'       => 'good_types',
-            'Payments'        => 'payments',
+            'FamilyMembersView'   => 'family_members',
+            'GoodsView'           => 'goods',
+            'GoodTypesView'       => 'good_types',
+            'PaymentsView'        => 'payments',
 
             // 🏫 School
-            'Class'           => 'classes',
-            'Student'         => 'students',
-            'Student_in_class'=> 'student_in_class',
-            'Schedule'        => 'schedules',
-            'Subject'         => 'subjects',
-            'Teacher'         => 'teachers',
+            'ClassView'           => 'classes',
+            'StudentView'         => 'students',
+            'Student_in_classView'=> 'student_in_class',
+            'ScheduleView'        => 'schedules',
+            'SubjectView'         => 'subjects',
+            'TeacherView'         => 'teachers',
 
             // 🏠 Booking
-            'Rooms'           => 'housing_rooms',
-            'Users'           => 'housing_users',
-            'Reservations'    => 'reservations',
-            'Reviews'         => 'reviews',
+            'RoomsView'           => 'housing_rooms',
+            'UsersView'           => 'housing_users',
+            'ReservationsView'    => 'reservations',
+            'ReviewsView'         => 'reviews',
         ];
 
         foreach ($views as $viewName => $tableName) {
