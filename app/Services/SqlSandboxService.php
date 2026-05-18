@@ -53,7 +53,7 @@ class SqlSandboxService
     private function runSelect(string $sql): array
     {
         try {
-            $data = DB::connection('sandbox_template')->select($sql);
+            $data = DB::connection(config('database.default_sandbox'))->select($sql);
 
             return $this->success($data);
         } catch (\Throwable $e) {
@@ -71,7 +71,7 @@ class SqlSandboxService
             ];
         }
 
-        $conn = DB::connection('sandbox_template');
+        $conn = DB::connection(config('database.default_sandbox'));
 
         $conn->beginTransaction();
 

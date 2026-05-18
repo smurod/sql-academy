@@ -179,7 +179,7 @@ class TaskController extends Controller
         }
 
         try {
-            $conn = DB::connection('sandbox_template');
+            $conn = DB::connection(config('database.default_sandbox'));
             $start = microtime(true);
             $rows = $conn->select($sql);
             $time = round(microtime(true) - $start, 4);
@@ -229,7 +229,7 @@ class TaskController extends Controller
             }
 
             try {
-                $conn = DB::connection('sandbox_template');
+                $conn = DB::connection(config('database.default_sandbox'));
                 $sql = trim($request->input('sql'));
                 if (preg_match('/^\s*select/i', $sql)) {
                     $rows = $conn->select($sql);
