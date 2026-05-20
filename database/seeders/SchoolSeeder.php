@@ -9,7 +9,7 @@ class SchoolSeeder extends Seeder
 {
     public function run(): void
     {
-        $connection = DB::connection('sandbox_template');
+        $connection = 'sandbox_template';
         // Отключить проверку foreign keys
         DB::connection($connection)->statement('SET FOREIGN_KEY_CHECKS=0;');
 

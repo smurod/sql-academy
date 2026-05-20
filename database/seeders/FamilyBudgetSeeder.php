@@ -13,7 +13,7 @@ class FamilyBudgetSeeder extends Seeder
      */
     public function run(): void
     {
-        $connection = DB::connection('sandbox_template');
+        $connection = 'sandbox_template';
 
         DB::connection($connection)->statement('SET FOREIGN_KEY_CHECKS=0;');
 
