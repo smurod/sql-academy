@@ -9,7 +9,7 @@ class AirlinesSeeder extends Seeder
 {
     public function run(): void
     {
-        $connection = config('database.default_sandbox');
+        $connection = DB::connection('sandbox_template');
 
         // Отключить проверку foreign keys
         DB::connection($connection)->statement('SET FOREIGN_KEY_CHECKS=0;');
