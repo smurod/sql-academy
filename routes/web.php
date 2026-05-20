@@ -15,6 +15,8 @@ use App\Http\Controllers\Public\MainController;
 use App\Http\Controllers\Public\TaskController as PublicTaskController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\UsersRatingController;
+use App\Http\Controllers\AiController;
+
 
 
 Route::redirect('/', '/public/home');
@@ -107,5 +109,6 @@ Route::prefix('admin')
 
 Route::middleware('auth')->post('/lesson/{lesson}/complete', [\App\Http\Controllers\Public\UserProgressController::class, 'complete'])
     ->name('public.lesson.complete');
+Route::post('/ai/ask', [AiController::class, 'ask'])->name('ai.ask');
 
 require __DIR__.'/auth.php';

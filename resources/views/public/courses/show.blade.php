@@ -947,6 +947,47 @@
             .prac-hdr   { padding: 0.75rem 1rem; }
             .lp-footer-inner { padding: 1rem; }
         }
+
+        /* ═══════════════════════════════════════════
+           AI CHAT СТИЛИ
+        ═══════════════════════════════════════════ */
+        @keyframes aipulse {
+            0%,100%{ transform:scale(1); opacity:1; }
+            50% { transform:scale(1.5); opacity:0.4; }
+        }
+
+        #ai-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #ai-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #ai-messages::-webkit-scrollbar-thumb {
+            background: rgba(139,92,246,0.3);
+            border-radius: 3px;
+        }
+
+        #ai-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(139,92,246,0.5);
+        }
+
+        @media (max-width: 640px) {
+            #ai-chat-window {
+                width: calc(100vw - 20px);
+                right: 10px;
+                left: 10px;
+                height: calc(100vh - 120px);
+                max-height: calc(100vh - 120px);
+            }
+
+            #ai-btn {
+                right: 10px;
+                bottom: 10px;
+                padding: 0.6rem 1rem 0.6rem 0.6rem;
+            }
+        }
     </style>
 @endsection
 
@@ -1282,6 +1323,184 @@
         </div>
 
     </div>{{-- /lp-page --}}
+
+    {{-- ═══ AI ЧАТ — плавающая кнопка и окно чата ═══ --}}
+
+    {{-- Кнопка открытия чата --}}
+    <div id="ai-btn" onclick="toggleAIChat()" style="
+        position:fixed; bottom:28px; right:28px; z-index:9999;
+        display:flex; align-items:center; gap:0.9rem;
+        background:rgba(22,22,42,0.97);
+        border:1px solid rgba(139,92,246,0.3);
+        padding:0.75rem 1.5rem 0.75rem 0.85rem;
+        border-radius:999px;
+        cursor:pointer;
+        box-shadow:0 12px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,92,246,0.15);
+        transition:all 0.25s ease;
+    "
+         onmouseover="this.style.boxShadow='0 18px 36px rgba(0,0,0,0.55), 0 0 0 1px rgba(139,92,246,0.45)'; this.style.transform='translateY(-2px)'"
+         onmouseout="this.style.boxShadow='0 12px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,92,246,0.15)'; this.style.transform='translateY(0)'">
+        <div style="position:relative; width:42px; height:42px; flex-shrink:0;">
+            <div style="width:42px;height:42px;background:linear-gradient(135deg,#8b5cf6,#6366f1);border-radius:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(139,92,246,0.4);">
+                <i class="bi bi-robot" style="color:#fff;font-size:1.25rem;"></i>
+            </div>
+            <div id="ai-unread-badge" style="display:none;position:absolute;top:-5px;right:-5px;background:#ef4444;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;border:2px solid #16162a;padding:0 4px;">1</div>
+        </div>
+        <div>
+            <div style="font-size:0.9rem;font-weight:600;color:#e0e0ff;line-height:1.3;">AI помощник</div>
+            <div style="font-size:0.72rem;color:#6b6b8a;line-height:1.3;">Готов помочь</div>
+        </div>
+    </div>
+
+    {{-- Окно чата --}}
+    <div id="ai-chat-window" style="
+        display:none;
+        position:fixed; bottom:106px; right:28px; z-index:9999;
+        width:420px;
+        height:600px;
+        max-height:calc(100vh - 150px);
+        background:#16162a;
+        border:1px solid rgba(255,255,255,0.09);
+        border-radius:22px;
+        box-shadow:0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,92,246,0.1);
+        flex-direction:column;
+        overflow:hidden;
+    ">
+        {{-- Шапка чата --}}
+        <div style="padding:1.2rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;background:linear-gradient(180deg, rgba(139,92,246,0.08), transparent);">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:0.7rem;">
+                    <div style="width:38px;height:38px;background:linear-gradient(135deg,#8b5cf6,#6366f1);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(139,92,246,0.35);">
+                        <i class="bi bi-robot" style="color:#fff;font-size:1.05rem;"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight:600;font-size:1rem;color:#e0e0ff;line-height:1.2;">AI помощник</div>
+                        <div style="font-size:0.7rem;color:#555;line-height:1.2;" id="ai-status">Онлайн</div>
+                    </div>
+                </div>
+                <div style="display:flex;gap:0.4rem;">
+                    <button onclick="clearAIChat()" title="Очистить чат" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);cursor:pointer;color:#666;font-size:0.9rem;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;"
+                            onmouseover="this.style.color='#e0e0ff';this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.color='#666';this.style.background='rgba(255,255,255,0.05)'">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                    <button onclick="toggleAIChat()" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);cursor:pointer;color:#666;font-size:1rem;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;"
+                            onmouseover="this.style.color='#e0e0ff';this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.color='#666';this.style.background='rgba(255,255,255,0.05)'">×</button>
+                </div>
+            </div>
+        </div>
+
+        {{-- Область сообщений --}}
+        <div id="ai-messages" style="
+            flex:1;
+            overflow-y:auto;
+            padding:1rem;
+            display:flex;
+            flex-direction:column;
+            gap:0.75rem;
+            scrollbar-width:thin;
+            scrollbar-color:rgba(139,92,246,0.3) transparent;
+        ">
+            {{-- Приветственное сообщение --}}
+            <div class="ai-message ai-bot" style="display:flex;gap:0.6rem;align-items:flex-start;">
+                <div style="width:32px;height:32px;background:linear-gradient(135deg,#8b5cf6,#6366f1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="bi bi-robot" style="color:#fff;font-size:0.85rem;"></i>
+                </div>
+                <div style="flex:1;">
+                    <div style="background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.2);border-radius:12px 12px 12px 4px;padding:0.7rem 0.9rem;">
+                        <p style="margin:0;font-size:0.85rem;line-height:1.6;color:#e0e0ff;">
+                            Привет! Я AI помощник. Могу ответить на вопросы о SQL, объяснить сложные моменты или помочь с задачами.
+                        </p>
+                    </div>
+                    <div style="font-size:0.65rem;color:#555;margin-top:0.3rem;padding-left:0.5rem;">Только что</div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Форма ввода --}}
+        <div style="padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,0.06);flex-shrink:0;background:rgba(0,0,0,0.2);">
+            <form id="ai-chat-form" style="display:flex;gap:0.6rem;align-items:flex-end;">
+                <textarea
+                    id="ai-chat-input"
+                    placeholder="Задайте вопрос..."
+                    rows="1"
+                    style="
+                        flex:1;
+                        background:rgba(31,31,53,0.9);
+                        border:1px solid rgba(255,255,255,0.1);
+                        border-radius:12px;
+                        padding:0.7rem 1rem;
+                        font-size:0.88rem;
+                        color:#e0e0ff;
+                        outline:none;
+                        resize:none;
+                        max-height:120px;
+                        font-family:inherit;
+                        line-height:1.4;
+                    "
+                    onfocus="this.style.borderColor='rgba(139,92,246,0.5)'"
+                    onblur="this.style.borderColor='rgba(255,255,255,0.1)'"
+                    onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); sendAIMessage(); }"
+                    oninput="autoResizeTextarea(this)"
+                ></textarea>
+                <button
+                    type="submit"
+                    onclick="event.preventDefault(); sendAIMessage();"
+                    style="
+                        width:44px;
+                        height:44px;
+                        background:linear-gradient(135deg,#8b5cf6,#6366f1);
+                        border:none;
+                        border-radius:12px;
+                        cursor:pointer;
+                        color:#fff;
+                        font-size:1.1rem;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        flex-shrink:0;
+                        transition:all 0.2s;
+                        box-shadow:0 4px 14px rgba(139,92,246,0.3);
+                    "
+                    onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 6px 20px rgba(139,92,246,0.4)'"
+                    onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 14px rgba(139,92,246,0.3)'"
+                >
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            </form>
+
+            {{-- Подсказка о выделении --}}
+            <div id="ai-selection-hint" style="display:none;margin-top:0.6rem;font-size:0.72rem;color:#8b5cf6;padding:0.4rem 0.6rem;background:rgba(139,92,246,0.08);border-radius:8px;border:1px solid rgba(139,92,246,0.15);">
+                <i class="bi bi-info-circle"></i> Выделен текст — он будет отправлен вместе с вопросом
+            </div>
+        </div>
+    </div>
+
+    {{-- Тултип при выделении текста --}}
+    <div id="ai-sel-tooltip" style="
+        display:none;
+        position:absolute;
+        z-index:99999;
+        align-items:center;
+        gap:0.4rem;
+        background:#1e1e38;
+        border:1px solid rgba(139,92,246,0.35);
+        border-radius:999px;
+        padding:0.35rem 0.75rem 0.35rem 0.55rem;
+        box-shadow:0 8px 24px rgba(0,0,0,0.5);
+        cursor:pointer;
+        white-space:nowrap;
+        font-size:0.8rem;
+        color:#e0e0ff;
+        font-weight:500;
+        user-select:none;
+        transition:opacity 0.15s;
+    " onclick="askAboutSelection()">
+        <div style="width:22px;height:22px;background:linear-gradient(135deg,#8b5cf6,#6366f1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="bi bi-robot" style="color:#fff;font-size:0.65rem;"></i>
+        </div>
+        Спросить AI
+    </div>
+
 @endsection
 
 
@@ -1470,7 +1689,7 @@
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': csrf,
-                            'Accept': 'application/json' // Заставляет Laravel возвращать JSON при ошибках
+                            'Accept': 'application/json'
                         },
                         body   : JSON.stringify({ sql: sql })
                     })
@@ -1507,7 +1726,7 @@
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': csrf,
-                            'Accept': 'application/json' // Заставляет Laravel возвращать JSON при ошибках
+                            'Accept': 'application/json'
                         },
                         body   : JSON.stringify({ sql: sql })
                     })
@@ -1816,6 +2035,278 @@
                 if(zo) zo.addEventListener('click', function(){ S.zoom = Math.max(0.15, S.zoom - 0.15); applyT(); });
 
                 build();
+            }
+
+        })();
+    </script>
+
+    {{-- AI CHAT JAVASCRIPT --}}
+    <script>
+        (function(){
+            'use strict';
+
+            var CSRF = document.querySelector('meta[name="csrf-token"]')
+                ? document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                : '';
+
+            var chatWindow = document.getElementById('ai-chat-window');
+            var messagesEl = document.getElementById('ai-messages');
+            var inputEl    = document.getElementById('ai-chat-input');
+            var selectionHint = document.getElementById('ai-selection-hint');
+            var selectedText = '';
+            var isTyping = false;
+
+            /* ─────────────────────────────────────────
+               Управление чатом
+            ───────────────────────────────────────── */
+
+            window.toggleAIChat = function() {
+                if (chatWindow.style.display === 'none' || !chatWindow.style.display) {
+                    chatWindow.style.display = 'flex';
+                    inputEl.focus();
+                    scrollToBottom();
+                    hideUnreadBadge();
+                } else {
+                    chatWindow.style.display = 'none';
+                }
+            };
+
+            window.clearAIChat = function() {
+                if (!confirm('Очистить всю историю чата?')) return;
+                messagesEl.innerHTML = '';
+                addBotMessage('История очищена. Чем могу помочь?');
+            };
+
+            function scrollToBottom() {
+                setTimeout(function() {
+                    messagesEl.scrollTop = messagesEl.scrollHeight;
+                }, 50);
+            }
+
+            function hideUnreadBadge() {
+                var badge = document.getElementById('ai-unread-badge');
+                if (badge) badge.style.display = 'none';
+            }
+
+            function showUnreadBadge() {
+                if (chatWindow.style.display === 'none' || !chatWindow.style.display) {
+                    var badge = document.getElementById('ai-unread-badge');
+                    if (badge) {
+                        badge.style.display = 'flex';
+                        badge.textContent = '1';
+                    }
+                }
+            }
+
+            /* ─────────────────────────────────────────
+               Автоматическое изменение размера textarea
+            ───────────────────────────────────────── */
+
+            window.autoResizeTextarea = function(el) {
+                el.style.height = 'auto';
+                el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+            };
+
+            /* ─────────────────────────────────────────
+               Добавление сообщений
+            ───────────────────────────────────────── */
+
+            function addUserMessage(text) {
+                var time = getCurrentTime();
+                var html = [
+                    '<div class="ai-message ai-user" style="display:flex;gap:0.6rem;align-items:flex-start;justify-content:flex-end;">',
+                    '<div style="flex:1;display:flex;flex-direction:column;align-items:flex-end;">',
+                    '<div style="background:linear-gradient(135deg,#8b5cf6,#6366f1);border-radius:12px 12px 4px 12px;padding:0.7rem 0.9rem;max-width:85%;word-wrap:break-word;">',
+                    '<p style="margin:0;font-size:0.85rem;line-height:1.6;color:#fff;">',
+                    escapeHtml(text),
+                    '</p>',
+                    '</div>',
+                    '<div style="font-size:0.65rem;color:#555;margin-top:0.3rem;padding-right:0.5rem;">' + time + '</div>',
+                    '</div>',
+                    '<div style="width:32px;height:32px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">',
+                    '<i class="bi bi-person-fill" style="color:#e0e0ff;font-size:0.85rem;"></i>',
+                    '</div>',
+                    '</div>'
+                ].join('');
+
+                messagesEl.insertAdjacentHTML('beforeend', html);
+                scrollToBottom();
+            }
+
+            function addBotMessage(text) {
+                var time = getCurrentTime();
+                var html = [
+                    '<div class="ai-message ai-bot" style="display:flex;gap:0.6rem;align-items:flex-start;">',
+                    '<div style="width:32px;height:32px;background:linear-gradient(135deg,#8b5cf6,#6366f1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">',
+                    '<i class="bi bi-robot" style="color:#fff;font-size:0.85rem;"></i>',
+                    '</div>',
+                    '<div style="flex:1;">',
+                    '<div style="background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.2);border-radius:12px 12px 12px 4px;padding:0.7rem 0.9rem;">',
+                    '<div style="font-size:0.85rem;line-height:1.6;color:#e0e0ff;white-space:pre-wrap;word-wrap:break-word;">',
+                    formatMessage(text),
+                    '</div>',
+                    '</div>',
+                    '<div style="font-size:0.65rem;color:#555;margin-top:0.3rem;padding-left:0.5rem;">' + time + '</div>',
+                    '</div>',
+                    '</div>'
+                ].join('');
+
+                messagesEl.insertAdjacentHTML('beforeend', html);
+                scrollToBottom();
+                showUnreadBadge();
+            }
+
+            function addTypingIndicator() {
+                if (isTyping) return;
+                isTyping = true;
+
+                var html = [
+                    '<div id="ai-typing" class="ai-message ai-bot" style="display:flex;gap:0.6rem;align-items:flex-start;">',
+                    '<div style="width:32px;height:32px;background:linear-gradient(135deg,#8b5cf6,#6366f1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">',
+                    '<i class="bi bi-robot" style="color:#fff;font-size:0.85rem;"></i>',
+                    '</div>',
+                    '<div style="flex:1;">',
+                    '<div style="background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.2);border-radius:12px 12px 12px 4px;padding:0.7rem 0.9rem;display:flex;gap:4px;">',
+                    '<div style="width:6px;height:6px;border-radius:50%;background:#8b5cf6;animation:aipulse 1s infinite 0s"></div>',
+                    '<div style="width:6px;height:6px;border-radius:50%;background:#8b5cf6;animation:aipulse 1s infinite 0.2s"></div>',
+                    '<div style="width:6px;height:6px;border-radius:50%;background:#8b5cf6;animation:aipulse 1s infinite 0.4s"></div>',
+                    '</div>',
+                    '</div>',
+                    '</div>'
+                ].join('');
+
+                messagesEl.insertAdjacentHTML('beforeend', html);
+                scrollToBottom();
+            }
+
+            function removeTypingIndicator() {
+                isTyping = false;
+                var typing = document.getElementById('ai-typing');
+                if (typing) typing.remove();
+            }
+
+            /* ─────────────────────────────────────────
+               Отправка сообщения
+            ───────────────────────────────────────── */
+
+            window.sendAIMessage = function() {
+                var text = inputEl.value.trim();
+                if (!text) return;
+
+                addUserMessage(text);
+                inputEl.value = '';
+                inputEl.style.height = 'auto';
+
+                var status = document.getElementById('ai-status');
+                if (status) status.textContent = 'Печатает...';
+
+                addTypingIndicator();
+
+                fetch('{{ route("ai.ask") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': CSRF,
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        question: text,
+                        selected_text: selectedText || null,
+                    }),
+                })
+                    .then(function(res) { return res.json(); })
+                    .then(function(data) {
+                        removeTypingIndicator();
+                        if (status) status.textContent = 'Онлайн';
+
+                        if (data.error) {
+                            addBotMessage('❌ Ошибка: ' + data.error);
+                        } else {
+                            addBotMessage(data.answer);
+                        }
+
+                        selectedText = '';
+                        if (selectionHint) selectionHint.style.display = 'none';
+                    })
+                    .catch(function(err) {
+                        removeTypingIndicator();
+                        if (status) status.textContent = 'Онлайн';
+                        addBotMessage('❌ Не удалось связаться с сервером. Попробуйте позже.');
+                    });
+            };
+
+            /* ─────────────────────────────────────────
+               Работа с выделенным текстом
+            ───────────────────────────────────────── */
+
+            document.addEventListener('mouseup', function(e) {
+                var tooltip = document.getElementById('ai-sel-tooltip');
+                if (tooltip && tooltip.contains(e.target)) return;
+
+                setTimeout(function() {
+                    var sel = window.getSelection();
+                    var text = sel ? sel.toString().trim() : '';
+
+                    if (!text || text.length < 3) {
+                        if (tooltip) tooltip.style.display = 'none';
+                        selectedText = '';
+                        if (selectionHint) selectionHint.style.display = 'none';
+                        return;
+                    }
+
+                    selectedText = text;
+                    if (selectionHint) selectionHint.style.display = 'block';
+
+                    var range = sel.getRangeAt(0);
+                    var rect = range.getBoundingClientRect();
+                    if (!tooltip) return;
+
+                    var left = rect.left + window.scrollX + rect.width / 2 - (tooltip.offsetWidth || 120) / 2;
+                    var top = rect.top + window.scrollY - 46;
+                    if (left < 8) left = 8;
+
+                    tooltip.style.left = left + 'px';
+                    tooltip.style.top = top + 'px';
+                    tooltip.style.display = 'flex';
+                }, 10);
+            });
+
+            window.askAboutSelection = function() {
+                var tooltip = document.getElementById('ai-sel-tooltip');
+                if (tooltip) tooltip.style.display = 'none';
+
+                if (!selectedText) return;
+
+                toggleAIChat();
+                inputEl.value = 'Объясни это: "' + selectedText.substring(0, 100) + (selectedText.length > 100 ? '..."' : '"');
+                inputEl.focus();
+                autoResizeTextarea(inputEl);
+            };
+
+            /* ─────────────────────────────────────────
+               Вспомогательные функции
+            ───────────────────────────────────────── */
+
+            function escapeHtml(text) {
+                var div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function formatMessage(text) {
+                return text
+                    .replace(/```sql\n([\s\S]*?)```/g, '<pre style="background:#0a0a1a;padding:0.6rem;border-radius:8px;overflow-x:auto;margin:0.5rem 0;"><code style="color:#4ade80;font-family:JetBrains Mono,monospace;font-size:0.8rem;">$1</code></pre>')
+                    .replace(/```([\s\S]*?)```/g, '<pre style="background:#0a0a1a;padding:0.6rem;border-radius:8px;overflow-x:auto;margin:0.5rem 0;"><code style="color:#e0e0ff;font-family:JetBrains Mono,monospace;font-size:0.8rem;">$1</code></pre>')
+                    .replace(/`([^`]+)`/g, '<code style="background:rgba(139,92,246,0.2);color:#c4b5fd;padding:0.15rem 0.4rem;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:0.82em;">$1</code>')
+                    .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#e0e0ff;">$1</strong>')
+                    .replace(/\n/g, '<br>');
+            }
+
+            function getCurrentTime() {
+                var now = new Date();
+                var h = now.getHours().toString().padStart(2, '0');
+                var m = now.getMinutes().toString().padStart(2, '0');
+                return h + ':' + m;
             }
 
         })();

@@ -43,6 +43,9 @@ return [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_REDIRECT_URI'),
-    ]
-
+    ],
+    'ai' => [
+        'key'   => env('AI_API_KEY'),
+        'model' => env('AI_MODEL', 'gemini-2.0-flash'),
+    ],
 ];
